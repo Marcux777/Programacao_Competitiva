@@ -1,0 +1,18 @@
+#include <iostream>
+
+using namespace std;
+
+class Node{
+    char v;
+    Node* left;
+    Node* right;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+class BTree{
+    
+
+
+
+}
