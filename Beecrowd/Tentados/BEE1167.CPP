@@ -15,13 +15,12 @@ int main() {
         int posi = 0;
         int v = circulo[posi].second;
         while (circulo.size() > 1) {
-            if (v % 2 != 0) {
-                posi = (posi + v) % circulo.size();
-            } else {
-                posi = (posi - v + circulo.size()) % circulo.size();
-            }
+            posi = (posi + v) % circulo.size();
             v = circulo[posi].second;
             circulo.erase(circulo.begin() + posi);
+            if(posi%2 != 0){
+                posi--;
+            }
             if(posi == circulo.size()){
                 posi = 0;
             }
