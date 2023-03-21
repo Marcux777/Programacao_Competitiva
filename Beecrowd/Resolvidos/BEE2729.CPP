@@ -4,7 +4,7 @@ using namespace std;
 
 int main(){
 	int n;
-    freopen("saida.txt", "w", stdout);
+    //freopen("saida.txt", "w", stdout);
 
 	cin >> n;
 	cin.ignore();
@@ -26,7 +26,6 @@ int main(){
             }
             cont--;
         }
-        //cout << endl;
 		compras.clear();
 		lista_de_compras.clear();
 
