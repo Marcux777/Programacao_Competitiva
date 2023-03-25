@@ -4,6 +4,10 @@
         "utility": "cpp",
         "map": "cpp",
         "string": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "xstring": "cpp",
+        "iosfwd": "cpp",
+        "vector": "cpp",
+        "deque": "cpp"
     }
 }
