@@ -3,7 +3,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
     int n, l, d;
     cin >> n >> l >> d;
 
