@@ -3,6 +3,8 @@
 #include <math.h>
 #include <string>
 #include <algorithm>
+#include <locale.h>
+
 
 using namespace std;
 
@@ -25,6 +27,7 @@ int ToMin(string a)
 
 int main()
 {
+    setlocale(LC_ALL, "pt_BR.utf8");
     //freopen("saida.txt", "w", stdout);
     vector<pair<int, string>> v;
     vector<pair<int, string>> final;
@@ -40,7 +43,7 @@ int main()
     }
     for (int i = 0; i < v.size(); i++)
     {
-        if (abs(1440 - v[i].first) <= temp)
+        if (abs(v[i].first - 1440) <= temp)
         {
             final.push_back(v[i]);
         }
