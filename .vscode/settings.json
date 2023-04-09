@@ -13,6 +13,7 @@
         "algorithm": "cpp",
         "cstdlib": "cpp",
         "xiosbase": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "xtree": "cpp"
     }
 }
