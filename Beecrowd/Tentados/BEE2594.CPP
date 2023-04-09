@@ -4,8 +4,8 @@ using namespace std;
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    //ios::sync_with_stdio(false);
+    //cin.tie(nullptr);
     //freopen("saida.txt", "w", stdout);
     int t;
     cin >> t;
