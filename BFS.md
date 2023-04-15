@@ -1,16 +1,16 @@
 # BFS - Breadth First Search
 
-    A busca em largura (BFS - Breadth-First Search) é um algoritmo utilizado para percorrer árvores ou grafos em busca de um nó que atenda a determinados critérios. Ele começa pela raiz da estrutura e visita todos os nós no nível atual antes de avançar para os nós no próximo nível. A BFS é útil para determinar o nível de cada nó a partir de um nó de origem dado.
+A busca em largura (BFS - Breadth-First Search) é um algoritmo utilizado para percorrer árvores ou grafos em busca de um nó que atenda a determinados critérios. Ele começa pela raiz da estrutura e visita todos os nós no nível atual antes de avançar para os nós no próximo nível. A BFS é útil para determinar o nível de cada nó a partir de um nó de origem dado.
 
-    O algoritmo da BFS utiliza uma fila para armazenar os nós a serem visitados. O processo começa com a inserção do nó raiz na fila. Enquanto a fila não estiver vazia, o primeiro nó da fila é removido e seus filhos são visitados. Os filhos visitados são adicionados à fila para serem processados posteriormente. Esse processo é repetido até que a fila esteja vazia, indicando que todos os nós foram visitados. A BFS é uma técnica eficiente para solucionar problemas na teoria dos grafos.
+O algoritmo da BFS utiliza uma fila para armazenar os nós a serem visitados. O processo começa com a inserção do nó raiz na fila. Enquanto a fila não estiver vazia, o primeiro nó da fila é removido e seus filhos são visitados. Os filhos visitados são adicionados à fila para serem processados posteriormente. Esse processo é repetido até que a fila esteja vazia, indicando que todos os nós foram visitados. A BFS é uma técnica eficiente para solucionar problemas na teoria dos grafos.
 
 # BFS para Árvores
 
-    A BFS em árvores é uma técnica simples e útil para percorrer árvores em largura. Ela começa do nó raiz e visita todos os nós em um nível antes de passar para o próximo nível. A BFS pode ser usada para encontrar um nó específico ou buscar informações relevantes na árvore.
+A BFS em árvores é uma técnica simples e útil para percorrer árvores em largura. Ela começa do nó raiz e visita todos os nós em um nível antes de passar para o próximo nível. A BFS pode ser usada para encontrar um nó específico ou buscar informações relevantes na árvore.
 
-    O algoritmo da BFS em árvores usa uma fila para armazenar os nós a serem visitados. Começa com a inserção do nó raiz na fila. Enquanto a fila não estiver vazia, o primeiro nó da fila é removido e seus filhos são visitados. Os filhos visitados são adicionados à fila para serem processados posteriormente. Esse processo é repetido até que a fila esteja vazia, indicando que todos os nós foram visitados.
+O algoritmo da BFS em árvores usa uma fila para armazenar os nós a serem visitados. Começa com a inserção do nó raiz na fila. Enquanto a fila não estiver vazia, o primeiro nó da fila é removido e seus filhos são visitados. Os filhos visitados são adicionados à fila para serem processados posteriormente. Esse processo é repetido até que a fila esteja vazia, indicando que todos os nós foram visitados.
 
-    Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores em largura e pode ser usada para encontrar um nó específico ou buscar informações relevantes na árvore.
+Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores em largura e pode ser usada para encontrar um nó específico ou buscar informações relevantes na árvore.
 
 ```C++
     //Exemplo de código BFS em árvores
