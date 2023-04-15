@@ -12,7 +12,7 @@ O algoritmo da BFS em árvores usa uma fila para armazenar os nós a serem visit
 
 Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores em largura e pode ser usada para encontrar um nó específico ou buscar informações relevantes na árvore.
 
-'''C++
+```C++
 //Exemplo de código BFS em árvores
 
 // Definindo a estrutura de um nó da árvore
@@ -26,9 +26,9 @@ struct Node {
         left = right = NULL;
     }
 };
-'''
+```
 
-'''C++
+```C++
 // Função que percorre a árvore em largura
 void bfs(Node *root) {
     if (root == NULL) return;
@@ -51,10 +51,10 @@ void bfs(Node *root) {
         }
     }
 }
-'''
+```
 
 
-'''C++
+```C++
 // Exemplo de uso
 int main() {
     Node *root = new Node(1);
@@ -70,4 +70,4 @@ int main() {
 
     return 0;
 }
-'''
+```
