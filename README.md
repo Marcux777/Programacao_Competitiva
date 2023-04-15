@@ -4,7 +4,7 @@
  
  Sites que uso:
  -----------------------------------
- | [Beecrowd](https://www.beecrowd.com.br/judge/pt/profile/542742) | [LeetCode](https://leetcode.com/Marcux777/) | [Uva Jugde](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=15) |
+ | <a href="https://www.beecrowd.com.br/judge/pt/profile/542742" target="_blank">Beecrowd</a> | <a href="https://leetcode.com/Marcux777/" target="_blank">LeetCode</a> | <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=15" target="_blank">Uva Judge</a> |
  -----------------------------------
  
  
