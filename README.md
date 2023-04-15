@@ -4,9 +4,9 @@ Este repositório contém conteúdo relacionado à programação competitiva, co
 
 ## Sites que uso
 
-1. <a href="https://www.beecrowd.com.br/judge/pt/profile/542742" target="_blank">Beecrowd</a> - Plataforma brasileira de treinamento em programação competitiva.
-2. <a href="https://leetcode.com/Marcux777/" target="_blank">LeetCode</a> - Site com desafios de programação e entrevistas.
-3. <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=15" target="_blank">UVa Online Judge</a> - Site com uma ampla variedade de problemas de programação competitiva.
+1. <a href="https://www.beecrowd.com.br/judge/pt/profile/542742" target="_blank" rel="noopener noreferrer">Beecrowd</a> - Plataforma brasileira de treinamento em programação competitiva.
+2. <a href="https://leetcode.com/Marcux777/" target="_blank" rel="noopener noreferrer">LeetCode</a> - Site com desafios de programação e entrevistas.
+3. <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=15" target="_blank" rel="noopener noreferrer">UVa Online Judge</a> - Site com uma ampla variedade de problemas de programação competitiva.
 
 
 ## Sumário
