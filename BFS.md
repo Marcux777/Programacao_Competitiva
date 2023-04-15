@@ -14,9 +14,10 @@ Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores e
 
 ```C++
     //Exemplo de código BFS em árvores
-    #include <iostream>
-    #include <vector>
+   #include <iostream>
     #include <queue>
+
+    using namespace std;
 
     // Definindo a estrutura de um nó da árvore
     struct Node {
@@ -29,6 +30,7 @@ Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores e
             left = right = NULL;
         }
     };
+
     // Função que percorre a árvore em largura
     void bfs(Node *root) {
         if (root == NULL) return;
