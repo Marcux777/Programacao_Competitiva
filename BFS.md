@@ -72,7 +72,7 @@ Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores e
 
 # BFS para Grafos
 
-    A busca em largura (BFS) também pode ser usada para percorrer grafos. Para isso, precisamos representar o grafo em uma estrutura de dados adequada, como uma lista de adjacências. A BFS começa em um vértice raiz e explora todos os vértices vizinhos antes de continuar para os vértices de nível mais profundo.
+A busca em largura (BFS) também pode ser usada para percorrer grafos. Para isso, precisamos representar o grafo em uma estrutura de dados adequada, como uma lista de adjacências. A BFS começa em um vértice raiz e explora todos os vértices vizinhos antes de continuar para os vértices de nível mais profundo.
 
 ´´´C++
     #include <iostream>
