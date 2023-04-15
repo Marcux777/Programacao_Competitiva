@@ -14,7 +14,7 @@ Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores e
 
 ```C++
     //Exemplo de código BFS em árvores
-   #include <iostream>
+    #include <iostream>
     #include <queue>
 
     using namespace std;
