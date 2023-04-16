@@ -1,6 +1,6 @@
 # Programação Competitiva
 
-Este repositório contém conteúdo relacionado à programação competitiva, como algoritmos e estruturas de dados comumente usados.
+Este repositório contém conteúdo relacionado à programação competitiva, desde problemas resolvidos até explicação, como de algoritmos e estruturas de dados.
 
 ## Meus Perfis
 
@@ -31,13 +31,15 @@ Este repositório contém conteúdo relacionado à programação competitiva, co
    * [DFS para Grafos](README.md#dfs-para-grafos)
 
 
-# BFS - Breadth First Search
+# GRAFOS
+
+## BFS - Breadth First Search
 
 A busca em largura (BFS - Breadth-First Search) é um algoritmo utilizado para percorrer árvores ou grafos em busca de um nó que atenda a determinados critérios. Ele começa pela raiz da estrutura e visita todos os nós no nível atual antes de avançar para os nós no próximo nível. A BFS é útil para determinar o nível de cada nó a partir de um nó de origem dado.
 
 O algoritmo da BFS utiliza uma fila para armazenar os nós a serem visitados. O processo começa com a inserção do nó raiz na fila. Enquanto a fila não estiver vazia, o primeiro nó da fila é removido e seus filhos são visitados. Os filhos visitados são adicionados à fila para serem processados posteriormente. Esse processo é repetido até que a fila esteja vazia, indicando que todos os nós foram visitados. A BFS é uma técnica eficiente para solucionar problemas na teoria dos grafos.
 
-# BFS para Árvores
+### BFS para Árvores
 
 A BFS em árvores é uma técnica simples e útil para percorrer árvores em largura. Ela começa do nó raiz e visita todos os nós em um nível antes de passar para o próximo nível. A BFS pode ser usada para encontrar um nó específico ou buscar informações relevantes na árvore.
 
@@ -105,7 +107,7 @@ Em resumo, a BFS em árvores é uma técnica eficiente para percorrer árvores e
 
 ```
 
-# BFS para Grafos
+### BFS para Grafos
 
 A busca em largura (BFS) também pode ser usada para percorrer grafos. Para isso, precisamos representar o grafo em uma estrutura de dados adequada, como uma lista de adjacências. A BFS começa em um vértice raiz e explora todos os vértices vizinhos antes de continuar para os vértices de nível mais profundo.
 
@@ -156,7 +158,7 @@ A busca em largura (BFS) também pode ser usada para percorrer grafos. Para isso
         return 0;
     }
 ```
-# DFS - Depth-First Search
+## DFS - Depth-First Search
 
 DFS (Depth-First Search) é um algoritmo de busca em grafos que percorre todos os vértices de um grafo de forma recursiva, visitando primeiro um vértice e, em seguida, explorando ao máximo cada um dos seus vizinhos antes de voltar e visitar o próximo vértice não visitado. O algoritmo é chamado "depth-first" porque ele explora até o máximo possível em cada ramificação antes de fazer backtracking e explorar outras ramificações em profundidade.
 
@@ -164,11 +166,11 @@ Para uma árvore, a DFS é uma busca recursiva que percorre todos os nós da ár
 
 Para um grafo, a DFS é um pouco mais complexa, pois pode haver ciclos no grafo. Nesse caso, é preciso marcar cada vértice visitado para garantir que o algoritmo não fique preso em um ciclo infinito. A DFS começa visitando um vértice inicial e marca-o como visitado. Em seguida, ela chama recursivamente a DFS para todos os vértices adjacentes que ainda não foram visitados. Esse processo é repetido até que todos os vértices tenham sido visitados. Se a DFS encontrar um vértice já visitado, ela volta para o vértice anterior e continua explorando outros ramos do grafo.
 
-# DFS para Árvores
+### DFS para Árvores
 
 Existem três formas de percorrer uma árvore com DFS:
 
-## Pré-ordem (Pre-Order):
+### Pré-ordem (Pre-Order):
 Nesta forma de percorrer a árvore, primeiro visita-se o nó raiz e, em seguida, visita-se recursivamente seus filhos da esquerda para a direita. Dessa forma, a ordem de visitação dos nós é sempre raiz, subárvore esquerda e subárvore direita.
 
 ```C++
@@ -188,7 +190,7 @@ Nesta forma de percorrer a árvore, primeiro visita-se o nó raiz e, em seguida,
     }
 ```
 
-## Pós-ordem (post-order):
+#### Pós-ordem (Pos-Order):
 Nesta forma de percorrer a árvore, primeiro visita-se recursivamente os filhos da esquerda para a direita e, em seguida, visita-se o nó raiz. Dessa forma, a ordem de visitação dos nós é sempre subárvore esquerda, subárvore direita e raiz.
 
 ```C++
@@ -208,7 +210,7 @@ Nesta forma de percorrer a árvore, primeiro visita-se recursivamente os filhos 
     }
 ```
 
-## Em-ordem (in-order): 
+#### Em-ordem (In-Order): 
 Esta forma de percorrer a árvore é aplicável apenas em árvores binárias. Neste método, primeiro visita-se recursivamente o filho da esquerda, em seguida visita-se o nó raiz e, finalmente, visita-se recursivamente o filho da direita. Dessa forma, a ordem de visitação dos nós é sempre subárvore esquerda, raiz e subárvore direita.
 
 ```C++
@@ -228,7 +230,7 @@ Esta forma de percorrer a árvore é aplicável apenas em árvores binárias. Ne
     }
 ```
 
-# DFS para Grafos
+### DFS para Grafos
 
 A DFS (Depth-First Search) em grafos é um algoritmo de busca em profundidade que visita todos os vértices do grafo. A DFS é implementada de forma recursiva, visitando um vértice de cada vez e explorando o máximo possível antes de retroceder.
 
