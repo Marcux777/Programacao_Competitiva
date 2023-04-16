@@ -13,22 +13,22 @@ Este repositório contém conteúdo relacionado à programação competitiva, co
 
 ### Grafos
 
-1. [BFS](BFS.md)
+1. [BFS](README.md#bfs---breadth-first-search)
 
-    * [BFS para Árvores](BFS.md#bfs-para-árvores)
-    * [BFS para Grafos](BFS.md#bfs-para-grafos)
+    * [BFS para Árvores](README.md#bfs-para-árvores)
+    * [BFS para Grafos](README.md#bfs-para-árvores)
    
-2. [DFS](DFS.md#dfs---depth-first-search)
+2. [DFS](README.md#dfs---depth-first-search)
 
-   * [DFS para Árvores](DFS.md#dfs---depth-first-search)
+   * [DFS para Árvores](README.md#dfs-para-árvores)
  
-      - [Pré-ordem (Pre-Order)](DFS.md#pós-ordem-post-order)
+      - [Pré-ordem (Pre-Order)](README.md#pré-ordem-pre-order)
       
-      - [Pós-ordem (post-order)](DFS.md#pós-ordem-post-order)
+      - [Pós-ordem (post-order)](README.md#pós-ordem-post-order)
       
-      - [Em-ordem (in-order)](DFS.md#em-ordem-in-order)
+      - [Em-ordem (in-order)](README.md#em-ordem-in-order)
       
-   * [DFS para Grafos](DFS.md#dfs-para-grafos)
+   * [DFS para Grafos](README.md#dfs-para-grafos)
 
 
 # BFS - Breadth First Search
