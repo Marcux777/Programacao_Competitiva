@@ -1,6 +1,6 @@
 # Programação Competitiva
 
-Este repositório contém conteúdo relacionado à programação competitiva, como algoritmos e estruturas de dados comumente usados.
+Este repositório contém conteúdo relacionado à programação competitiva, desde problemas resolvidos até explicação, como de algoritmos e estruturas de dados.
 
 ## Meus Perfis
 
