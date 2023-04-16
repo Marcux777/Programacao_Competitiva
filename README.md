@@ -2,7 +2,7 @@
 
 Este repositório contém conteúdo relacionado à programação competitiva, como algoritmos e estruturas de dados comumente usados.
 
-## Sites que uso
+## Meus Perfis
 
 1. <a href="https://www.beecrowd.com.br/judge/pt/profile/542742" target="_blank" rel="noopener noreferrer">Beecrowd</a> - Plataforma brasileira de treinamento em programação competitiva.
 2. <a href="https://leetcode.com/Marcux777/" target="_blank" rel="noopener noreferrer">LeetCode</a> - Site com desafios de programação e entrevistas.
