@@ -276,5 +276,3 @@ A DFS (Depth-First Search) em grafos é um algoritmo de busca em profundidade qu
         return 0;
     }
 ```
-
-
