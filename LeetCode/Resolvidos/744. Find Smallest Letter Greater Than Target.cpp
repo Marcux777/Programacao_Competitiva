@@ -2,27 +2,32 @@
 #include <vector>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    char nextGreatestLetter(vector<char>& letters, char target) {
+    char nextGreatestLetter(vector<char> &letters, char target)
+    {
         int n = letters.size();
         int l = 0, r = n - 1;
-        
+
         // Busca binária para encontrar a posição do caractere target ou da próxima letra maior do que target
-        while (l <= r) {
+        while (l <= r)
+        {
             int mid = l + (r - l) / 2;
-            if (letters[mid] > target) {
+            if (letters[mid] > target)
+            {
                 r = mid - 1;
-            } else {
+            }
+            else
+            {
                 l = mid + 1;
             }
         }
-        
+
         // Retorna o caractere na posição encontrada, ou o primeiro caractere do vetor caso a próxima letra seja maior do que a última letra do vetor
         return letters[l % n];
     }
 };
-
 
 int main()
 {

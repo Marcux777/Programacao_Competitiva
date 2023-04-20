@@ -18,7 +18,7 @@ public:
 
 int main()
 {
-    vector<int> v = {1,1,2};
+    vector<int> v = {1, 1, 2};
     Solution x;
     cout << x.removeDuplicates(v) << endl;
 }

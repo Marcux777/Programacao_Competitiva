@@ -2,18 +2,20 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    int strStr(string haystack, string needle) {
+    int strStr(string haystack, string needle)
+    {
         return haystack.find(needle);
     }
 };
-//Teste:
-int main(){
+// Teste:
+int main()
+{
     Solution x;
     string frase, procurada;
     frase = "leetcode";
     procurada = "leeto";
     cout << x.strStr(frase, procurada) << endl;
-
 }
