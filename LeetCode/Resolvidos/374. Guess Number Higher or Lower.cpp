@@ -1,6 +1,8 @@
-class Solution {
+class Solution
+{
 public:
-    int guessNumber(int n) {
+    int guessNumber(int n)
+    {
         int lo = 1, hi = n;
         int mid;
         while (lo < hi)
@@ -15,9 +17,12 @@ public:
                 hi = mid;
             }
         }
-        if(guess(lo) == 0){
+        if (guess(lo) == 0)
+        {
             return lo;
-        }else{
+        }
+        else
+        {
             return hi;
         }
     }

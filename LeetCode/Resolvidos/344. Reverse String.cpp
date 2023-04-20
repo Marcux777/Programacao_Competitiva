@@ -4,18 +4,22 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    void reverseString(vector<char>& s) {
+    void reverseString(vector<char> &s)
+    {
         return reverse(s.begin(), s.end());
     }
 };
 
-int main() {
+int main()
+{
     Solution solucao;
     vector<char> s = {'h', 'e', 'l', 'l', 'o'};
     solucao.reverseString(s);
-    for (auto i : s) {
+    for (auto i : s)
+    {
         cout << i;
     }
     cout << endl;

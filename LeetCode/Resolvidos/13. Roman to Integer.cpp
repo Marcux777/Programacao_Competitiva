@@ -16,10 +16,14 @@ public:
         mp['D'] = 500;
         mp['M'] = 1000;
         int soma = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (i > 0 && mp[s[i]] > mp[s[i-1]]) {
-                soma += mp[s[i]] - 2 * mp[s[i-1]];
-            } else {
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (i > 0 && mp[s[i]] > mp[s[i - 1]])
+            {
+                soma += mp[s[i]] - 2 * mp[s[i - 1]];
+            }
+            else
+            {
                 soma += mp[s[i]];
             }
         }

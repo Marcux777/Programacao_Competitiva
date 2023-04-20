@@ -4,8 +4,8 @@
 
 using namespace std;
 
-/*A função remove encontra o primeiro elemento que é igual ao valor especificado e o move para o final do vector. 
-Em seguida, a função erase remove todos os elementos do final do vector que correspondem ao valor especificado. 
+/*A função remove encontra o primeiro elemento que é igual ao valor especificado e o move para o final do vector.
+Em seguida, a função erase remove todos os elementos do final do vector que correspondem ao valor especificado.
 Esse processo é repetido até que não haja mais elementos iguais ao valor especificado.*/
 
 class Solution

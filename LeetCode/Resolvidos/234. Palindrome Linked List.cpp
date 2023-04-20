@@ -3,26 +3,34 @@
 using namespace std;
 
 // Definição da classe ListNode
-struct ListNode {
+struct ListNode
+{
     int val;
-    ListNode* next;
+    ListNode *next;
     ListNode(int x) : val(x), next(nullptr) {}
 };
 
-class Solution {
+class Solution
+{
 public:
-    bool isPalindrome(ListNode* head) {
+    bool isPalindrome(ListNode *head)
+    {
         stack<int> st;
-        ListNode* Percorre = head;
-        while(Percorre){
+        ListNode *Percorre = head;
+        while (Percorre)
+        {
             st.push(Percorre->val);
             Percorre = Percorre->next;
         }
         Percorre = head;
-        while(!st.empty()){
-            if(Percorre->val != st.top()){
+        while (!st.empty())
+        {
+            if (Percorre->val != st.top())
+            {
                 return false;
-            }else{
+            }
+            else
+            {
                 Percorre = Percorre->next;
                 st.pop();
             }
@@ -31,14 +39,18 @@ public:
     }
 };
 
-int main() {
-    ListNode* head = new ListNode(1);
+int main()
+{
+    ListNode *head = new ListNode(1);
     head->next = new ListNode(2);
 
     Solution sol;
-    if (sol.isPalindrome(head)) {
+    if (sol.isPalindrome(head))
+    {
         cout << "A lista eh um palindromo" << endl;
-    } else {
+    }
+    else
+    {
         cout << "A lista nao eh um palindromo" << endl;
     }
 
