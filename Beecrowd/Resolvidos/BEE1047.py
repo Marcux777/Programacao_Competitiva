@@ -11,8 +11,8 @@ if a == b == c == d:
 elif min1 < min2:
     dif = min2 - min1
     h = dif/60
-    mints = (dif%60)
-    print ('O JOGO DUROU {} HORA(S) E {} MINUTO(S)'.format(floor(h),mints))
+    mints = (dif % 60)
+    print('O JOGO DUROU {} HORA(S) E {} MINUTO(S)'.format(floor(h), mints))
 elif a == c:
     dif = b - d
-    h = 
+    h =

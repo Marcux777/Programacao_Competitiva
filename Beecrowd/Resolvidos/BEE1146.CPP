@@ -1,17 +1,23 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
     int x;
     cin >> x;
-    while (x!=0){
-        for(int i = 1; i <= x; i++){
+    while (x != 0)
+    {
+        for (int i = 1; i <= x; i++)
+        {
             cout << i;
-            if (x != i){
+            if (x != i)
+            {
                 cout << " ";
-            } else {
+            }
+            else
+            {
                 cout << endl;
             }
         }
-        cin  >> x;
+        cin >> x;
     }
 }

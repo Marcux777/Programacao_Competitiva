@@ -9,29 +9,46 @@ struct Pessoa
     int custo;
 };
 
-int regiao(char a){
-    if(a == 'L'){
+int regiao(char a)
+{
+    if (a == 'L')
+    {
         return 1;
-    }else{
-        if(a == 'N'){
+    }
+    else
+    {
+        if (a == 'N')
+        {
             return 2;
-        }else{
-            if(a == 'O'){
+        }
+        else
+        {
+            if (a == 'O')
+            {
                 return 3;
-            }else{
+            }
+            else
+            {
                 return 4;
             }
         }
     }
 }
 
-bool comp(Pessoa a, Pessoa b){
-    if(a.custo != b.custo){
+bool comp(Pessoa a, Pessoa b)
+{
+    if (a.custo != b.custo)
+    {
         return a.custo < b.custo;
-    }else{
-        if(a.local != b.local){
+    }
+    else
+    {
+        if (a.local != b.local)
+        {
             return regiao(a.local) < regiao(b.local);
-        }else{
+        }
+        else
+        {
             return a.nome < b.nome;
         }
     }
@@ -41,7 +58,7 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     int t;
     while (cin >> t)
     {
@@ -53,7 +70,8 @@ int main()
             v.push_back(a);
         }
         sort(v.begin(), v.end(), comp);
-        for(auto it : v){
+        for (auto it : v)
+        {
             cout << it.nome << endl;
         }
     }

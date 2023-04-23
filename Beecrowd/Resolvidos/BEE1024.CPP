@@ -1,13 +1,13 @@
-//CODIGO CORRIGIDO
+// CODIGO CORRIGIDO
 #include <iostream>
 #include <algorithm>
-#include<stdio.h>
+#include <stdio.h>
 
 using namespace std;
 int main()
 {
   int cteste;
-  //freopen("saida.txt", "w", stdout);
+  // freopen("saida.txt", "w", stdout);
   cin >> cteste;
   cin.ignore();
   string frase, crip1, crip2;
@@ -24,7 +24,9 @@ int main()
       if ((isalpha(frase[j])))
       {
         crip1 += letra + 3;
-      }else{
+      }
+      else
+      {
         crip1 += frase[j];
       }
     }

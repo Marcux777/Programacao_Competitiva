@@ -12,11 +12,14 @@ int survivor(int n, int k)
     return Tnk;
 }
 
-int main(){
+int main()
+{
     int n;
-    while(cin >> n && n){
+    while (cin >> n && n)
+    {
         int aux = 1;
-        while(survivor(n, aux) + 2 != 13){
+        while (survivor(n, aux) + 2 != 13)
+        {
             aux++;
         }
         cout << aux << endl;

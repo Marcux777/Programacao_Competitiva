@@ -1,35 +1,46 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int main(){
+int main()
+{
     string date, dia;
-    long int n, p, v,c,d, aux;
-    while(cin >> p >> n){
+    long int n, p, v, c, d, aux;
+    while (cin >> p >> n)
+    {
         aux = 0;
         c = 0;
         d = 0;
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++)
+        {
             cin >> date;
-            for(int j = 0; j < p; j++){
+            for (int j = 0; j < p; j++)
+            {
                 cin >> v;
-                if(v == 1){
+                if (v == 1)
+                {
                     c++;
                 }
             }
-            if(c==p){
-                if(aux == 0){
+            if (c == p)
+            {
+                if (aux == 0)
+                {
                     dia = date;
                     aux = 1;
                 }
             }
-            else{
+            else
+            {
                 d++;
             }
-            c=0;
+            c = 0;
         }
-        if (d == n){
+        if (d == n)
+        {
             cout << "Pizza antes de FdI" << endl;
-        } else {
+        }
+        else
+        {
             cout << dia << endl;
         }
     }

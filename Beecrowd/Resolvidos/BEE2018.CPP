@@ -41,7 +41,7 @@ bool comp(Pais a, Pais b)
 int main()
 {
     string fds;
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     vector<Pais> v;
     map<string, Pais> mp;
     map<string, Pais>::iterator it;

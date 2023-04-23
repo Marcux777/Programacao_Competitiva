@@ -1,28 +1,33 @@
 #include <iostream>
 using namespace std;
-int main(){
-    int tp, a,b,c,d,e, cont = 0;
+int main()
+{
+    int tp, a, b, c, d, e, cont = 0;
     cin >> tp;
     cin >> a;
-    if(a == tp){
+    if (a == tp)
+    {
         cont++;
     }
     cin >> b;
-    if(b == tp){
+    if (b == tp)
+    {
         cont++;
     }
     cin >> c;
-    if(c == tp){
+    if (c == tp)
+    {
         cont++;
     }
     cin >> d;
-    if(d == tp){
+    if (d == tp)
+    {
         cont++;
     }
     cin >> e;
-    if(e == tp){
+    if (e == tp)
+    {
         cont++;
     }
     cout << cont << endl;
-
 }

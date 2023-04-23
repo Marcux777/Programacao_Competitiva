@@ -1,13 +1,17 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-int main(){
-   int t,min,max, c;
-   while(cin>> t >> min >> max){
+int main()
+{
+    int t, min, max, c;
+    while (cin >> t >> min >> max)
+    {
         c = 0;
-        while(t--){
+        while (t--)
+        {
             int a;
-            cin>>a;
-            if(a>=min&&a<=max){
+            cin >> a;
+            if (a >= min && a <= max)
+            {
                 c++;
             }
         }

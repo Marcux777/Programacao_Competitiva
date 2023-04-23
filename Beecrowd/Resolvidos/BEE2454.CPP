@@ -1,16 +1,23 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
 	char s;
 	int a, b;
 	cin >> a >> b;
-	if(a == 1){
-		if(b == 1){
+	if (a == 1)
+	{
+		if (b == 1)
+		{
 			s = 'A';
-		} else if (b == 0){
+		}
+		else if (b == 0)
+		{
 			s = 'B';
 		}
-	} else {
+	}
+	else
+	{
 		s = 'C';
 	}
 	cout << s << endl;

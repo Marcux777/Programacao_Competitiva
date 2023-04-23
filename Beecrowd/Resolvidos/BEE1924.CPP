@@ -1,11 +1,13 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int main(){
+int main()
+{
     int n;
     string s;
     cin >> n;
-    while(n--){
+    while (n--)
+    {
         cin >> s;
     }
 

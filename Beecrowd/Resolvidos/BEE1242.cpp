@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     string rnaa;
     while (cin >> rnaa)
     {

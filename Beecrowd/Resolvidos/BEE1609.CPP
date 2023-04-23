@@ -2,20 +2,22 @@
 
 using namespace std;
 
-int main(){
+int main()
+{
 	ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+	cin.tie(NULL);
 	int t, a, n;
-	set <int> st;
+	set<int> st;
 	cin >> t;
-	while(t--){
+	while (t--)
+	{
 		cin >> a;
-		while(a--){
+		while (a--)
+		{
 			cin >> n;
 			st.insert(n);
 		}
 		cout << st.size() << endl;
 		st.clear();
 	}
-	
 }

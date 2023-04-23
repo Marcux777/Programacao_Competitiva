@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
     int t;
     cin >> t;
-    cout << t*4 << endl;
+    cout << t * 4 << endl;
 }

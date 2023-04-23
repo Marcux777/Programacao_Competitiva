@@ -9,7 +9,7 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     int n;
     while (cin >> n && n)
     {
@@ -31,8 +31,9 @@ int main()
         }
         for (auto it : mp)
         {
-            if(it.second % 2){
-                cout << it.first<< endl;
+            if (it.second % 2)
+            {
+                cout << it.first << endl;
             }
         }
     }

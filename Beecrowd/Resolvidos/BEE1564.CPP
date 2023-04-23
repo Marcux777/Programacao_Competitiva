@@ -1,11 +1,16 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
     int n;
-    while(cin >> n){
-        if (n == 0){
+    while (cin >> n)
+    {
+        if (n == 0)
+        {
             cout << "vai ter copa!" << endl;
-        }if (n >= 1){
+        }
+        if (n >= 1)
+        {
             cout << "vai ter duas!" << endl;
         }
     }

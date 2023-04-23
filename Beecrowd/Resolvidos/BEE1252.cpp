@@ -34,7 +34,7 @@ bool customSort(int a, int b)
 
 int main()
 {
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     while (cin >> n >> m && n && m)
     {
         vector<int> nums(n);

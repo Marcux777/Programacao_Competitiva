@@ -9,7 +9,7 @@ int main()
     int n, m;
     while (cin >> n && n)
     {
-        //freopen("saida.txt", "w", stdout);
+        // freopen("saida.txt", "w", stdout);
         map<string, string> alunos;
         map<string, string> presentes;
         string nome, assinatura;
@@ -17,14 +17,14 @@ int main()
         while (n--)
         {
             cin >> nome >> assinatura;
-            //cin.ignore();
+            // cin.ignore();
             alunos[nome] = assinatura;
         }
         cin >> m;
         while (m--)
         {
             cin >> nome >> assinatura;
-            //cin.ignore();
+            // cin.ignore();
             presentes[nome] = assinatura;
         }
         int cont = 0, erros = 0;

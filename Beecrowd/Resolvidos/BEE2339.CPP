@@ -1,12 +1,15 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
 	int C, P, F;
 	cin >> C >> P >> F;
-	if(P >= C*F){
+	if (P >= C * F)
+	{
 		cout << "S" << endl;
 	}
-	else {
+	else
+	{
 		cout << "N" << endl;
 	}
 }

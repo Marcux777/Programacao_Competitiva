@@ -1,10 +1,12 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
     long int t, r1, r2;
     cin >> t;
-    for(int i = 0; i < t; i++){
+    for (int i = 0; i < t; i++)
+    {
         cin >> r1 >> r2;
-        cout << r1+r2 << endl;
+        cout << r1 + r2 << endl;
     }
 }

@@ -93,8 +93,10 @@ string decodeMorse(string morseCode)
     {
         result += morseMap[i];
     }
-    for(int i = 0; i < result.size(); i++){
-        if(result[i] == NULL){
+    for (int i = 0; i < result.size(); i++)
+    {
+        if (result[i] == NULL)
+        {
             result[i] = ' ';
         }
     }
@@ -104,7 +106,7 @@ string decodeMorse(string morseCode)
 int main()
 {
     int t;
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     cin >> t;
     cin.ignore();
     while (t--)

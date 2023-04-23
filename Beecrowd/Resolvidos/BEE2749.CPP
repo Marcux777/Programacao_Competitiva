@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
     cout << "---------------------------------------" << endl;
     cout << "|x = 35                               |" << endl;
     cout << "|                                     |" << endl;

@@ -2,22 +2,33 @@
 
 using namespace std;
 
-int ordem(pair<string, char> a){
-    if(a.second == 'P'){
+int ordem(pair<string, char> a)
+{
+    if (a.second == 'P')
+    {
         return 1;
-    }else{
-        if(a.second == 'M'){
+    }
+    else
+    {
+        if (a.second == 'M')
+        {
             return 2;
-        }else{
+        }
+        else
+        {
             return 3;
         }
     }
 }
 
-bool comp(pair<string, char> a, pair<string, char> b){
-    if(a.second == b.second){
+bool comp(pair<string, char> a, pair<string, char> b)
+{
+    if (a.second == b.second)
+    {
         return a.first < b.first;
-    }else{
+    }
+    else
+    {
         return ordem(a) < ordem(b);
     }
 }
@@ -27,7 +38,7 @@ int main()
     int t;
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     string nome, cor;
     char a;
     vector<pair<string, char>> branco, vermelho;
@@ -51,10 +62,12 @@ int main()
         sort(branco.begin(), branco.end(), comp);
         sort(vermelho.begin(), vermelho.end(), comp);
 
-        for(auto it = branco.begin(); it != branco.end(); it++){
+        for (auto it = branco.begin(); it != branco.end(); it++)
+        {
             cout << "branco " << it->second << " " << it->first << endl;
         }
-        for(auto it = vermelho.begin(); it != vermelho.end(); it++){
+        for (auto it = vermelho.begin(); it != vermelho.end(); it++)
+        {
             cout << "vermelho " << it->second << " " << it->first << endl;
         }
 

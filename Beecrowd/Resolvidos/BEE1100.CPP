@@ -41,9 +41,12 @@ int main()
   string a, b;
   while (cin >> a >> b)
   {
-    if(a == b){
+    if (a == b)
+    {
       cout << "To get from " << a << " to " << b << " takes " << 0 << " knight moves." << endl;
-    }else{
+    }
+    else
+    {
       int x1 = a[0] - 'a' + 1;
       int y1 = a[1] - '0';
       int x2 = b[0] - 'a' + 1;

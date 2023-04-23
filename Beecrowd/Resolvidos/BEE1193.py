@@ -5,10 +5,10 @@ n = int(input())
 for i in range(1, n+1):
     # Obtenha o valor e o formato de entrada
     x, y = input().split()
-    
+
     # Imprima o número de caso de teste
     print("Case {}:".format(i))
-    
+
     # Verifique o formato de entrada
     if y == "bin":
         decimal = int(x, 2)

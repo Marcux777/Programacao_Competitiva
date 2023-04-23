@@ -2,39 +2,66 @@
 using namespace std;
 int IPR(int a, int b, int c, int d, int e)
 {
-	if(a == 1){
-		if(d == 0){
-			if(e == 0){
-				if((b+c)%2 == 0){
+	if (a == 1)
+	{
+		if (d == 0)
+		{
+			if (e == 0)
+			{
+				if ((b + c) % 2 == 0)
+				{
 					return 1;
-				} else {
+				}
+				else
+				{
 					return 2;
 				}
-			} else {
+			}
+			else
+			{
 				return 1;
 			}
-		} else {
-			if(e == 0){
+		}
+		else
+		{
+			if (e == 0)
+			{
 				return 1;
-			} else {
+			}
+			else
+			{
 				return 2;
 			}
 		}
-	} else {
-		if(d == 0){
-			if(e == 0){
-				if((b+c)%2 == 1){
+	}
+	else
+	{
+		if (d == 0)
+		{
+			if (e == 0)
+			{
+				if ((b + c) % 2 == 1)
+				{
 					return 1;
-				} else {
+				}
+				else
+				{
 					return 2;
 				}
-			} else {
+			}
+			else
+			{
 				return 1;
 			}
-		} else {
-			if(e == 0){
+		}
+		else
+		{
+			if (e == 0)
+			{
 				return 1;
-			} else {
+			}
+			else
+			{
 				return 2;
 			}
 		}

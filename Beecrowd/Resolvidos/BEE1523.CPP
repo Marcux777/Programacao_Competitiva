@@ -11,13 +11,13 @@ int main()
     int f;
     int flag;
     int pos;
-   
-    while(cin >> n >> k && n && k)
+
+    while (cin >> n >> k && n && k)
     {
         flag = 0;
         pos = -1;
 
-        for (int i = 0 ; i < n ; i++)
+        for (int i = 0; i < n; i++)
         {
             cin >> c >> f;
             if (!flag)
@@ -32,18 +32,19 @@ int main()
                     int ultimo = s[pos];
                     if (c >= ultimo)
                     {
-                        while(pos >= 0 && c >= ultimo)
+                        while (pos >= 0 && c >= ultimo)
                         {
                             pos--;
-                            if (pos < 0) break;
+                            if (pos < 0)
+                                break;
                             ultimo = s[pos];
                         }
-                    }                   
+                    }
                     if (pos >= k)
                         flag = 1;
                     else
                     {
-                        if (pos >= 0  && f > s[pos])
+                        if (pos >= 0 && f > s[pos])
                             flag = 1;
                         else
                         {
@@ -54,7 +55,9 @@ int main()
                 }
             }
         }
-        if (!flag) cout << "Sim\n";
-        else cout << "Nao\n";       
+        if (!flag)
+            cout << "Sim\n";
+        else
+            cout << "Nao\n";
     }
 }

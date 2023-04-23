@@ -1,15 +1,16 @@
 #include <iostream>
- 
+
 using namespace std;
- 
-int main() {
+
+int main()
+{
 	long long int a, b, c, d;
 	char x;
 	cin >> a >> b >> x >> c;
-	if(x=='+')
+	if (x == '+')
 	{
-		d=b+c;
-		if(d>a)
+		d = b + c;
+		if (d > a)
 		{
 			cout << "OVERFLOW" << endl;
 		}
@@ -20,8 +21,8 @@ int main() {
 	}
 	else
 	{
-		d=b*c;
-		if(d>a)
+		d = b * c;
+		if (d > a)
 		{
 			cout << "OVERFLOW" << endl;
 		}
@@ -30,5 +31,4 @@ int main() {
 			cout << "OK" << endl;
 		}
 	}
-		
 }
