@@ -25,8 +25,8 @@ int main()
     int n;
     while (cin >> n && n)
     {
-        //freopen("saida.txt", "w", stdout);
-        // Criar vetor de pessoas
+        // freopen("saida.txt", "w", stdout);
+        //  Criar vetor de pessoas
         vector<int> pessoas(n);
         for (int i = 0; i < n; i++)
         {

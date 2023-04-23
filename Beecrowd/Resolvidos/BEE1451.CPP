@@ -6,9 +6,9 @@ using namespace std;
 
 int main()
 {
-        
+
     string line;
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     while (getline(cin, line))
     {
         vector<char> text;

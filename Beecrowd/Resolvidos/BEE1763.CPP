@@ -3,160 +3,160 @@ using namespace std;
 int main()
 {
 	string x;
-	while(cin>>x)
+	while (cin >> x)
 	{
-		if(x=="brasil")
+		if (x == "brasil")
 		{
-			cout<<"Feliz Natal!\n";
+			cout << "Feliz Natal!\n";
 		}
 		else
 		{
-			if(x=="alemanha")
+			if (x == "alemanha")
 			{
-				cout<<"Frohliche Weihnachten!\n";
+				cout << "Frohliche Weihnachten!\n";
 			}
 			else
 			{
-				if(x=="austria")
+				if (x == "austria")
 				{
-					cout<<"Frohe Weihnacht!\n";
+					cout << "Frohe Weihnacht!\n";
 				}
 				else
 				{
-					if(x=="coreia")
+					if (x == "coreia")
 					{
-						cout<<"Chuk Sung Tan!\n";
+						cout << "Chuk Sung Tan!\n";
 					}
 					else
 					{
-						if(x=="espanha")
+						if (x == "espanha")
 						{
-							cout<<"Feliz Navidad!\n";
+							cout << "Feliz Navidad!\n";
 						}
 						else
 						{
-							if(x=="grecia")
+							if (x == "grecia")
 							{
-								cout<<"Kala Christougena!\n";
+								cout << "Kala Christougena!\n";
 							}
 							else
 							{
-								if(x=="estados-unidos")
+								if (x == "estados-unidos")
 								{
-									cout<<"Merry Christmas!\n";
+									cout << "Merry Christmas!\n";
 								}
 								else
 								{
-									if(x=="inglaterra")
+									if (x == "inglaterra")
 									{
-										cout<<"Merry Christmas!\n";
+										cout << "Merry Christmas!\n";
 									}
 									else
 									{
-										if(x=="australia")
+										if (x == "australia")
 										{
-											cout<<"Merry Christmas!\n";
+											cout << "Merry Christmas!\n";
 										}
 										else
 										{
-											if(x=="portugal")
+											if (x == "portugal")
 											{
-												cout<<"Feliz Natal!\n";
+												cout << "Feliz Natal!\n";
 											}
 											else
 											{
-												if(x=="suecia")
+												if (x == "suecia")
 												{
-													cout<<"God Jul!\n";
+													cout << "God Jul!\n";
 												}
 												else
 												{
-													if(x=="turquia")
+													if (x == "turquia")
 													{
-														cout<<"Mutlu Noeller\n";
+														cout << "Mutlu Noeller\n";
 													}
 													else
 													{
-														if(x=="argentina")
+														if (x == "argentina")
 														{
-															cout<<"Feliz Navidad!\n";
+															cout << "Feliz Navidad!\n";
 														}
 														else
 														{
-															if(x=="chile")
+															if (x == "chile")
 															{
-																cout<<"Feliz Navidad!\n";
+																cout << "Feliz Navidad!\n";
 															}
 															else
 															{
-																if(x=="mexico")
+																if (x == "mexico")
 																{
-																	cout<<"Feliz Navidad!\n";
+																	cout << "Feliz Navidad!\n";
 																}
 																else
 																{
-																	if(x=="antardida")
+																	if (x == "antardida")
 																	{
-																		cout<<"Merry Christmas!\n";
+																		cout << "Merry Christmas!\n";
 																	}
 																	else
 																	{
-																		if(x=="canada")
+																		if (x == "canada")
 																		{
-																			cout<<"Merry Christmas!\n";
+																			cout << "Merry Christmas!\n";
 																		}
 																		else
 																		{
-																			if(x=="irlanda")
+																			if (x == "irlanda")
 																			{
-																				cout<<"Nollaig Shona Dhuit!\n";
+																				cout << "Nollaig Shona Dhuit!\n";
 																			}
 																			else
 																			{
-																				if(x=="belgica")
+																				if (x == "belgica")
 																				{
-																					cout<<"Zalig Kerstfeest!\n";
+																					cout << "Zalig Kerstfeest!\n";
 																				}
 																				else
 																				{
-																					if(x=="italia")
+																					if (x == "italia")
 																					{
-																						cout<<"Buon Natale!\n";
+																						cout << "Buon Natale!\n";
 																					}
 																					else
 																					{
-																						if(x=="libia")
+																						if (x == "libia")
 																						{
-																							cout<<"Buon Natale!\n";
+																							cout << "Buon Natale!\n";
 																						}
 																						else
 																						{
-																							if(x=="siria")
+																							if (x == "siria")
 																							{
-																								cout<<"Milad Mubarak!\n";
+																								cout << "Milad Mubarak!\n";
 																							}
 																							else
 																							{
-																								if(x=="marrocos")
+																								if (x == "marrocos")
 																								{
-																									cout<<"Milad Mubarak!\n";
+																									cout << "Milad Mubarak!\n";
 																								}
 																								else
 																								{
-																									if(x=="japao")
+																									if (x == "japao")
 																									{
-																										cout<<"Merii Kurisumasu!\n";
+																										cout << "Merii Kurisumasu!\n";
 																									}
 																									else
 																									{
-																										cout<<"--- NOT FOUND ---\n";
+																										cout << "--- NOT FOUND ---\n";
 																									}
 																								}
 																							}
 																						}
 																					}
 																				}
-																			}																			}
+																			}
 																		}
 																	}
 																}
@@ -175,3 +175,4 @@ int main()
 			}
 		}
 	}
+}

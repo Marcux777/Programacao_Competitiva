@@ -1,15 +1,20 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int main(){
-    int c,n;
+int main()
+{
+    int c, n;
     string nome;
     cin >> c;
-    for(int i = 0; i < c; i++){
+    for (int i = 0; i < c; i++)
+    {
         cin >> nome >> n;
-        if (nome == "Thor"){
+        if (nome == "Thor")
+        {
             cout << "Y" << endl;
-        } else {
+        }
+        else
+        {
             cout << "N" << endl;
         }
     }

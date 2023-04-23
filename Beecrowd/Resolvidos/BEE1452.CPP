@@ -14,8 +14,8 @@ map<string, set<int>> apps; // mapa de aplicativos para o conjunto de servidores
 
 int main()
 {
-    //freopen("saida.txt", "w", stdout);
-    while (scanf("%d%d", &N, &M)&& N && M)
+    // freopen("saida.txt", "w", stdout);
+    while (scanf("%d%d", &N, &M) && N && M)
     {
         apps.clear();
 

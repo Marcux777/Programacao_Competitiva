@@ -1,32 +1,40 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-int main(){
+int main()
+{
     int card;
-    queue <int> remanecentes;
-    queue <int> descartadas;
+    queue<int> remanecentes;
+    queue<int> descartadas;
     cin >> card;
-    while(card != 0){
-        while(remanecentes.size()){
+    while (card != 0)
+    {
+        while (remanecentes.size())
+        {
             remanecentes.pop();
         }
-        while(descartadas.size()){
+        while (descartadas.size())
+        {
             descartadas.pop();
         }
-        for(int i = 1; i <= card; i++){
+        for (int i = 1; i <= card; i++)
+        {
             remanecentes.push(i);
         }
-        while(remanecentes.size() > 1){
+        while (remanecentes.size() > 1)
+        {
             descartadas.push(remanecentes.front());
             remanecentes.pop();
             remanecentes.push(remanecentes.front());
             remanecentes.pop();
         }
         cout << "Discarded cards: ";
-        while(descartadas.size()){
+        while (descartadas.size())
+        {
             cout << descartadas.front();
             descartadas.pop();
-            if(descartadas.size()>=1){
+            if (descartadas.size() >= 1)
+            {
                 cout << ", ";
             }
         }

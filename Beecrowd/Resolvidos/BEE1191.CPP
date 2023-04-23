@@ -32,7 +32,6 @@ public:
     }
 };
 
-
 Node *buildTreeHelper(const string &pre, const string &in)
 {
     if (pre.empty())
@@ -51,7 +50,7 @@ Node *buildTreeHelper(const string &pre, const string &in)
     return root;
 }
 
-Node*buildTree(const string &pre, const string &in)
+Node *buildTree(const string &pre, const string &in)
 {
     return buildTreeHelper(pre, in);
 }
@@ -71,7 +70,7 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     string pre, in;
     while (cin >> pre >> in)
     {

@@ -2,25 +2,28 @@
 
 using namespace std;
 
-int main(){
+int main()
+{
     int n, m;
     string s, trad, nome;
-    map <string, string> mp;
+    map<string, string> mp;
     cin >> n;
-    while(n--){
+    while (n--)
+    {
         cin >> s;
         cin.ignore();
         getline(cin, trad);
         mp[s] = trad;
     }
     cin >> m;
-    while(m--){
+    while (m--)
+    {
         cin.ignore();
         getline(cin, nome);
         cin >> s;
 
         cout << nome << endl;
-        cout << mp.find(s)->second << endl << endl;
-
+        cout << mp.find(s)->second << endl
+             << endl;
     }
 }

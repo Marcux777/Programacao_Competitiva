@@ -7,7 +7,7 @@ int a[26]; // a[i] guarda a quantidade de vezes que a letra 'a'+i aparece na fra
 int main()
 {
 	int n;
-	//freopen("saida.txt", "w", stdout);
+	// freopen("saida.txt", "w", stdout);
 	cin >> n;
 	getline(cin, s); // para consumir o '\n' restante
 	while (n--)

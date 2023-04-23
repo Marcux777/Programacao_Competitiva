@@ -2,11 +2,14 @@
 
 using namespace std;
 
-int main(){
+int main()
+{
 	int n;
-	map <int, string> mp;
-	while(cin >> n){
-		for(int i = 0; i < n; i++){
+	map<int, string> mp;
+	while (cin >> n)
+	{
+		for (int i = 0; i < n; i++)
+		{
 			int pre;
 			string aux;
 			cin >> aux;
@@ -14,14 +17,18 @@ int main(){
 			mp[pre] = aux;
 		}
 		int i = 1;
-		for(auto it = mp.begin(); it != mp.end(); it++, i++){
-			if(i < (int)mp.size()){
+		for (auto it = mp.begin(); it != mp.end(); it++, i++)
+		{
+			if (i < (int)mp.size())
+			{
 				cout << it->second << " ";
-			}else{
+			}
+			else
+			{
 				cout << it->second << endl;
 			}
 		}
-		//cout << endl;
+		// cout << endl;
 		mp.clear();
 	}
 }

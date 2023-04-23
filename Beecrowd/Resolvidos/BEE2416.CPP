@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
 	int c, n;
 	cin >> c >> n;
-	cout << c%n << endl;
+	cout << c % n << endl;
 }

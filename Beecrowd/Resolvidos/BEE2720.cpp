@@ -20,13 +20,14 @@ struct Presente
     }
 };
 
-bool compare(Presente a, Presente b){
+bool compare(Presente a, Presente b)
+{
     return a.id < b.id;
 }
 
 int main()
 {
-    //freopen("saida.txt","w",stdout);
+    // freopen("saida.txt","w",stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int t;
@@ -50,13 +51,14 @@ int main()
         // Ordena os presentes
         sort(presentes.begin(), presentes.end());
 
-        vector <Presente> aux;
+        vector<Presente> aux;
         for (int i = 0; i < k; i++)
         {
             aux.push_back(presentes[i]);
         }
         sort(aux.begin(), aux.end(), compare);
-        for(int i = 0; i < k; i++){
+        for (int i = 0; i < k; i++)
+        {
             cout << aux[i].id;
             if (i < k - 1)
             {

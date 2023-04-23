@@ -252,7 +252,7 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     // freopen("entrada.txt", "r", stdin);
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     string operacao;
     int num;
     BTree<int> Arv;
@@ -325,6 +325,6 @@ int main()
                 }
             }
         }
-        cin.sync(); //Limpar o buffer
+        cin.sync(); // Limpar o buffer
     }
 }

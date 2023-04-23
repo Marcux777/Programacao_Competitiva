@@ -4,8 +4,8 @@ using namespace std;
 
 int main()
 {
-    //Problema de Simulação
-    //freopen("saida.txt", "w", stdout);
+    // Problema de Simulação
+    // freopen("saida.txt", "w", stdout);
     int n, m;
     cin >> n >> m;
     vector<int> tempo(n);

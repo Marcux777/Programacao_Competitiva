@@ -1,12 +1,17 @@
 #include <iostream>
 using namespace std;
-int main(){
-    int x,y;
+int main()
+{
+    int x, y;
     cin >> x >> y;
-    for(int i = 1; i <= y; i++){
-        if (i%x != 0){
+    for (int i = 1; i <= y; i++)
+    {
+        if (i % x != 0)
+        {
             cout << i << " ";
-        } else {
+        }
+        else
+        {
             cout << i << "\n";
         }
     }

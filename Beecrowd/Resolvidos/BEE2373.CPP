@@ -2,12 +2,15 @@
 
 using namespace std;
 
-int main(){
-	int n,soma = 0,x,y;
+int main()
+{
+	int n, soma = 0, x, y;
 	cin >> n;
-	for(int i = 0; i < n; i++){
+	for (int i = 0; i < n; i++)
+	{
 		cin >> x >> y;
-		if(x > y){
+		if (x > y)
+		{
 			soma += y;
 		}
 	}

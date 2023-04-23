@@ -16,7 +16,7 @@ Por último, insere-se o próximo avião que esteja se aproximando ao lado leste
 int main()
 {
 
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     queue<string> oeste, norte, sul, leste;
     bool tem_norte = false, tem_sul = false, tem_oeste, tem_leste;
     string p;
@@ -83,7 +83,7 @@ int main()
     }
     while (!oeste.empty() || !leste.empty() || !sul.empty() || !norte.empty())
     {
-        
+
         if (!oeste.empty())
         {
             cout << oeste.front();

@@ -205,7 +205,7 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     bool PrimeiraLinha = true;
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     string expression;
     while (getline(cin, expression))
     {

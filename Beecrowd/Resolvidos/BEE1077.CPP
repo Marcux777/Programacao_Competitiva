@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
- 
+
 int prec(char c)
 {
     if (c == '^')
@@ -15,34 +15,38 @@ int prec(char c)
 
 void infixToPostfix(string s)
 {
- 
+
     stack<char> st;
     string result;
- 
-    for (int i = 0; i < s.length(); i++) {
+
+    for (int i = 0; i < s.length(); i++)
+    {
         char c = s[i];
- 
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-            || (c >= '0' && c <= '9'))
+
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
             result += c;
 
         else if (c == '(')
             st.push('(');
- 
-        else if (c == ')') {
-            while (st.top() != '(') {
+
+        else if (c == ')')
+        {
+            while (st.top() != '(')
+            {
                 result += st.top();
                 st.pop();
             }
             st.pop();
         }
- 
-        else {
-            while (!st.empty()
-                   && prec(s[i]) <= prec(st.top())) {
+
+        else
+        {
+            while (!st.empty() && prec(s[i]) <= prec(st.top()))
+            {
                 if (c == '^' && st.top() != '^')
                     break;
-                else {
+                else
+                {
                     result += st.top();
                     st.pop();
                 }
@@ -50,24 +54,26 @@ void infixToPostfix(string s)
             st.push(c);
         }
     }
- 
-    while (!st.empty()) {
+
+    while (!st.empty())
+    {
         result += st.top();
         st.pop();
     }
- 
+
     cout << result << endl;
 }
- 
+
 int main()
 {
-	int n;
+    int n;
     string exp;
     cin >> n;
-    while(n--){
-		cin >> exp;
-		infixToPostfix(exp);
-		exp.clear();
-	}
+    while (n--)
+    {
+        cin >> exp;
+        infixToPostfix(exp);
+        exp.clear();
+    }
     return 0;
 }

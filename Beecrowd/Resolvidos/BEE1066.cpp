@@ -2,25 +2,31 @@
 
 using namespace std;
 
-int main(){
+int main()
+{
 	int i, num;
-	int par = 0,impar = 0,positivo = 0,negativo = 0;
-	
-	
-	for (i = 0; i < 5; i++){
+	int par = 0, impar = 0, positivo = 0, negativo = 0;
+
+	for (i = 0; i < 5; i++)
+	{
 		cin >> num;
-		if (num % 2 == 0){
+		if (num % 2 == 0)
+		{
 			par++;
-			
-		} else {
+		}
+		else
+		{
 			impar++;
 		}
-		if(num > 0){
+		if (num > 0)
+		{
 			positivo++;
-		} else{
-			if(num < 0){
+		}
+		else
+		{
+			if (num < 0)
+			{
 				negativo++;
-
 			}
 		}
 	}
@@ -28,6 +34,6 @@ int main(){
 	cout << impar << " valor(es) impar(es)" << endl;
 	cout << positivo << " valor(es) positivo(s)" << endl;
 	cout << negativo << " valor(es) negativo(s)" << endl;
-	
+
 	return 0;
 }

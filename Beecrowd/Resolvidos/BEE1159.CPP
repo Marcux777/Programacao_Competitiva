@@ -1,21 +1,28 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
     int x, soma;
     cin >> x;
-    while(x!=0){
-        if (x%2 == 0){
+    while (x != 0)
+    {
+        if (x % 2 == 0)
+        {
             soma = 0;
-            for(int i = 1; i <= 5; i++){
+            for (int i = 1; i <= 5; i++)
+            {
                 soma += x;
-                x+=2;
+                x += 2;
             }
-        } else {
+        }
+        else
+        {
             x++;
             soma = 0;
-            for(int i = 1; i <= 5; i++){
-                soma+= x;
-                x+=2;
+            for (int i = 1; i <= 5; i++)
+            {
+                soma += x;
+                x += 2;
             }
         }
         cout << soma << endl;
