@@ -2,13 +2,6 @@
 
 Este repositório contém conteúdo relacionado à programação competitiva, desde problemas resolvidos até explicação, como de algoritmos e estruturas de dados.
 
-## Meus Perfis
-
-1. <a href="https://www.beecrowd.com.br/judge/pt/profile/542742" target="_blank" rel="noopener noreferrer">Beecrowd</a> - Plataforma brasileira de treinamento em programação competitiva.
-2. <a href="https://leetcode.com/Marcux777/" target="_blank" rel="noopener noreferrer">LeetCode</a> - Site com desafios de programação e entrevistas.
-3. <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=15" target="_blank" rel="noopener noreferrer">UVa Online Judge</a> - Site com uma ampla variedade de problemas de programação competitiva.
-
-
 ## Sumário
 
 ### Grafos
@@ -276,7 +269,6 @@ A DFS (Depth-First Search) em grafos é um algoritmo de busca em profundidade qu
         return 0;
     }
 ```
-
 ## Topological Sorting
 
 Ordenação Topológica (ou Topological Sorting, em inglês) é um algoritmo utilizado para ordenar os vértices de um grafo acíclico direcionado (DAG - Directed Acyclic Graph) de tal forma que, para cada aresta (u, v), o vértice u aparece antes do vértice v na ordenação. Em outras palavras, a ordenação topológica indica a ordem em que os vértices devem ser visitados para que todas as arestas do grafo sejam percorridas respeitando a direção.
@@ -382,5 +374,6 @@ Exemplo em C++
     }
     //código retirado de: https://www.geeksforgeeks.org/topological-sorting/?ref=gcse
 ```
+
 
 
