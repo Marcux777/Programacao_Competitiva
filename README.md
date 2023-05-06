@@ -276,3 +276,111 @@ A DFS (Depth-First Search) em grafos é um algoritmo de busca em profundidade qu
         return 0;
     }
 ```
+
+## Topological Sorting
+
+Ordenação Topológica (ou Topological Sorting, em inglês) é um algoritmo utilizado para ordenar os vértices de um grafo acíclico direcionado (DAG - Directed Acyclic Graph) de tal forma que, para cada aresta (u, v), o vértice u aparece antes do vértice v na ordenação. Em outras palavras, a ordenação topológica indica a ordem em que os vértices devem ser visitados para que todas as arestas do grafo sejam percorridas respeitando a direção.
+
+A ordenação topológica é frequentemente utilizada em problemas que envolvem dependência entre tarefas, como por exemplo, em compilação de programas ou em planejamento de projetos. O algoritmo utiliza uma abordagem baseada em DFS (Depth-First Search) para percorrer o grafo e gerar a ordenação, considerando que os vértices que não possuem arestas de entrada (isto é, que não possuem dependências) são visitados primeiro. Caso o grafo possua ciclos, a ordenação topológica não é possível de ser gerada, indicando que as dependências não podem ser resolvidas.
+
+Exemplo em C++
+
+```C++
+    #include <bits/stdc++.h>
+    using namespace std;
+
+    // Classe para representar um grafo
+    class Graph {
+        int V;            // Número de vértices
+        list<int>* adj;   // Ponteiro para um array de listas de adjacência
+
+        // Função auxiliar usada por topologicalSort
+        void topologicalSortUtil(int v, bool visited[], stack<int>& Stack);
+
+    public:
+        // Construtor
+        Graph(int V);
+
+        // Função para adicionar uma aresta ao grafo
+        void addEdge(int v, int w);
+
+        // Imprime a ordenação topológica do grafo
+        void topologicalSort();
+    };
+
+    // Implementação dos métodos da classe Graph
+
+    Graph::Graph(int V) {
+        this->V = V;
+        adj = new list<int>[V];
+    }
+
+    void Graph::addEdge(int v, int w) {
+        // Adiciona w na lista de adjacência de v
+        adj[v].push_back(w);
+    }
+
+    void Graph::topologicalSortUtil(int v, bool visited[], stack<int>& Stack) {
+        // Marca o nó atual como visitado
+        visited[v] = true;
+
+        // Visita todos os vértices adjacentes a este vértice
+        list<int>::iterator i;
+        for (i = adj[v].begin(); i != adj[v].end(); ++i) {
+            if (!visited[*i]) {
+                topologicalSortUtil(*i, visited, Stack);
+            }
+        }
+
+        // Empilha o vértice atual na pilha
+        Stack.push(v);
+    }
+
+    void Graph::topologicalSort() {
+        stack<int> Stack;
+
+        // Marca todos os vértices como não visitados
+        bool* visited = new bool[V];
+        for (int i = 0; i < V; i++) {
+            visited[i] = false;
+        }
+
+        // Chama a função auxiliar recursiva para armazenar a ordenação
+        // topológica começando de todos os vértices, um por um
+        for (int i = 0; i < V; i++) {
+            if (visited[i] == false) {
+                topologicalSortUtil(i, visited, Stack);
+            }
+        }
+
+        // Imprime o conteúdo da pilha, que é a ordenação topológica do grafo
+        while (Stack.empty() == false) {
+            cout << Stack.top() << " ";
+            Stack.pop();
+        }
+
+        delete[] visited;
+    }
+
+    // Função principal
+    int main() {
+        // Cria um grafo dado no diagrama acima
+        Graph g(6);
+        g.addEdge(5, 2);
+        g.addEdge(5, 0);
+        g.addEdge(4, 0);
+        g.addEdge(4, 1);
+        g.addEdge(2, 3);
+        g.addEdge(3, 1);
+
+        cout << "A ordenação topológica do grafo é: ";
+
+        // Chama a função para imprimir a ordenação topológica do grafo
+        g.topologicalSort();
+
+        return 0;
+    }
+    //código retirado de: https://www.geeksforgeeks.org/topological-sorting/?ref=gcse
+```
+
+
