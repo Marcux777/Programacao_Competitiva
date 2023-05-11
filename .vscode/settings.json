@@ -61,6 +61,7 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "sstream": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "functional": "cpp"
     }
 }
