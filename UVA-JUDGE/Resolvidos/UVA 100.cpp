@@ -2,12 +2,17 @@
 
 using namespace std;
 
-int cycleLength(int n) {
+int cycleLength(int n)
+{
     int length = 1;
-    while (n > 1) {
-        if (n % 2 == 0) {
+    while (n > 1)
+    {
+        if (n % 2 == 0)
+        {
             n = n / 2;
-        } else {
+        }
+        else
+        {
             n = 3 * n + 1;
         }
         length++;
@@ -15,14 +20,17 @@ int cycleLength(int n) {
     return length;
 }
 
-int main() {
+int main()
+{
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     int i, j;
-    while (cin >> i >> j) {
+    while (cin >> i >> j)
+    {
         int maxCycle = 0;
-        for (int n = min(i, j); n <= max(i, j); n++) {
+        for (int n = min(i, j); n <= max(i, j); n++)
+        {
             int currentCycle = cycleLength(n);
             maxCycle = max(maxCycle, currentCycle);
         }

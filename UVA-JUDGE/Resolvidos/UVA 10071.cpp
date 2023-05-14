@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
-#include<stdio.h>
-
+#include <stdio.h>
 
 using namespace std;
 
 int main()
 {
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     int v, t;
     while (cin >> v >> t)
     {
