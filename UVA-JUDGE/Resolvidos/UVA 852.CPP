@@ -38,7 +38,7 @@ void floodfill(int i, int j)
 
 int main()
 {
-    //freopen("saida.txt", "w", stdout);
+    // freopen("saida.txt", "w", stdout);
     int n;
     cin >> n;
     while (n--)

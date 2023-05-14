@@ -2,22 +2,29 @@
 
 using namespace std;
 
-int main(){
-    //freopen("saida.txt", "w", stdout);
+int main()
+{
+    // freopen("saida.txt", "w", stdout);
     int n;
     cin >> n;
-    while(n--){
+    while (n--)
+    {
         int x, y;
         cin >> x >> y;
-        if(x > y){
+        if (x > y)
+        {
             cout << ">" << endl;
-        }else{
-            if(x < y){
+        }
+        else
+        {
+            if (x < y)
+            {
                 cout << "<" << endl;
-            }else{
+            }
+            else
+            {
                 cout << "=" << endl;
             }
         }
     }
-    
 }
