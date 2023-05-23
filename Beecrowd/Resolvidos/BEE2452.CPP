@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <queue>
 using namespace std;
 int main()
 {
@@ -24,9 +25,9 @@ int main()
         res++;
         pq.pop();
         a[x] = 1;
-        if (a[x - 1] == 0 and x - 1 > 0)
+        if (a[x - 1] == 0 && x - 1 > 0)
             pq.push(x - 1), k++, a[x - 1] = 1;
-        if (a[x + 1] == 0 and x + 1 <= j)
+        if (a[x + 1] == 0 && x + 1 <= j)
             pq.push(x + 1), k++, a[x + 1] = 1;
         if (res == l)
         {
