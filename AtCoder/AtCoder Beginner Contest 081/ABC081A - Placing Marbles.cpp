@@ -4,7 +4,8 @@
 
 using namespace std;
 
-int main(){
+int main()
+{
     string s;
     cin >> s;
     int cont = count(s.begin(), s.end(), '1');
