@@ -39,9 +39,14 @@ public:
 
 int main()
 {
-    Solution solucao;
-    vector<int> nums = {-1, 0, 5};
-    int target = 5;
-    cout << solucao.search(nums, target);
+    Solution solution;
+
+    vector<int> nums = {2, 5, 6, 8, 10, 12, 15};
+    int target = 8;
+
+    int result = solution.search(nums, target);
+
+    cout << "Índice do elemento encontrado: " << result << endl;
+
     return 0;
 }

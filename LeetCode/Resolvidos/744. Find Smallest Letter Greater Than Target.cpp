@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 class Solution
@@ -31,9 +32,17 @@ public:
 
 int main()
 {
-    Solution s;
-    vector<char> letters = {'e', 'e', 'e', 'e', 'e', 'e', 'n', 'n', 'n', 'n'};
-    char target = 'e';
-    cout << s.nextGreatestLetter(letters, target) << endl; // output: n
+    Solution solution;
+
+    // Criação do vetor de caracteres
+    vector<char> letters = {'a', 'c', 'f', 'h', 'k'};
+    char target = 'd';
+
+    // Chamada da função nextGreatestLetter
+    char result = solution.nextGreatestLetter(letters, target);
+
+    // Imprime a próxima letra maior do que o caractere de destino
+    cout << "Próxima letra maior: " << result << endl;
+
     return 0;
 }
