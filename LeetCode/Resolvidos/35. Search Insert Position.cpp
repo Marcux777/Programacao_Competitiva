@@ -27,10 +27,17 @@ public:
 
 int main()
 {
-    Solution s;
-    std::vector<int> nums{1, 3, 5, 6};
-    int target = 5;
-    int pos = s.searchInsert(nums, target);
-    std::cout << "O alvo " << target << " deve ser inserido na posicao " << pos << std::endl;
+    Solution solution;
+
+    // Criação do vetor de inteiros ordenado
+    vector<int> nums = {1, 3, 5, 6};
+    int target = 4;
+
+    // Chamada da função searchInsert
+    int result = solution.searchInsert(nums, target);
+
+    // Imprime a posição de inserção do elemento no vetor
+    cout << "Posição de inserção: " << result << endl;
+
     return 0;
 }
