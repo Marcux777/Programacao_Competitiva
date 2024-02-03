@@ -1,8 +1,6 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,6 +8,15 @@ using namespace std;
 #define endl '\n'
 #define f first
 #define s second
+#define all(x) (x).rbegin(), (x).rend() // obter um intervalo que abrange todo o contêiner
+#define fi(x) find()
+#define sz(x) ((int)(x).size()) // tamanho
+#define pb push_back
+#define ii pair<int, int>
+#define vi vector<int>
+#define vii vector<pair<int, int>>
+#define vll vector<long long>
+#define PI 3.14159265358979323846
 
 int main()
 {
@@ -18,33 +25,33 @@ int main()
     cout.tie(0);
     int n;
     cin >> n;
-    vector<long long>v(n);
-    long long maxi = -1, maxpos = -1;
-    for(int i = 0; i < n; i++){
-        cin >> v[i];
-        if(maxi < abs(v[i])){
-            maxi = abs(v[i]);
-            maxpos = i;
+    vector<int> v(n);
+    for (auto &i : v)
+        cin >> i;
+
+    int j, i;
+    for (i = 1; i < n; i++)
+    {
+        while (v[i - 1] > v[i])
+        {
+            if (v[i - 1] < 0 && v[i] < 0)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    v[i - 1] = min(v[i - 1], v[i - 1] + v[j]);
+                }
+            }
+            else
+            {
+                for (j = 0; j < n; j++)
+                {
+                    v[i] = max(v[i], v[i] + v[j]);
+                }
+            }
         }
     }
-    vector<pair<int, int>> ans;
-    for(int i=0; i<n; i++){
-        if(i == maxpos){
-            continue;
-        }
-        v[i] += v[maxpos];
-        ans.push_back({maxpos+1, i+1});
+    for (auto i : v)
+    {
+        cout << i << " ";
     }
-    if(v[0] >= 0){
-        for(int i = 1; i < n; i++){
-            v[i] += v[i-1];
-            ans.push_back({i, i+1});
-        }
-    }else{
-        for(int i = n-2; i >= 0; i--){
-            v[i] += v[i+1];
-            ans.push_back({i+2, i+1});
-        }
-    }
-    cout << ans.size() << endl;
 }
