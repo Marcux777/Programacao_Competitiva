@@ -41,9 +41,9 @@ int main()
 			cout << endl;
 		char let;
 		cin >> let;
-		cin.ignore();
+		//cin.ignore();
 		n = let - 'A';
-		while (getline(cin, s) && s != "\0")
+		while (getline(cin, s) && s != "")
 		{
 			int x, y;
 			x = s[0] - 'A';
