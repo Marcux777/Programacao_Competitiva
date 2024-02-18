@@ -1,1 +1,1 @@
-{"name":"Local: a","url":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","tests":[],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","group":"local","local":true}
+{"name":"Local: a","url":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","tests":[{"id":1707737755703,"input":"3 8 2\n\n4 5\n\n2 5 5\n\n1 3 10 6 4\n\n13 1 4\n\n15 12 100 5\n\n0 0 0","output":"2\n-1\n6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","group":"local","local":true}
