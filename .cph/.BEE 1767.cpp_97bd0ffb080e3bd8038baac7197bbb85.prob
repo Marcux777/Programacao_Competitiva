@@ -1,0 +1,1 @@
+{"name":"Local: BEE 1767","url":"c:\\GitHub\\Programacao_Competitiva\\BEE 1767.cpp","tests":[{"id":1710866033674,"input":"2\n4\n6 17\n21 23\n72 24\n143 2\n10\n1 17\n11 23\n22 24\n13 2\n23 3\n24 4\n9 5\n8 6\n7 7\n15 8","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\BEE 1767.cpp","group":"local","local":true}

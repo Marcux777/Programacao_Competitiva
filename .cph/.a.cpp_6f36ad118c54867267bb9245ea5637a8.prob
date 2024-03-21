@@ -1,1 +1,1 @@
-{"name":"Local: a","url":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","tests":[{"id":1708690683507,"input":"Dia 5\n08 : 12 : 23\nDia 9\n06 : 13 : 23","output":"3 dia(s)\n22 hora(s)\n1 minuto(s)\n0 segundo(s)"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","group":"local","local":true}
+{"name":"Local: a","url":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","tests":[],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\a.cpp","group":"local","local":true}
