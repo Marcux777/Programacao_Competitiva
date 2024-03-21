@@ -1,0 +1,1 @@
+{"name":"Local: 200 - Rare Order","url":"c:\\GitHub\\Programacao_Competitiva\\TO DO\\Grafos\\200 - Rare Order.cpp","tests":[{"id":1708870875517,"input":"XWY\nZX\nZXY\nZXW\nYWWX\n#","output":"XZYW"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\TO DO\\Grafos\\200 - Rare Order.cpp","group":"local","local":true}
