@@ -1,0 +1,1 @@
+{"name":"Local: a","url":"c:\\GitHub\\Programacao_Competitiva\\a.py","tests":[{"id":1711729532766,"input":"6 9 22 15\n\n","output":"S"},{"id":1711818799732,"input":"14 40 12 60\n\n","output":"N"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\a.py","group":"local","local":true}

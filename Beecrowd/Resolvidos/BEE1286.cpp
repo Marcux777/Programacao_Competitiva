@@ -11,7 +11,7 @@ using namespace std;
 int n, p;
 vector<vector<int>> dp;
 
-vector<int> pizza;
+vector<int> a;
 vector<int> tempo;
 
 int f(int id, int weight)
@@ -24,9 +24,9 @@ int f(int id, int weight)
         return dp[id][weight];
     int a = f(id + 1, weight);
     //cout << a << endl;
-    if (pizza[id] + weight <= p)
+    if (a[id] + weight <= p)
     {
-        int resp = f(id + 1, weight + pizza[id]) + tempo[id];
+        int resp = f(id + 1, weight + a[id]) + tempo[id];
         a = max(a, resp);
     }
     return dp[id][weight] = a;
@@ -42,12 +42,12 @@ signed main()
     {
         cin >> p;
         dp = vector<vector<int>>(n + 1, vector<int>(p + 1, -1));
-        pizza = vector<int>(n);
+        a = vector<int>(n);
         tempo = vector<int>(n);
 
         for (int i = 0; i < n; i++)
         {
-            cin >>  tempo[i] >> pizza[i];
+            cin >>  tempo[i] >> a[i];
         }
         cout << f(0, 0) << " min." << endl;
     }
