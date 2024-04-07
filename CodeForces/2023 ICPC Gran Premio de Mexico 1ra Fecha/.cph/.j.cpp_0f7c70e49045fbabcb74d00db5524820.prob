@@ -1,0 +1,1 @@
+{"name":"Local: j","url":"c:\\GitHub\\Programacao_Competitiva\\2023 ICPC Gran Premio de Mexico 1ra Fecha\\j.cpp","tests":[{"id":1711202019352,"input":"5 3\n1 2 3 4 5\n1 2\n1 5\n3 5\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\2023 ICPC Gran Premio de Mexico 1ra Fecha\\j.cpp","group":"local","local":true}

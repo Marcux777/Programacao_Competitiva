@@ -1,0 +1,1 @@
+{"name":"Local: setas","url":"c:\\GitHub\\Programacao_Competitiva\\setas.cpp","tests":[{"id":1711830327103,"input":"3\n>>V\nAV<\nA<>","output":"8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\GitHub\\Programacao_Competitiva\\setas.cpp","group":"local","local":true}
