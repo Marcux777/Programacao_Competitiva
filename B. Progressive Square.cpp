@@ -40,45 +40,14 @@ void dbg_out(Head H, Tail... T)
     cerr << ' ' << H;
     dbg_out(T...);
 }
-#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cerr << endl
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<bool>> v(n, vector<bool>(n, true));
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (i % 2 == 0 && j % 2 != 0)
-            {
-                v[i][j] = false;
-            }
-            if (i % 2 != 0 && j % 2 == 0)
-            {
-                v[i][j] = false;
-            }
-        }
-    }
-
-    for (auto k : v)
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            for (auto l : k)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    if(l == 1)
-                        cout << "#";
-                    else{
-                        cout << ".";
-                    }
-                }
-            }
-            cout << endl;
-        }
-    }
+    int n, c, d;
+    cin >> n >> c >> d;
+    vector<int> v(n*n);
+    for(auto &i : v) cin >> i;
+    
 }
 int32_t main()
 {

@@ -40,51 +40,53 @@ void dbg_out(Head H, Tail... T)
     cerr << ' ' << H;
     dbg_out(T...);
 }
-#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cerr << endl
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<bool>> v(n, vector<bool>(n, true));
-    for (int i = 0; i < n; i++)
+    string s;
+    map<char, int> dic;
+    cin >> s;
+    for (auto i : s)
     {
-        for (int j = 0; j < n; j++)
+        if (dic.find(i) != dic.end())
         {
-            if (i % 2 == 0 && j % 2 != 0)
-            {
-                v[i][j] = false;
-            }
-            if (i % 2 != 0 && j % 2 == 0)
-            {
-                v[i][j] = false;
-            }
+            dic[i]++;
+        }
+        else
+        {
+            dic[i] = 1;
         }
     }
-
-    for (auto k : v)
+    int c = 0;
+    if (dic.size() % 2 == 0)
     {
-        for (int i = 0; i < 2; i++)
+        while (c < dic.size())
         {
-            for (auto l : k)
+            c++;
+            int igual = 0;
+            for (auto j : dic)
             {
-                for (int j = 0; j < 2; j++)
+                if (j.second == c)
                 {
-                    if(l == 1)
-                        cout << "#";
-                    else{
-                        cout << ".";
-                    }
+                    igual++;
                 }
             }
-            cout << endl;
+            if (igual != 0 && igual != 2)
+            {
+                cout << "No\n";
+                return;
+            }
         }
+    }else{
+        cout << "No\n";
+        return;
     }
+    cout << "Yes\n";
 }
 int32_t main()
 {
     IOS;
     int tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;
