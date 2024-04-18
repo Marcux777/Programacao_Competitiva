@@ -19,6 +19,7 @@ using namespace std;
 #define bk back()
 #define endl "\n"
 #define rep(i, a, b) for (int i = a; i < (b); ++i)
+#define fopen() freopen("texto.txt", "w", stdout)
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<vvi> vvvi;
@@ -40,45 +41,35 @@ void dbg_out(Head H, Tail... T)
     cerr << ' ' << H;
     dbg_out(T...);
 }
-#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cerr << endl
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+vector<vi> dp;
+vi a, b;
+int k, r, n;
+
+int f(int id, int w){
+    if(id >= n) return 0;
+    if(w > k) return 0;
+    if(dp[id][w] != -1) return dp[id][w];
+
+    int r1 = f(id+1, w);
+    if(b[id] + w <= k){
+        int r2 = f(id+1, w+b[id]) + a[id];
+        r1 = max(r1, r2);
+    }
+    return dp[id][w] = r1;
+}
+
 void solve()
 {
-    int n;
     cin >> n;
-    vector<vector<bool>> v(n, vector<bool>(n, true));
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (i % 2 == 0 && j % 2 != 0)
-            {
-                v[i][j] = false;
-            }
-            if (i % 2 != 0 && j % 2 == 0)
-            {
-                v[i][j] = false;
-            }
-        }
+    a = vi(n);
+    b = vi(n);
+    for(int i = 0; i < n; i++){
+        cin >> a[i] >> b[i];
     }
-
-    for (auto k : v)
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            for (auto l : k)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    if(l == 1)
-                        cout << "#";
-                    else{
-                        cout << ".";
-                    }
-                }
-            }
-            cout << endl;
-        }
-    }
+    cin >> k >> r;
+    dp = vector<vi>(n+1, vi(k+1, -1));
+    cout << (f(0, 0) >= r ? "Missao completada com sucesso" : "Falha na missao") << endl;
 }
 int32_t main()
 {

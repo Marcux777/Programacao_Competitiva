@@ -41,14 +41,21 @@ void dbg_out(Head H, Tail... T)
     dbg_out(T...);
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cerr << endl
+
+bool isBin(int x){
+    return x%10 == 0 || x%11 == 0;
+}
+
 void solve()
 {
+    int n; cin >> n;
     
 }
 int32_t main()
 {
     IOS;
     int tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

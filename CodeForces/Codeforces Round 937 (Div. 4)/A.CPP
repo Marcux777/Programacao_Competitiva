@@ -43,12 +43,17 @@ void dbg_out(Head H, Tail... T)
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cerr << endl
 void solve()
 {
+    int a, b, c; cin >> a >> b >> c;
+    if(a < b && b < c) cout << "STAIR\n";
+    else if(a < b && b > c) cout << "PEAK\n";
+    else cout << "NONE\n";
     
 }
 int32_t main()
 {
     IOS;
     int tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

@@ -43,12 +43,48 @@ void dbg_out(Head H, Tail... T)
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cerr << endl
 void solve()
 {
-    
+    string s;
+    cin >> s;
+    int hora = (s[0] - '0') * 10 + (s[1] - '0');
+    int minutes = (s[3] - '0') * 10 + (s[4] - '0');
+    string horario = "AM";
+    if (hora / 12 > 0)
+        horario = "PM";
+    string resp;
+    hora %= 12;
+    if (hora < 10)
+    {
+        if (hora == 0)
+        {
+            resp += to_string(12);
+        }
+        else
+        {
+            resp += '0';
+            resp += to_string(hora);
+        }
+    }
+    else
+    {
+        resp += to_string(hora);
+    }
+    resp += ':';
+    if (minutes < 10)
+    {
+        resp += '0';
+        resp += to_string(minutes);
+    }
+    else
+    {
+        resp += to_string(minutes);
+    }
+    cout << resp << " " << horario << endl;
 }
 int32_t main()
 {
     IOS;
     int tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
