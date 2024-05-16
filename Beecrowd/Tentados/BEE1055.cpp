@@ -1,61 +1,35 @@
-#include <iostream>
-#include <vector>
-#include <math.h>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int Soma(const std::vector<int> &nums)
-{
-    int sum = 0;
-    for (int i = 1; i < nums.size(); ++i)
-    {
-        sum += abs(nums[i] - nums[i - 1]);
-    }
-    return sum;
-}
-
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    freopen("saida.txt", "w", stdout);
-
-    int t;
+    int n;
+    vector<int> v, permute;
+    int t, t1 = 1;
     cin >> t;
-    for (int j = 0; j < t; j++)
+    while (t1 <= t)
     {
-        int n;
+        long long int soma = 0;
         cin >> n;
-        vector<int> v(n);
-        for (int i = 0; i < n; i++)
-        {
-            cin >> v[i];
-        }
+        v = vector<int>(n);
+        permute = vector<int>(n);
+        for (auto &i : v)
+            cin >> i;
+
         sort(v.begin(), v.end());
-        int par = 0;
-        int impar = 1;
-        vector<vector<int>> dp(n, vector<int>(n));
-
-        for (int i = 1; i < n; i++)
+        int idx = 0;
+        for (int i = 0, j = n - 1; i <= j; i++, j--)
         {
-            dp[i][0] += abs(v[i] - v[i - 1]);
+            permute[idx++] = v[i];
+            permute[idx++] = v[j];
         }
 
-        for (int i = 2; i < n; i++)
+        for (int i = 0; i < n - 1; i++)
         {
-            for (int j = 1; j < n; j++)
-            {
-                dp[i][j] = max(dp[i - 1][j - 1], dp[i - 1][j]) + abs(v[i] - v[i - 1]);
-            }
+            soma += abs(permute[i] - permute[i + 1]);
         }
-
-        int soma = 0;
-        for (int i = 0; i < n; i++)
-        {
-            soma = max(soma, dp[n - 1][i]);
-        }
-
-        cout << "Case " << j + 1 << ": " << soma << endl;
+        cout << "Case " << t1 << ": " << soma << endl;
+        t1++;
     }
 }
