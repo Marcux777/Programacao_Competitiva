@@ -14,4 +14,4 @@ O DSU é uma estrutura de dados extremamente útil para resolver problemas que e
 - Identificar o número de componentes conectados em um grafo.
 - Verificar se um grafo é bipartido.
 
-**[Codigo DSU](./Programacao_Competitiva/Algoritmos_Basicos/DSU/DSU.cpp)**
+**[Codigo DSU](./C:/GitHub/Programacao_Competitiva/Algoritmos_Basicos/DSU/DSU.cpp)**
