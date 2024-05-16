@@ -2,4 +2,4 @@
 
 ## Estrutura de Dados
 
-1. [DSU(./DSU.md)]
+1. [DSU](./DSU.md)
