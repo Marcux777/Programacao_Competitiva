@@ -4,11 +4,11 @@
 
 ### Travessia no Grafo
 
-    - [DFS](./DFS.md)
-    - [BFS](./BFS.md)
+    - [DFS](./Algoritmos_Basicos/Grafos/Percorrer%20Grafos/DFS.cpp)
+    - [BFS](./algoritmos_Basicos/Grafos/Percorrer%20Grafos/BFS.cpp)
 ### Componentes Conexos, Pontes e Pontos de Articulação
 
-    - [Componentes Conexos](./Componentes%20Conexos.md)
+    - [Componentes Conexos](./Algoritmos_Basicos/Grafos/Connected%20components,%20bridges,%20articulations%20points/Finding%20Connected%20Components.cpp)
     - [Encontrando Pontes em $O(N + M)$](./encontrando.md)
     - [Buscando Pontes Online]()
     - [Buscando Pontos de articulação em $O(N + M)$](./buscando.md)
