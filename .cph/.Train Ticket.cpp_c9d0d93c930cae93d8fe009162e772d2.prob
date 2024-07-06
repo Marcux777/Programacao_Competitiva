@@ -1,0 +1,1 @@
+{"name":"Local: Train Ticket","url":"/home/marcux777/Programacao_Competitiva/Train Ticket.cpp","tests":[{"id":1720029641558,"input":"1222\n","output":"1+2+2+2=7\n"},{"id":1720029715710,"input":"0290\n","output":"0-2+9+0=7\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/Train Ticket.cpp","group":"local","local":true}
