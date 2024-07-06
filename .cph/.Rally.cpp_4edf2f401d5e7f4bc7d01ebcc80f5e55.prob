@@ -1,0 +1,1 @@
+{"name":"Local: Rally","url":"/home/marcux777/Programacao_Competitiva/Rally.cpp","tests":[{"id":1719873609204,"input":"2\n1 4\n","output":"5"},{"id":1719873687327,"input":"7\n14 14 2 13 56 2 37\n","output":"2354\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/Rally.cpp","group":"local","local":true}

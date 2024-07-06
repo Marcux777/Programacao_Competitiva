@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, n2;
-bool vis[26];
-vector<int> vet[26];
+int n;
+bool vis[27];
+vector<int> vet[27];
 string s;
 int cont;
 
@@ -20,7 +20,7 @@ void dfs(int u)
 {
 	vis[u] = true;
 
-	for (int i = 0; i < vet[u].size(); i++)
+	for (auto i : vet[u])
 	{
 		if (!vis[i])
 		{
@@ -33,17 +33,14 @@ int main()
 {
 	int t;
 	cin >> t;
-	bool fim = false;
 	while (t--)
 	{
 		inicia();
-		if (fim)
-			cout << endl;
 		char let;
 		cin >> let;
-		//cin.ignore();
-		n = let - 'A';
-		while (getline(cin, s) && s != "")
+		cin.ignore();
+		n = let - 'A' + 1;
+		while (getline(cin, s) && s!= "")
 		{
 			int x, y;
 			x = s[0] - 'A';
@@ -51,15 +48,15 @@ int main()
 			vet[x].push_back(y);
 			vet[y].push_back(x);
 		}
-		for (int i = 0; i <= n; i++)
+		for (int i = 0; i < n; i++)
 		{
 			if (!vis[i])
 			{
-				dfs(i);
 				cont++;
+				dfs(i);
 			}
 		}
-		fim = true;
 		cout << cont << endl;
+		if(t) cout << endl;
 	}
 }
