@@ -5,7 +5,7 @@
 ### Travessia no Grafo
 
 - [DFS](./Algoritmos_Basicos/Grafos/Percorrer%20Grafos/DFS.cpp)
-- [BFS](./algoritmos_Basicos/Grafos/Percorrer%20Grafos/BFS.cpp)
+- [BFS](./Algoritmos_Basicos/Grafos/Percorrer%20Grafos/BFS.cpp)
 
 ### Componentes Conexos, Pontes e Pontos de Articulação
 
