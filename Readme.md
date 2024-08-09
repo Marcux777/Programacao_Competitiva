@@ -15,6 +15,10 @@
 - [Buscando Pontos de articulação em $O(N + M)$](./buscando.md)
 - [Componentes Fontemente Conexos] 
 
+### Spanning Tree
+
+- [Algoritmo de Kruskal](./Algoritmos_Basicos/Grafos/Kruskal.cpp)
+
 ## Estrutura de Dados
 
 1. [DSU](./DSU.md)

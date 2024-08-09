@@ -1,0 +1,1 @@
+{"name":"Local: H","url":"/home/marcux777/Programacao_Competitiva/H.cpp","tests":[{"id":1720979120428,"input":"3 70\n20 30 10\n","output":"2"},{"id":1721240263845,"input":"3 10\n20 30 10","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/H.cpp","group":"local","local":true}
