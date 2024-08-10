@@ -9,11 +9,15 @@
 
 ### Componentes Conexos, Pontes e Pontos de Articulação
 
-- [Componentes Conexos](./Algoritmos_Basicos/Grafos/Connected%20components,%20bridges,%20articulations%20points/Finding%20Connected%20Components.cpp)
-- [Encontrando Pontes em ![O(N + M)](https://latex.codecogs.com/svg.latex?O(N%20+%20M))](./encontrando.md)
+- [Componentes Conexos](./Componentes%20Conexos.md)
+
+- [Encontrando Pontes em O(N + M)](./encontrando.md)
+
 - [Buscando Pontes Online]()
-- [Buscando Pontos de articulação em ![O(N + M)](https://latex.codecogs.com/svg.latex?O(N%20+%20M))](./buscando.md)
-- [Componentes Fontemente Conexos] 
+- 
+- [Buscando Pontos de articulação em O(N + M)](./buscando.md)
+
+- [Componentes Fontemente Conexos](./Componentes%20Fortemente%20Conexos.md)
 
 ### Spanning Tree
 
