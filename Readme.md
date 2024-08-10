@@ -17,8 +17,8 @@
 
 ### Spanning Tree
 
-- [Algoritmo de Kruskal](./Algoritmos_Basicos/Grafos/Kruskal.cpp)
-- [Algoritmo de Prim] -> Atualização futura xD
+- [Algoritmo de Kruskal](./Algoritmos_Basicos/Grafos/Minimum%20Spanning%20Tree/Kruskal.cpp)
+- [Algoritmo de Prim](.Algoritmos_Basicos/Grafos/Minimum%20Spanning%20Tree/Prim.cpp)
 
 ## Estrutura de Dados
 
