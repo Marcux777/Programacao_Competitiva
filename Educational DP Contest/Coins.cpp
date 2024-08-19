@@ -19,9 +19,6 @@ using namespace std;
 #define bk back()
 #define endl "\n"
 #define rep(i, a, b) for (int i = a; i < (b); ++i)
-typedef vector<double> vd;
-typedef vector<vd> vvd;
-typedef vector<vvd> vvvd;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<vvi> vvvi;
@@ -48,7 +45,32 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    // Pode ser otimizada o espaço usado
+    // nesse codigo passa, mas pode ser usado O(N), 
+    // ao inves de O(N^2), como foi feito aqui
+    int n; cin >> n;
+    vector<double> v(n);
+    rep(i, 0, n) cin >> v[i];
 
+    vector<vector<double>> pd(n+1, vector<double>(n+1, 0.0));
+    pd[0][0] = 1.0;
+
+    rep(i, 0, n)
+    {
+        rep(j, 0, i+1)
+        {
+            pd[i+1][j] += pd[i][j] * (1 - v[i]);
+            pd[i+1][j+1] += pd[i][j] * v[i];
+        }
+    }
+
+    double ans = 0.0;
+
+    for(int i = (n+1)/2; i <= n; i++)
+    {
+        ans += pd[n][i];
+    }
+    cout << fixed << setprecision(10) << ans << endl;
 }
 
 int32_t main()
