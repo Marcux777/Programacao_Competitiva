@@ -48,6 +48,22 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, k; cin >> n >> k;
+    vi v(n);
+    for(auto &i : v) cin >> i;
+
+    vi dp(k+1, 0);
+    dp[0] = 0;
+
+    for(int i = 1; i <= k; i++){
+        for(int j = 0; j < n; j++){
+            if(i - v[j] >= 0 && !dp[i - v[j]]) {
+                dp[i] = 1; break;
+            }
+        }
+    }
+
+    cout << (dp[k] ? "First" : "Second") << endl;
 
 }
 
