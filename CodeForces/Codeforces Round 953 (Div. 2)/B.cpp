@@ -45,11 +45,13 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-
 void solve()
 {
-    
-
+    int n, a, b;
+    cin >> n >> a >> b;
+    int k = min(min(n, b), b-a);
+    if(a >= b) cout << n*a << endl;
+    else cout << (b*k + k - k*(k+1)/2) + (n - k)*a << endl;
 }
 
 int32_t main()
@@ -57,6 +59,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
