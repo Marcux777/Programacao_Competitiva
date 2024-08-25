@@ -1,4 +1,4 @@
-# Algoritos Basicos
+# Algoritmos
 
 ## Grafos
 
