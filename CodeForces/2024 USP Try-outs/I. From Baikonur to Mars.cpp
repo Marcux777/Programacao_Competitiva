@@ -32,7 +32,6 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -49,7 +48,19 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n;
+	cin>>n;
+	int vet[n];
+	for(auto &i : vet)cin>>i;
+	sort(vet,vet+n);
+	int imp=0;
+	for(int i=0;i<n;i++){
+		if(vet[i]%2){
+			imp = max(imp,vet[i]);
+		}
+	}
+	if(imp==0||imp==1)cout<<1<<endl;
+	else cout<<2<<endl;
 
 }
 

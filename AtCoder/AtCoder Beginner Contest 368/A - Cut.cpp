@@ -19,6 +19,9 @@ using namespace std;
 #define bk back()
 #define endl "\n"
 #define rep(i, a, b) for (int i = a; i < (b); ++i)
+typedef vector<double> vd;
+typedef vector<vd> vvd;
+typedef vector<vvd> vvvd;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<vvi> vvvi;
@@ -45,7 +48,20 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n, k; cin >> n >> k;
+    vi v(n);
+    queue<int> q;
+    for(auto &i : v) {
+        cin >> i;
+    }
+    for(int i = n - k; i < n; i++){
+        cout << v[i] << " ";
+    }
+    for(int i = 0; i < n - k; i++){
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
 }
 
 int32_t main()

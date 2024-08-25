@@ -32,7 +32,6 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -49,8 +48,24 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
-
+    int n; cin >> n;
+    priority_queue<int> pq;
+    for(int i = 0; i < n; i++){
+        int x; cin >> x;
+        pq.push(x);
+    }
+    int c= 0;
+    while(true){
+        int x = pq.top();
+        pq.pop();
+        int y = pq.top();
+        pq.pop();
+        if(x == 0 || y == 0) break;
+        pq.push(x-1);
+        pq.push(y-1);
+        c++;
+    }
+    cout << c << endl;
 }
 
 int32_t main()

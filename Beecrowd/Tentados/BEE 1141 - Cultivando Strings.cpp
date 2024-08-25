@@ -32,7 +32,6 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -49,8 +48,33 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
-
+    int n;
+    while(cin >> n && n){
+        vector<string> a;
+        for(int i = 0; i < n; i++){
+            string s;
+            cin >> s;
+            a.push_back(s);
+        }
+        sort(a.begin(), a.end(), [](string a, string b){
+            return sz(a) < sz(b);
+        });
+        unordered_map<string, int> dp;
+        int len = 1;
+        for(auto i : a){
+            dp[i] = 1;
+            for(int j = 1; j < sz(i); j++){
+                string pre = i.substr(0, j);
+                string suf = i.substr(sz(i) - j);
+                if(dp.count(pre))
+                    dp[i] = max(dp[i], dp[pre]+1);
+                if(dp.count(suf))
+                    dp[i] = max(dp[i], dp[suf]+1);
+            }
+            len = max(len, dp[i]);
+        }
+        cout << len << endl;
+    }
 }
 
 int32_t main()
