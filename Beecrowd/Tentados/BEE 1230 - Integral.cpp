@@ -32,7 +32,6 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -46,10 +45,48 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+struct point{
+    int x, f;
+};
+
+bool comp(point a, point b){
+    return a.x < b.x;
+}
+
 
 void solve()
 {
     
+    int n, m, y;
+    while(cin >> n >> m >> y){
+        vector<point> s(m);
+        for(int i = 0; i < m; i++)
+            cin >> s[i].x >> s[i].f;
+
+        sort(s.begin(), s.end(), comp);
+
+        vi f(n+1, -1);
+        for(auto &i : s)
+            f[i.x] = i.f;
+        
+        for(int i = 1; i < n; i++)
+            if(f[i] == -1){
+                f[i] = (f[i-1] + f[i+1])/2;
+            }
+
+        int area = 0;
+        for(int i = 0; i < n; i++)
+            area += (f[i] + f[i+1])/2;
+
+        if(area == y){
+            cout << "S";
+            for(int i = 1; i < n; i++)
+                if(f[i]!=-1) cout << " " << f[i];
+            cout << endl;
+        }else{
+            cout << "N" << endl;
+        }
+    }
 
 }
 

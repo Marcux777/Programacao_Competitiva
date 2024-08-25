@@ -32,7 +32,6 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -46,10 +45,49 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+vvi graph;
+vi vis;
+unordered_set<int> st;
+int c = 0;
+
+pair<int, int> dfs(int u, int p, int K) {
+    int c = vis[u], ans = 0;
+    bool ok = true;
+    for (int v : graph[u]) {
+        if (v != p) {
+            auto [c_sub, ans_sub] = dfs(v, u, K);
+            c += c_sub;
+            ans += ans_sub;
+            ok &= c_sub < K;
+        }
+    }
+    ans += ok && (c > 0);
+    return {c, ans};
+}
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    c = 0;
+    vi v(k);
+    graph.resize(n+1);
+    vis.resize(n+1, 0);
+
+    for(int i = 1; i < n; i++){
+        int x, y; cin >> x >> y;
+        graph[x].pb(y);
+        graph[y].pb(x);
+    }
     
+    for(auto &i : v) {
+        cin >> i;
+        st.insert(i);
+        vis[i] = 1;
+    }
+
+    cout << dfs(v[0], -1, k).second << endl;
+
 
 }
 

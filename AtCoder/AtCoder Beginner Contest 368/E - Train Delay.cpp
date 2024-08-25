@@ -32,7 +32,6 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -46,10 +45,48 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+struct Train {
+    int departure_city;
+    int arrival_city;
+    int departure_time;
+    int arrival_time;
+};
 
-void solve()
-{
-    
+void solve() {
+    int n, m, x0;
+    cin >> n >> m >> x0;
+    vvi abst(m, vi(4));
+    viii events;
+
+    for(int i = 0; i < m; i++){
+        cin >> abst[i][0] >> abst[i][1] >> abst[i][2] >> abst[i][3];
+        events.pb({abst[i][2], {2, i}});
+        events.pb({abst[i][3], {1, i}});
+    }
+
+    vi x(m, 0), arr(n+1, 0);
+    sor(events);
+
+    for (const auto& event : events) {
+        int t = event.first;
+        int k = event.second.first;
+        int i = event.second.second;
+        int A = abst[i][0];
+        int B = abst[i][1];
+        int S = abst[i][2];
+        int T = abst[i][3];
+
+        if (k == 1) {
+            arr[B] = max(arr[B], T + x[i]);
+        } else {
+            x[i] = (i > 0) ? max(0LL, arr[A] - S) : x0;
+        }
+    }
+
+    for (int i = 1; i < m; ++i) {
+        cout << x[i] << " ";
+    }
+    cout << endl;
 
 }
 
