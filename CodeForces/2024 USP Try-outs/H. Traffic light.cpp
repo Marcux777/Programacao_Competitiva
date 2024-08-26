@@ -46,15 +46,49 @@ void dbg_out(Head H, Tail... T)
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
 int n, m, t;
-vector<vii> adj;
-vi x, y;
+vector<viii> adj;
+
+void dijsktra(int a, int b) {
+    vi dist(n + 1, LINF);
+    dist[a] = b;
+    priority_queue<pii, vii, greater<pii>> pq;
+    pq.emplace(dist[a], a);
+    while (!pq.empty()) {    
+        auto [d, u] = pq.top();
+        pq.pop();
+        if (d > dist[u])
+            continue;
+
+        for (auto &[v, p] : adj[u]) {
+            auto &[x, y] = p;
+            int new_dist = d;
+            int curr = d % (x + y);
+            if (curr >= x) {
+                new_dist += (x + y) - curr;
+            }
+
+            if (dist[v] > new_dist) {
+                dist[v] = new_dist;
+                pq.emplace(dist[v], v);
+            }
+        }
+    }
+    cout << dist[n] << endl;
+}
+
 
 void solve()
 {
     cin >> n >> m >> t;
     adj.resize(n + 1);
-    x = vi(n + 1);
-    y = vi(n + 1);
+    for (int i = 0 ; i < m; i++){
+        int u, v, x, y;
+        cin >> u >> v >> x >> y;
+        adj[u].pb({v, {x, y}});
+        adj[v].pb({u, {x, y}});
+    }
+
+    dijsktra(1, t);
 }
 
 int32_t main()
