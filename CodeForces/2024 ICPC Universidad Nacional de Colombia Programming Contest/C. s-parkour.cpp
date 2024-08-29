@@ -46,54 +46,24 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-struct music{
-    int minuto;
-    int duracao;
-    int id;
-    bool pulou;
-
-    bool operator<(const music &a) const{
-        return minuto < a.minuto;
-    }
-};
 
 void solve()
 {
     int n; cin >> n;
-
-    vector<music> playlist(n);
-
-    for(int i = 0; i < n; i++){
-        int t, m, c;
-        cin >> t >> m >> c;
-        
-        playlist[i] = {t, m, i+1, c==1};
+    vi v(n);
+    for(auto &i : v) cin >> i;
+    int ans = 0;
+    vi pref(2*n + 1, 0);
+    int num = n;
+    ans = num;
+    pref[num]++;
+    for (int i = 1; i < n; ++i) {
+        num += v[i] > v[i-1] ? 1 : -1;
+        ans += pref[num];
+        pref[num]++;
     }
-    sor(playlist);
 
-    vi ans;
-    int tempo = 0;
-    queue<music> q;
-    for(int i = 0; i < n; i++){
-        while(q.size()){
-            int s = (q.front().pulou ? q.front().minuto : max(tempo, q.front().minuto));
-            if(s + q.front().duracao > playlist[i].minuto){
-                break;
-            }
-            tempo = max(tempo, s + q.front().duracao);
-            q.pop();
-        }
-        if(playlist[i].pulou && q.size()){
-            ans.pb(q.front().id);
-            q.front() = playlist[i];
-        }
-        else{
-            q.push(playlist[i]);
-        }
-    }
-    cout << ans.size() << endl;
-    for(auto i : ans) cout << i << " ";
-    
+    cout << ans << endl;
 }
 
 int32_t main()

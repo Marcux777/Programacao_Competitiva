@@ -46,54 +46,34 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-struct music{
-    int minuto;
-    int duracao;
-    int id;
-    bool pulou;
-
-    bool operator<(const music &a) const{
-        return minuto < a.minuto;
-    }
-};
 
 void solve()
 {
-    int n; cin >> n;
+    ld x, y, z;
+    ld tx, ty, tz, raio;
+    cin >> x >> y >> z;
+    cin >> tx >> ty >> tz >> raio;
 
-    vector<music> playlist(n);
+    ld l = 0.0, r = min({x, y, z})/2.0;
+    ld tol = 1e-15;
+    int it = 0;
+    tx = max(tx, x - tx);
+    ty = max(ty, y - ty);
+    tz = max(tz, z - tz);
 
-    for(int i = 0; i < n; i++){
-        int t, m, c;
-        cin >> t >> m >> c;
-        
-        playlist[i] = {t, m, i+1, c==1};
-    }
-    sor(playlist);
+    while(r - l > tol && it < 1000){
+        it++;
+        ld R = (l + r) / 2.0;
+        ld distance = ((R - tx)*(R - tx) + (R - ty)*(R - ty) + (R - tz)*(R - tz));
 
-    vi ans;
-    int tempo = 0;
-    queue<music> q;
-    for(int i = 0; i < n; i++){
-        while(q.size()){
-            int s = (q.front().pulou ? q.front().minuto : max(tempo, q.front().minuto));
-            if(s + q.front().duracao > playlist[i].minuto){
-                break;
-            }
-            tempo = max(tempo, s + q.front().duracao);
-            q.pop();
-        }
-        if(playlist[i].pulou && q.size()){
-            ans.pb(q.front().id);
-            q.front() = playlist[i];
-        }
-        else{
-            q.push(playlist[i]);
+        if (distance >= (raio + R) * (raio + R)) {
+            l = R;
+        }else{
+            r = R;
         }
     }
-    cout << ans.size() << endl;
-    for(auto i : ans) cout << i << " ";
-    
+    cout << fixed << setprecision(15);
+    cout << l << endl;
 }
 
 int32_t main()
