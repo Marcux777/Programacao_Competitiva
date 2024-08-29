@@ -1,1 +1,0 @@
-{"name":"Local: a","url":"/home/marcux777/Programacao_Competitiva/a.cpp","tests":[{"id":1716984417624,"input":"2\n2 3 4\n10 1 10\n","output":"100\n600\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/a.cpp","group":"local","local":true}

@@ -1,1 +1,0 @@
-{"name":"Local: Book Shop","url":"/home/marcux777/Programacao_Competitiva/Book Shop.cpp","tests":[{"id":1720622717809,"input":"4 10\n4 8 5 3\n5 12 8 1\n","output":"13"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/Book Shop.cpp","group":"local","local":true}
