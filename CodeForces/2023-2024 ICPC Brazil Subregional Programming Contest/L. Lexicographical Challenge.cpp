@@ -46,54 +46,28 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-struct music{
-    int minuto;
-    int duracao;
-    int id;
-    bool pulou;
-
-    bool operator<(const music &a) const{
-        return minuto < a.minuto;
-    }
-};
-
 void solve()
 {
-    int n; cin >> n;
+    string s;
+    cin >> s;
+    int k;
+    cin >> k;
 
-    vector<music> playlist(n);
+    int n = sz(s);
+    vector<string> substrings(k);
 
-    for(int i = 0; i < n; i++){
-        int t, m, c;
-        cin >> t >> m >> c;
-        
-        playlist[i] = {t, m, i+1, c==1};
-    }
-    sor(playlist);
+    for (int i = 0; i < n; i++)
+        substrings[i % k] += s[i];
 
-    vi ans;
-    int tempo = 0;
-    queue<music> q;
-    for(int i = 0; i < n; i++){
-        while(q.size()){
-            int s = (q.front().pulou ? q.front().minuto : max(tempo, q.front().minuto));
-            if(s + q.front().duracao > playlist[i].minuto){
-                break;
-            }
-            tempo = max(tempo, s + q.front().duracao);
-            q.pop();
-        }
-        if(playlist[i].pulou && q.size()){
-            ans.pb(q.front().id);
-            q.front() = playlist[i];
-        }
-        else{
-            q.push(playlist[i]);
-        }
-    }
-    cout << ans.size() << endl;
-    for(auto i : ans) cout << i << " ";
-    
+    for (int i = 0; i < k; i++)
+        sort(substrings[i].begin(), substrings[i].end());
+
+    string result = "";
+    for (int i = 0; i < n; i++)
+        result += substrings[i % k][i / k];
+
+
+    cout << result << endl;
 }
 
 int32_t main()

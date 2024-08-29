@@ -46,54 +46,45 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-struct music{
-    int minuto;
-    int duracao;
-    int id;
-    bool pulou;
-
-    bool operator<(const music &a) const{
-        return minuto < a.minuto;
-    }
-};
-
+vi x = {0, 0, 1, -1, 1, 1, -1, -1};
+vi y = {1, -1, 0, 0, 1, -1, 1, -1};
 void solve()
 {
-    int n; cin >> n;
+    int h, w;
+    cin >> h >> w;
+    vector<string> v(h);
+    vvi mat(h, vi(w, 0));
+    for (auto &i : v)
+        cin >> i;
 
-    vector<music> playlist(n);
-
-    for(int i = 0; i < n; i++){
-        int t, m, c;
-        cin >> t >> m >> c;
-        
-        playlist[i] = {t, m, i+1, c==1};
-    }
-    sor(playlist);
-
-    vi ans;
-    int tempo = 0;
-    queue<music> q;
-    for(int i = 0; i < n; i++){
-        while(q.size()){
-            int s = (q.front().pulou ? q.front().minuto : max(tempo, q.front().minuto));
-            if(s + q.front().duracao > playlist[i].minuto){
-                break;
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
+        {
+            if (v[i][j] == '#')
+            {
+                for (int k = 0; k < 8; k++)
+                {
+                    if (i + x[k] >= 0 && i + x[k] < h && j + y[k] >= 0 && j + y[k] < w)
+                    {
+                        if (v[i + x[k]][j + y[k]] != '#')
+                            mat[i + x[k]][j + y[k]]++;
+                    }
+                }
             }
-            tempo = max(tempo, s + q.front().duracao);
-            q.pop();
-        }
-        if(playlist[i].pulou && q.size()){
-            ans.pb(q.front().id);
-            q.front() = playlist[i];
-        }
-        else{
-            q.push(playlist[i]);
         }
     }
-    cout << ans.size() << endl;
-    for(auto i : ans) cout << i << " ";
-    
+    for(int i = 0; i < h; i++){
+        for(int j = 0; j < w; j++){
+            if(v[i][j] == '#'){
+                cout << '#';
+            }
+            else{
+                cout << mat[i][j];
+            }
+        }
+        cout << endl;
+    }
 }
 
 int32_t main()
