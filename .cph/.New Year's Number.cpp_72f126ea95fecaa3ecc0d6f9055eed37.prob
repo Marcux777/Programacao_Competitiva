@@ -1,1 +1,0 @@
-{"name":"Local: New Year's Number","url":"/home/marcux777/Programacao_Competitiva/New Year's Number.cpp","tests":[{"id":1719098625692,"input":"5\n1\n4041\n4042\n8081\n8079\n","output":"NO\nYES\nYES\nYES\nNO\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/New Year's Number.cpp","group":"local","local":true}
