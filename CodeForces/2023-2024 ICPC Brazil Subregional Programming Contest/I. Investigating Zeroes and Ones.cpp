@@ -51,10 +51,26 @@ void solve()
 {
     int n; cin >> n;
     vi v(n);
-    for(auto i : v) cin >> i;
+    for(auto &i : v) cin >> i;
 
-    
-
+    vi prefix(n+1, 0);
+    int ans = 0;
+    ans = prefix[1] = v[0];
+    for(int i = 1; i < n; i++) {
+        if(v[i] == 1){
+            // Se o elemento atual for 1 (ímpar):
+            // O número de subarrays ímpares terminando em i é igual ao 
+            // número de subarrays pares até i-1 mais 1 (o próprio elemento v[i]).
+            prefix[i+1] = i + 1 - prefix[i];
+        } else {
+            // Se o elemento atual for 0 (par):
+            // O número de subarrays ímpares terminando em i é igual ao 
+            // número de subarrays ímpares até i-1.
+            prefix[i+1] = prefix[i];
+        }
+        ans += prefix[i+1];
+    }
+    cout << ans << endl;
 }
 
 int32_t main()
