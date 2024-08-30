@@ -46,44 +46,31 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void fastFib(int n, vi& v){
-    if(n == 0){
-        v[0] = 0;
-        v[1] = 1;
-        return;
-    }
-    fastFib(n/2, v);
 
-    int a, b, c, d;
-    a = v[0];
-    b = v[1];
-    c = 2*b - a;
-    if(c < 0) c += mod;
-
-    c = (a*c)%mod;
-    d = (a*a + b*b)%mod;
-
-    if(n%2 == 0){
-        v[0] = c;
-        v[1] = d;
+int isPrime(int n){
+    if(n < 2) return 0;
+    for(int i = 2; i*i <= n; i++){
+        if(n%i == 0) return 0;
     }
-    else{
-        v[0] = d;
-        v[1] = c+d;
-    }
+    return 1;
 }
-
 
 void solve()
 {
-    int n, m;
-    while(cin >> n >> m){
-        vi v(2);
-        fastFib(n, v);
-        int a = v[0];
-        v = vi(2);
-        fastFib(a, v);
-        cout << v[0]%m << endl;
+    int m;
+    while(cin >> m){
+        vi v(m);
+        for(auto &i : v) cin >> i;
+        int n;
+        cin >> n;
+        int sum = 0;
+        for(int i = m-1; i >=  0; i-=n)
+            sum += v[i];
+        if(isPrime(sum)){
+            cout << "You’re a coastal aircraft, Robbie, a large silver aircraft.\n";
+        }else{
+            cout << "Bad boy! I’ll hit you.\n";
+        }
     }
 
 }
