@@ -1,3 +1,8 @@
+#if defined(LOCAL) or not defined(LUOGU)
+#pragma GCC optimize(3)
+#pragma GCC optimize("Ofast,unroll-loops")
+#endif
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -12,13 +17,18 @@ using namespace std;
 #define s second
 #define Unique(v) \
     sort(all(v)); \
-    v.erase(unique(all(v)), v.end());
+    v.erase(unique(all(v)), v.end()); \
+    v.shrink_to_fit()
 #define sz(v) ((int)v.size())
 #define sor(x) sort(all(x))
 #define ft front()
 #define bk back()
 #define endl "\n"
 #define rep(i, a, b) for (int i = a; i < (b); ++i)
+#define MIN(v) *min_element(all(v))
+#define MAX(v) *max_element(all(v))
+#define LB(c, x) distance((c).begin(), lower_bound(all(c), (x)))
+#define UB(c, x) distance((c).begin(), upper_bound(all(c), (x)))
 typedef vector<double> vd;
 typedef vector<vd> vvd;
 typedef vector<vvd> vvvd;
