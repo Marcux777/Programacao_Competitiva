@@ -59,18 +59,7 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, x, y;
-    cin >> n >> x >> y;
-    int l = 0, r = n * min(x, y);
-
-    while(l < r){
-        int mid = l + (r - l)/2;
-        if((mid/x) + (mid/y) >= n - 1)
-            r = mid;
-        else l = mid + 1;
-    }
-
-    cout << l+min(x, y) << endl;
+    
 
 }
 
