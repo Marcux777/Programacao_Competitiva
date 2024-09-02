@@ -56,22 +56,50 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+bool posso(string &t, string &p, const vi &perm, int k) {
+    // posso formar p atraves de t
+    int n = t.size();
+    int m = p.size();
+    vector<bool> vis(n, false);
+    
+    for (int i = 0; i < k; ++i) {
+        vis[perm[i] - 1] = true;
+    }
+    
+    int j = 0;
+    for (int i = 0; i < n; ++i) {
+        if (!vis[i] && t[i] == p[j]) {
+            ++j;
+            if (j == m) return true;
+        }
+    }
+    
+    return j == m;
+}
+
 
 void solve()
 {
-    int n, x, y;
-    cin >> n >> x >> y;
-    int l = 0, r = n * min(x, y);
-
-    while(l < r){
-        int mid = l + (r - l)/2;
-        if((mid/x) + (mid/y) >= n - 1)
-            r = mid;
-        else l = mid + 1;
+    string t, p;
+    cin >> t >> p;
+    int n = t.size();
+    vi perm(n); // permutação
+    for (int i = 0; i < n; ++i) {
+        cin >> perm[i];
     }
-
-    cout << l+min(x, y) << endl;
-
+    
+    int l = 0, r = n, ans = 0;
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (posso(t, p, perm, mid)) {
+            ans = mid;
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    
+    cout << ans << endl;
 }
 
 int32_t main()
