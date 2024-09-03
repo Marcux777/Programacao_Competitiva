@@ -58,6 +58,24 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int x, y, k;
+    cin >> x >> y >> k;
+
+    int dx = x, dy = y;
+    int mx = dx / k, my = dy / k;
+    int rx = dx % k, ry = dy % k;
+
+    if (rx == 0 && ry == 0)
+    {
+        
+        cout << max(mx, my) * 2 - 1 << endl;
+    }
+    else if (rx == 0 || ry == 0)
+        cout << max(mx, my) * 2 + 2 << endl;
+    else if (mx == my)
+        cout << mx * 2 + 2 << endl;
+    else
+        cout << max(mx, my) * 2 + 1 + (rx + ry > k) << endl;
 }
 
 int32_t main()
@@ -65,6 +83,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

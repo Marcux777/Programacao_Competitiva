@@ -56,8 +56,39 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+// mais elegante assim 
+
+int prefixSum(int i, int k){
+    // soma da PA 
+    return (i * (2 * k + i - 1)) / 2;
+}
+
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+
+    int l = 1, r = n - 1;
+    while (l < r)
+    {
+        int mid = l + (r - l) / 2;
+
+        int leftSum = prefixSum(mid, k);
+        int rightSum = prefixSum(n, k) - leftSum;
+        int x = abs(leftSum - rightSum);
+
+        int x_left = abs(prefixSum(mid - 1, k) - (prefixSum(n, k) - prefixSum(mid - 1, k)));
+        int x_right = abs(prefixSum(mid + 1, k) - (prefixSum(n, k) - prefixSum(mid + 1, k)));
+
+        if (x <= x_left && x <= x_right)
+            l = r = mid;
+        else if (x_left < x)
+            r = mid - 1;
+        else
+            l = mid + 1;
+    }
+
+    cout << abs(prefixSum(l, k) - (prefixSum(n, k) - prefixSum(l, k))) << endl;
 }
 
 int32_t main()
@@ -65,6 +96,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

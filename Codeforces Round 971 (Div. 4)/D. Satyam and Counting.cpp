@@ -56,8 +56,22 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+struct Point{
+    int x, y;
+};
+
+int distance(Point p1, Point p2){
+    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+}
+
 void solve()
 {
+    int n; cin >> n;
+    vector<Point> points(n);
+    for(int i = 0; i < n; i++){
+        cin >> points[i].x >> points[i].y;
+    }
+    
 }
 
 int32_t main()
@@ -65,6 +79,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
