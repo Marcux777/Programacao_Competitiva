@@ -15,8 +15,8 @@ using namespace std;
 #define all(v) v.begin(), v.end()
 #define f first
 #define s second
-#define Unique(v) \
-    sort(all(v)); \
+#define Unique(v)                     \
+    sort(all(v));                     \
     v.erase(unique(all(v)), v.end()); \
     v.shrink_to_fit()
 #define sz(v) ((int)v.size())
@@ -56,11 +56,16 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-
 void solve()
 {
-    
+    int n, k;
+    cin >> n >> k;
+    vi a(n);
 
+    for (auto &i : a)
+        cin >> i;
+
+    
 }
 
 int32_t main()
@@ -68,6 +73,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

@@ -58,6 +58,20 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    vi ans(n);
+    for(int i = 0; i < n; i++){
+        string s;
+        cin >> s;
+        for(int j = 0; j < sz(s); j++) {
+            if(s[j] == '#') {
+                ans[n - 1 - i] = j + 1;
+                break;
+            }
+        }
+    }
+    for(auto i : ans) cout << i << " ";
+    cout << endl;
 }
 
 int32_t main()
@@ -65,6 +79,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
