@@ -46,7 +46,7 @@ typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-const int mod = 1e9 + 7;
+const int mod = 998244353;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -58,7 +58,24 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n, k; cin >> n >> k;
+    vi v(n+1, 0), a(n), dp(n+1);
+    for(auto &i : a) cin >> i;
+
+    unordered_map<int, int> prefix;
+    prefix[0] = 1;
+    int sum = 1;
+    int s = 0;
+
+    for (int i = 0; i < n; i++) {
+        s += a[i];
+        int c = (sum - prefix[s - k] + mod) % mod;
+        prefix[s] = (prefix[s] + c) % mod;
+        sum = (sum + c) % mod;
+        if (i == n - 1) {
+            cout << c << endl;
+        }
+    }
 }
 
 int32_t main()
