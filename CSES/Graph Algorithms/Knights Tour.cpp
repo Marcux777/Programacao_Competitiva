@@ -7,7 +7,6 @@
 
 using namespace std;
 
-#define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
@@ -56,42 +55,71 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve()
-{
-    int n, m, q;
-    cin >> n >> m >> q;
-    vector<vii> graph(n + 1);
-    vvi dist(n + 1, vi(n + 1, LINF));
+int dx[] = {2, 1, -1, -2, -2, -1, 1, 2};
+int dy[] = {1, 2, 2, 1, -1, -2, -2, -1};
 
-    for (int i = 0; i <= n; i++)
-        dist[i][i] = 0;
+bool isValid(int x, int y, const vvi &mat) {
+    return (x >= 0 && x < 8 && y >= 0 && y < 8 && mat[x][y] == -1);
+}
 
-    for (int i = 0; i < m; i++)
-    {
-        int a, b, c;
-        cin >> a >> b >> c;
-        dist[a][b] = min(dist[a][b], c);
-        dist[b][a] = min(dist[b][a], c);
+int countMoves(int x, int y, vector<vector<int>>& mat) {
+    int count = 0;
+    for (int i = 0; i < 8; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if (isValid(nx, ny, mat)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+bool dfs(int x, int y, int movei, vector<vector<int>>& mat, int& c) {
+    if (movei == 64) return true;
+
+    vector<pair<int, pair<int, int>>> moves;
+    for (int k = 0; k < 8; k++) {
+        int nx = x + dx[k];
+        int ny = y + dy[k];
+        if (isValid(nx, ny, mat)) {
+            int count = countMoves(nx, ny, mat);
+            moves.push_back({count, {nx, ny}});
+        }
     }
 
-    for (int k = 1; k <= n; k++)
-        for (int i = 1; i <= n; i++)
-            for (int j = 1; j <= n; j++)
-                if (dist[i][k] < LINF && dist[k][j] < LINF)
-                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+    sort(moves.begin(), moves.end());
 
-    while (q--)
+    for (auto move : moves) {
+        int nx = move.second.first;
+        int ny = move.second.second;
+        mat[nx][ny] = c++;
+        if (dfs(nx, ny, movei + 1, mat, c)) return true;
+        mat[nx][ny] = -1;
+        c--;
+    }
+
+    return false;
+}
+
+void solve()
+{
+    vvi mat(8, vi(8, -1));
+    int x, y;
+    cin >> x >> y;
+    x--, y--;
+    int c = 1;
+    mat[y][x] = 0;
+    dfs(y, x, 1, mat, c);
+
+    for (auto &i : mat)
     {
-        int a, b;
-        cin >> a >> b;
-        if (dist[a][b] == LINF)
-            cout << -1 << endl;
-        else
-            cout << dist[a][b] << endl;
+        for (auto &j : i)
+            cout << j+1 << " ";
+        cout << endl;
     }
 }
 
-int32_t main()
+int main()
 {
     IOS;
     int tt;

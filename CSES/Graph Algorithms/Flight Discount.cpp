@@ -11,7 +11,6 @@ void dijkstra(vector<vector<pair<int, int>>> &graph, int start, int end)
     vector<vector<int>> dist(n, vector<int>(2, INF));
 
     dist[start][0] = 0LL;
-    // um par que contém o custo total para chegar ao nó e um par que contém o nó atual e um indicador se o cupom foi usado ou não.
     priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> queue;
     queue.push({0, {1, 0}}); // cupom não usado
 
