@@ -54,11 +54,13 @@ void dbg_out(Head H, Tail... T)
 
 
 int depth[MAXN], parent[MAXN][LOG], dist[MAXN];
-vector<pair<int, int>> g[MAXN];
+vii g[MAXN];
 
 void dfs(int u, int par) {
     parent[u][0] = par;
     for(int i = 1; i < LOG; i++) {
+        // tentando zerar o parent
+        parent[u][i] = -1;
         if(parent[u][i-1] != -1) {
             parent[u][i] = parent[parent[u][i-1]][i-1];
         }
@@ -95,8 +97,9 @@ signed main() {
     //freopen("saida.txt", "w", stdout);
     int n;
     while(cin >> n && n) {
-        for(int i = 0; i < n; i++) g[i].clear();
-        memset(parent, -1, sizeof(parent));
+        for(int i = 0; i < n; i++)
+            g[i].clear();
+        //memset(parent, -1, sizeof(parent));
         
         for(int i = 1; i < n; i++) {
             int a, w;
