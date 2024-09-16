@@ -1,3 +1,8 @@
+#if defined(LOCAL) or not defined(LUOGU)
+#pragma GCC optimize(3)
+#pragma GCC optimize("Ofast,unroll-loops")
+#endif
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -10,15 +15,23 @@ using namespace std;
 #define all(v) v.begin(), v.end()
 #define f first
 #define s second
-#define Unique(v) \
-    sort(all(v)); \
-    v.erase(unique(all(v)), v.end());
+#define Unique(v)                     \
+    sort(all(v));                     \
+    v.erase(unique(all(v)), v.end()); \
+    v.shrink_to_fit()
 #define sz(v) ((int)v.size())
 #define sor(x) sort(all(x))
 #define ft front()
 #define bk back()
 #define endl "\n"
 #define rep(i, a, b) for (int i = a; i < (b); ++i)
+#define MIN(v) *min_element(all(v))
+#define MAX(v) *max_element(all(v))
+#define LB(c, x) distance((c).begin(), lower_bound(all(c), (x)))
+#define UB(c, x) distance((c).begin(), upper_bound(all(c), (x)))
+typedef vector<double> vd;
+typedef vector<vd> vvd;
+typedef vector<vvd> vvvd;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<vvi> vvvi;
@@ -29,6 +42,7 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
+typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
@@ -44,6 +58,9 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
     
 }
 
