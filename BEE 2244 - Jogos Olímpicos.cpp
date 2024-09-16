@@ -56,16 +56,29 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+struct atleta{
+    int hi, hti, ci, cti;
+};
+
+bool isValid(atleta &a, vector<atleta> &atletas){
+    for(auto &b : atletas){
+        if(a.hi < b.hi && a.hti <= b.hti && a.ci > b.ci && a.cti >= b.cti)
+            return false;
+    }
+    return true;
+}
+
 void solve()
 {
-    int n, m; cin >> n >> m;
-    vvi graph(n+1);
-    for(int i = 0; i < ; i++){
-        int a, b; cin >> a >> b;
-        graph[a].pb(b);
+    int n; cin >> n;
+    vector<atleta> a(n);
+    for(auto &i : a) cin >> i.hi >> i.hti >> i.ci >> i.cti;
+    int ans = 0;
+    for(auto i : a){
+        if(isValid(i, a))
+            ans++;
     }
-    
-
+    cout << ans << endl;
 }
 
 int32_t main()
