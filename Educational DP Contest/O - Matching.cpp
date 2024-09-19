@@ -58,33 +58,30 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, k; 
-    cin >> n >> k;
-    vi v(n);
-    for(auto &i : v) 
-        cin >> i;
+    int n; 
+    cin >> n;
+    vvi v(n, vi(n, 0));
+    rep(i, 0, n)
+        rep(j, 0, n)
+            cin >> v[i][j];
 
-    vvi dp(n+1, vi(k+1, 0));
+    vvi dp(1<<n, vi(n, 0));
+
     dp[0][0] = 1;
 
-    for(int i = 1; i <= n; i++){
-        vi prefix_sum(k+1, 0);
-        prefix_sum[0] = dp[i-1][0];
-        for(int j = 1; j <= k; j++){
-            prefix_sum[j] = (prefix_sum[j-1] + dp[i-1][j]) % mod;
-        }
-        for(int j = 0; j <= k; j++){
-            if(j <= v[i-1]){
-                dp[i][j] = prefix_sum[j];
-            } else {
-                dp[i][j] = (prefix_sum[j] - prefix_sum[j - v[i-1] - 1] + mod) % mod;
+    for(int m = 0; m < (1 << n); m++){
+        for(int i = 0; i < n; i++){
+            if(!(m & (1 << i))) continue;
+            for(int j = 0; j < i; j++){
+                if(m & (1 << j) && v[j][i]){
+                    dp[m][i] = (dp[m][i] + dp[m ^ (1 << i)][j]) % mod;
+                }
             }
-        }
+        }   
     }
+    cout << dp[(1 << n) - 1][n-1] << endl;
 
-    cout << dp[n][k] << endl;
 }
-
 
 int32_t main()
 {

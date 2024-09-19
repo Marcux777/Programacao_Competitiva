@@ -56,34 +56,19 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-int n;
-vi v;
-
-
 void solve()
 {
-    cin >> n;
-    v.resize(n);
-    rep(i, 0, n) cin >> v[i];
-    vvi dp(n, vi(n, LINF));
-    vvi sum(n, vi(n, 0));
-    rep(i, 0, n)
-    {
-        dp[i][i] = 0;
-        sum[i][i] = v[i];
+    int n; cin >> n;
+    vi v(n);
+    for(auto &i : v) cin >> i;
+    vi ans;
+    for(int i = 1; i < n; i++){
+        auto it = lower_bound(all(ans), v[i]);
+        if(it == ans.end()) ans.pb(v[i]);
+        else *it = v[i];
     }
+    cout << ans.size() << endl;
 
-    for(int l = 2; l <= n; l++){
-        for(int i = 0; i <= n - l; i++){
-            int j = i + l - 1;
-            sum[i][j] = sum[i][j - 1] + v[j];
-            for(int k = i; k < j; k++){
-                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k + 1][j] + sum[i][j]);
-            }
-        }
-    }
-
-    cout << dp[0][n-1] << endl;
 }
 
 int32_t main()
