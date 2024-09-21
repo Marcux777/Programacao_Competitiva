@@ -56,38 +56,9 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve() {
-    int n;
-    while (cin >> n && n) {
-        queue<vi> q;
-        q.push({1});
-        unordered_set<int> vis;
-        vis.insert(1);
-
-        while (!q.empty()) {
-            vi v = q.front();
-            q.pop();
-            int last = v.back();
-
-            if (last == n) {
-                for (auto i : v)
-                    cout << i << " ";
-                cout << endl;
-                break;
-            }
-
-            for (int i = 0; i < v.size(); i++) {
-                for (int j = i; j < v.size(); j++) {
-                    int nxt = v[i] + v[j];
-                    if (nxt > n || vis.count(nxt)) continue;
-                    vi nw = v;
-                    nw.pb(nxt);
-                    q.push(nw);
-                    vis.insert(nxt);
-                }
-            }
-        }
-    }
+void solve()
+{
+    
 }
 
 int32_t main()
