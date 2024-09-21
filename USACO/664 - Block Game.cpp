@@ -56,34 +56,33 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve(ifstream & cin, ofstream& cout)
+void solve(ifstream& cin, ofstream& cout)
 {
-    int n; cin >> n;
-    vi a(n+1), b(n+1);
-    rep(i, 1, n+1) cin >> a[i];
-    rep(i, 1, n+1) cin >> b[i];
+    int n;
+    vi v(26, 0);
+    cin >> n;
+    while(n--){
+        string a, b;
+        cin >> a >> b;
+        map<char, int> mpa, mpb;
+        for(auto i : a)
+            mpa[i]++;
+        for(auto i : b) 
+            mpb[i]++;
 
-    vi original(n+1);
-
-    for(int i = 1; i <= n; i++){
-        int pos = i;
-        for(int j = 0; j < 3; j++){
-            pos = a[pos];
+        for(char i = 'a'; i <= 'z'; i++){
+            v[i - 'a'] += max(mpa[i], mpb[i]);
         }
-
-        original[i] = b[pos];
     }
 
-
-    for(int i = 1; i <= n; i++) cout << original[i] << endl;
-    
+    for(auto i : v) cout <<  i << endl;
 }
 
 int32_t main()
 {
     IOS;
-    ifstream in("shuffle.in");
-    ofstream out("shuffle.out");
+    ifstream in("blocks.in");
+    ofstream out("blocks.out");
     int tt;
     tt = 1;
     while (tt--)

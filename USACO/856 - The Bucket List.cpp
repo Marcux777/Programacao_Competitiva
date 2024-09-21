@@ -56,34 +56,48 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve(ifstream & cin, ofstream& cout)
-{
-    int n; cin >> n;
-    vi a(n+1), b(n+1);
-    rep(i, 1, n+1) cin >> a[i];
-    rep(i, 1, n+1) cin >> b[i];
+struct Event {
+    int time;
+    int b;
+};
 
-    vi original(n+1);
+bool compare(Event a, Event b) {
+    return a.time < b.time;
+}
 
-    for(int i = 1; i <= n; i++){
-        int pos = i;
-        for(int j = 0; j < 3; j++){
-            pos = a[pos];
-        }
+void solve(ifstream& cin, ofstream& cout) {
+    int n;
+    cin >> n;
+    vector<Event> events;
 
-        original[i] = b[pos];
+    for (int i = 0; i < n; i++) {
+        int s, t, b;
+        cin >> s >> t >> b;
+        events.push_back({s, b});
+        events.push_back({t, -b});
     }
 
+    sort(events.begin(), events.end(), compare);
 
-    for(int i = 1; i <= n; i++) cout << original[i] << endl;
-    
+    int curr = 0;
+    int max_buckets = 0;
+
+    for (auto event : events) {
+        curr += event.b;
+        if (curr > max_buckets) {
+            max_buckets = curr;
+        }
+    }
+
+    cout << max_buckets << endl;
 }
 
 int32_t main()
 {
     IOS;
-    ifstream in("shuffle.in");
-    ofstream out("shuffle.out");
+    ifstream in("blist.in");
+    ofstream out("blist.out");
+
     int tt;
     tt = 1;
     while (tt--)
