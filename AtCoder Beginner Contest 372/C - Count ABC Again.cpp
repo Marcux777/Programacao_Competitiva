@@ -56,21 +56,40 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-int n;
-
-bool bt(int u, vi &ans){
-    
+int count(const string &s) {
+    int count = 0;
+    for (int i = 0; i + 2 < sz(s); ++i)
+        if (s.substr(i, 3) == "ABC")
+            count++;
+        
+    return count;
 }
-
 void solve()
 {
-    while(cin >> n && n){
-        vi ans;
-        bt(n, ans);
-        for(auto x: ans){
-            cout << x << " ";
-        }
-        cout << endl;
+    int n, q;
+    cin >> n >> q;
+    string s; cin >> s;
+    int curr = count(s);
+    while (q--) {
+        int x;
+        char c;
+        cin >> x >> c;
+        x--;
+
+        for (int i = max(0LL, x - 2); i <= min(n - 3, x); ++i) 
+            if (s.substr(i, 3) == "ABC") 
+                curr--;
+            
+
+        s[x] = c;
+
+        for (int i = max(0LL, x - 2); i <= min(n - 3, x); ++i)
+            if (s.substr(i, 3) == "ABC") 
+                curr++;
+            
+        
+
+        cout << curr << endl;
     }
 
 }
