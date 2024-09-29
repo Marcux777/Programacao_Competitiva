@@ -56,29 +56,51 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+vector<vii> adj;
+vi x;
+
+void dfs(int u){
+    for(auto [v, w] : adj[u]){
+        if(x[v] == LINF){
+            x[v] = x[u] + w;
+            dfs(v);
+        }
+    }
+}
+
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    map<int, int> prefix;
-    prefix[0] = 1;
-    int curr = 0;
-    int ans = 0;
-    rep(i, 0, n) {
-        int a;
-        cin >> a;
-        curr += a;
-        auto it = prefix.find(curr - x);
-        if (it != prefix.end())
-            ans += it->second;
-        prefix[curr]++;
+    int n, m;
+    cin >> n >> m;
+    adj=vector<vii> (n);
+    for (int i = 0; i < m; i++)
+    {
+        int u, v, w;
+        cin >> u >> v >> w;
+        u--, v--;
+        adj[u].pb({v, w});
+        adj[v].pb({u, -w});
     }
-    cout << ans << endl;
+
+    x=vi(n, LINF);
+    for(int i = 0; i < n; i++){
+        if(x[i] == LINF){
+            x[i] = 0;
+            dfs(i);
+        }
+    }
+
+    for(auto i : x) cout << i << " ";
+    
+    cout << endl;
 }
 
 int32_t main()
 {
     IOS;
-    solve();
+    int tt;
+    tt = 1;
+    while (tt--)
+        solve();
     return 0;
 }

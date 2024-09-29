@@ -1,0 +1,1 @@
+{"name":"Local: Haybale stacking","url":"/home/marcux777/Programacao_Competitiva/SPOJ/Haybale stacking.cpp","tests":[{"id":1727564150965,"input":"7 4\n5 5\n2 4\n4 6\n3 5\n\n","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/SPOJ/Haybale stacking.cpp","group":"local","local":true}

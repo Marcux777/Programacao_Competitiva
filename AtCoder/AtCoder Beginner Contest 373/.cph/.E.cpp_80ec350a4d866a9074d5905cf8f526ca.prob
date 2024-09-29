@@ -1,0 +1,1 @@
+{"name":"Local: E","url":"/home/marcux777/Programacao_Competitiva/AtCoder Beginner Contest 373/E.cpp","tests":[{"id":1727527346041,"input":"5 2 16\n3 1 4 1 5\n","output":"2 -1 1 -1 0\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/AtCoder Beginner Contest 373/E.cpp","group":"local","local":true}
