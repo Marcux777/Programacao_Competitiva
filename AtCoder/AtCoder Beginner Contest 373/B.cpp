@@ -58,20 +58,18 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    map<int, int> prefix;
-    prefix[0] = 1;
-    int curr = 0;
+    string s;
+    cin >> s;
+    map<char, int> mp;
+    for (int i = 0; i < 26; ++i)
+        mp[s[i]] = i + 1;
+    
     int ans = 0;
-    rep(i, 0, n) {
-        int a;
-        cin >> a;
-        curr += a;
-        auto it = prefix.find(curr - x);
-        if (it != prefix.end())
-            ans += it->second;
-        prefix[curr]++;
+    int curr = mp['A'];
+    
+    for (char c = 'B'; c <= 'Z'; ++c) {
+        ans += abs(mp[c] - curr);
+        curr = mp[c];
     }
     cout << ans << endl;
 }
@@ -79,6 +77,9 @@ void solve()
 int32_t main()
 {
     IOS;
-    solve();
+    int tt;
+    tt = 1;
+    while (tt--)
+        solve();
     return 0;
 }

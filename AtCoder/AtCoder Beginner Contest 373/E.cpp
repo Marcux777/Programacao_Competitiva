@@ -56,29 +56,65 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve()
-{
-    int n, x;
-    cin >> n >> x;
-    map<int, int> prefix;
-    prefix[0] = 1;
-    int curr = 0;
-    int ans = 0;
-    rep(i, 0, n) {
-        int a;
-        cin >> a;
-        curr += a;
-        auto it = prefix.find(curr - x);
-        if (it != prefix.end())
-            ans += it->second;
-        prefix[curr]++;
+int extra_votes(vector<pii>& a, vector<int>& s, int l, int r, int x) {
+    auto pos = lower_bound(a.begin() + l, a.begin() + r, make_pair(x, -1LL)) - a.begin();
+    return (pos - l) * x - (s[pos] - s[l]);
+}
+
+void solve() {
+    int n, m, k;
+    cin >> n >> m >> k;
+    vi a(n);
+    for (auto &i : a) cin >> i;
+    
+    int V = k - accumulate(all(a), 0LL);
+    
+    if (m == n) {
+        for (int i = 0; i < n; ++i) cout << 0 << " ";
+        cout << endl;
+        return;
     }
-    cout << ans << endl;
+    
+    vector<pii> b(n);
+    for (int i = 0; i < n; ++i) b[i] = {a[i], i};
+    sort(all(b));
+    
+    vi s(n + 1, 0);
+    for (int i = 0; i < n; ++i) s[i + 1] = s[i] + b[i].first;
+    
+    vi ans(n, 0);
+    
+    for (int i = 0; i < n; ++i) {
+        int ng = -1, ok = V + 1;
+        while (ng + 1 < ok) {
+            int mi = (ng + ok) / 2;
+            int x = b[i].first + mi + 1;
+            int v;
+            if (i < n - m) {
+                v = extra_votes(b, s, n - m, n, x);
+            } else {
+                v = (i - (n - m - 1)) * x - (s[i] - s[n - m - 1]);
+                v += extra_votes(b, s, i + 1, n, x);
+            }
+            if (v > V - mi) {
+                ok = mi;
+            } else {
+                ng = mi;
+            }
+        }
+        ans[b[i].second] = ok <= V ? ok : -1;
+    }
+    
+    for (int i = 0; i < n; ++i) cout << ans[i] << " ";
+    cout << endl;
 }
 
 int32_t main()
 {
     IOS;
-    solve();
+    int tt;
+    tt = 1;
+    while (tt--)
+        solve();
     return 0;
 }

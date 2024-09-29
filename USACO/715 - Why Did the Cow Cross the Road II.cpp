@@ -56,29 +56,40 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve()
+void solve(ifstream& cin, ofstream& cout)
 {
-    int n, x;
-    cin >> n >> x;
-    map<int, int> prefix;
-    prefix[0] = 1;
-    int curr = 0;
-    int ans = 0;
-    rep(i, 0, n) {
-        int a;
-        cin >> a;
-        curr += a;
-        auto it = prefix.find(curr - x);
-        if (it != prefix.end())
-            ans += it->second;
-        prefix[curr]++;
+    int n, k, b;
+    cin >>  n>> k >> b;
+    vi broken(n + 1, 0);
+
+    for (int i = 0; i < b; ++i) {
+        int x;
+        cin >> x;
+        broken[x] = 1;
     }
-    cout << ans << endl;
+
+    vi prefix_sum(n + 1, 0);
+    rep(i, 1, n+1)
+        prefix_sum[i] = prefix_sum[i - 1] + broken[i];
+
+    int min_repairs = INF;
+    for (int i = 1; i <= n - k + 1; ++i)
+        min_repairs = min(min_repairs,  prefix_sum[i + k - 1] - prefix_sum[i - 1]);
+
+    cout << min_repairs << endl;
+
 }
 
 int32_t main()
 {
     IOS;
-    solve();
+    ifstream in ("maxcross.in");
+    ofstream out("maxcross.out");
+    int tt;
+    tt = 1;
+    while (tt--)
+        solve(in, out);
+    in.close();
+    out.close();
     return 0;
 }

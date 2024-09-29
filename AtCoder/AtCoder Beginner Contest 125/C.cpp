@@ -58,27 +58,36 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, x;
-    cin >> n >> x;
-    map<int, int> prefix;
-    prefix[0] = 1;
-    int curr = 0;
-    int ans = 0;
-    rep(i, 0, n) {
-        int a;
-        cin >> a;
-        curr += a;
-        auto it = prefix.find(curr - x);
-        if (it != prefix.end())
-            ans += it->second;
-        prefix[curr]++;
-    }
-    cout << ans << endl;
+    int n; cin >> n;
+    vi v(n);
+    for(auto &i : v) cin >> i;
+
+    vi pre(n), suf(n);
+    pre[0] = v[0];
+    for(int i = 1; i < n; i++)
+        pre[i] = __gcd(pre[i - 1], v[i]);
+    suf[n - 1] = v[n - 1];
+    for(int i = n - 2; i >= 0; i--)
+        suf[i] = __gcd(suf[i + 1], v[i]);
+
+    int ma = 0;
+    for(int i = 0; i < n; i++){{
+        int curr;
+        if(i == 0) curr = suf[i+1];
+        else if (i == n-1) curr = pre[i-1];
+        else curr = __gcd(pre[i-1], suf[i+1]);
+        ma = max(ma, curr);
+    }}
+    
+    cout << ma << endl;
 }
 
 int32_t main()
 {
     IOS;
-    solve();
+    int tt;
+    tt = 1;
+    while (tt--)
+        solve();
     return 0;
 }
