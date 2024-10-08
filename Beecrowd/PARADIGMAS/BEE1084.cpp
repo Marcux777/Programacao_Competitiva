@@ -58,17 +58,30 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n; cin >> n;
-    vi v(n);
-    for(auto &i : v) cin >> i;
-    vi ans;
-    for(int i = 0; i < n; i++){
-        auto it = lower_bound(all(ans), v[i]);
-        if(it == ans.end()) ans.pb(v[i]);
-        else *it = v[i];
+    int n, d;
+    while(cin >> n >> d && n && d){
+        string s;
+        cin >> s;
+        stack<char>st;
+        int cnt = d;
+        for(auto c : s){
+            while(!st.empty() && st.top() < c && cnt > 0){
+                st.pop();
+                cnt--;
+            }
+            st.push(c);
+        }
+        while(cnt){
+            st.pop();
+            cnt--;
+        }
+        string ans;
+        while(!st.empty()){
+            ans = st.top() + ans;
+            st.pop();
+        }
+        cout << ans << endl;
     }
-    cout << ans.size() << endl;
-
 }
 
 int32_t main()
