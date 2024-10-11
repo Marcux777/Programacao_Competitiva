@@ -56,14 +56,65 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-
 void solve()
 {
     string s;
     cin >> s;
-    int n = s.size() + 1;
-    vvi sum(s, vi(26));
-    for(int i = 1; i  <=)
+    int n = s.size();
+    int q;
+    cin >> q;
+
+    vvi prefix_sum(n + 1, vi(26, 0));
+
+    for (int i = 1; i <= n; ++i)
+    {
+        for (int j = 0; j < 26; ++j)
+        {
+            prefix_sum[i][j] = prefix_sum[i-1][j];
+        }
+        prefix_sum[i][s[i-1] - 'a']++;
+    }
+
+    while (q--)
+    {
+        int l, r;
+        cin >> l >> r;
+        if (r - l == 0)
+        {
+            cout << "Yes" << endl;
+            continue;
+        }
+
+        if (s[l-1] != s[r-1])
+        {
+            cout << "Yes" << endl;
+            continue;
+        }
+
+        vi freq(26, 0);
+        for (int j = 0; j < 26; ++j)
+        {
+            freq[j] = (prefix_sum[r][j] - prefix_sum[l-1][j]>0);
+        }
+
+        int dist_cnt = 0;
+        for (int j = 0; j < 26; ++j)
+        {
+            if (freq[j] > 0)
+            {
+                dist_cnt++;
+            }
+        }
+
+        if (dist_cnt >= 3)
+        {
+            cout << "Yes" << endl;
+        }
+        else
+        {
+            cout << "No" << endl;
+        }
+    }
 }
 
 int32_t main()
