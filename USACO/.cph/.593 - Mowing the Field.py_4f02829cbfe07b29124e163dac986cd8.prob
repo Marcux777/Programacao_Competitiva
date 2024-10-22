@@ -1,0 +1,1 @@
+{"name":"Local: 593 - Mowing the Field","url":"/home/marcux777/Programacao_Competitiva/USACO/593 - Mowing the Field.py","tests":[{"id":1729539975865,"input":"6\nN 10\nE 2\nS 3\nW 4\nS 5\nE 8\n","output":"10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/USACO/593 - Mowing the Field.py","group":"local","local":true}
