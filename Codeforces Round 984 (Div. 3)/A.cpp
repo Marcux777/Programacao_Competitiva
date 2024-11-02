@@ -56,58 +56,29 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-class FenwickTree {
-public:
-    int n;
-    vector<long long> tree;
-
-    FenwickTree(int n) : n(n), tree(n + 1, 0) {}
-
-    void add(int index, long long value) {
-        for (++index; index <= n; index += index & -index)
-            tree[index] += value;
-    }
-
-    // prefix sum[0..index)
-    long long sum(int index) {
-        long long result = 0;
-        for (; index > 0; index -= index & -index)
-            result += tree[index];
-        return result;
-    }
-
-    // sum over [left, right)
-    long long sum(int left, int right) {
-        return sum(right) - sum(left);
-    }
-};
-
 void solve()
 {
-    int n, m; cin >> n >> m;
+    int n; cin >> n;
     vi a(n);
-    for(auto &i :a) cin >> i;
-    vi s(n+1);
-    rep(i, 1, n+1)
-        s[i] = (s[i-1] + a[i-1])%m;
-
-    FenwickTree fenwick(m);
-    int sum, ans;
-    sum = ans = 0;
-    rep(i, 0, n+1){
-        ans += s[i] * i - sum + fenwick.sum(s[i] + 1, m)*m;
-        sum += s[i];
-        fenwick.add(s[i], 1);
+    bool ok = true;
+    rep(i, 0, n)
+        cin >> a[i];
+    
+    rep (i, 1, n) {
+        if (abs(a[i] - a[i - 1]) != 5 && abs(a[i] - a[i - 1]) != 7) {
+            ok = false;
+            break;
+        }
     }
-    cout << ans << endl;
+    cout << (ok ? "YES" : "NO") << endl;
 }
-
 
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

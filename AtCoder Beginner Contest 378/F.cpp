@@ -1,71 +1,84 @@
-#if defined(LOCAL) or not defined(LUOGU)
-#pragma GCC optimize(3)
-#pragma GCC optimize("Ofast,unroll-loops")
-#endif
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-#define int long long
-#define IOS                           \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(0)
-#define pb push_back
-#define all(v) v.begin(), v.end()
-#define f first
-#define s second
-#define Unique(v)                     \
-    sort(all(v));                     \
-    v.erase(unique(all(v)), v.end()); \
-    v.shrink_to_fit()
-#define sz(v) ((int)v.size())
-#define sor(x) sort(all(x))
-#define ft front()
-#define bk back()
-#define endl "\n"
-#define rep(i, a, b) for (int i = a; i < (b); ++i)
-#define MIN(v) *min_element(all(v))
-#define MAX(v) *max_element(all(v))
-#define LB(c, x) distance((c).begin(), lower_bound(all(c), (x)))
-#define UB(c, x) distance((c).begin(), upper_bound(all(c), (x)))
-typedef vector<double> vd;
-typedef vector<vd> vvd;
-typedef vector<vvd> vvvd;
-typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef vector<vvi> vvvi;
-typedef long long ll;
-typedef double db;
-typedef long double ld;
-typedef pair<int, int> pii;
-typedef pair<int, pii> piii;
-typedef vector<pii> vii;
-typedef vector<piii> viii;
-typedef tuple<int, int, int> tiii;
-const int MAXN = 2e5 + 5;
-const int INF = 0x3f3f3f3f;
-const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-const int mod = 1e9 + 7;
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+class DSU {
+public:
+    vector<int> parent;
+    vector<int> size;
 
-void solve(){
-    
-}
+    DSU(int n) : parent(n), size(n, 1) {
+        for (int i = 0; i < n; ++i) parent[i] = i;
+    }
 
-int32_t main()
-{
-    IOS;
-    int tt;
-    tt = 1;
-    while (tt--)
-        solve();
+    int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    void merge(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x == y) return;
+        if (size[x] < size[y]) swap(x, y);
+        parent[y] = x;
+        size[x] += size[y];
+    }
+
+    vector<vector<int>> groups() {
+        int n = parent.size();
+        vector<int> leader_buf(n), group_size(n);
+        for (int i = 0; i < n; ++i) {
+            leader_buf[i] = find(i);
+            group_size[leader_buf[i]]++;
+        }
+        vector<vector<int>> result(n);
+        for (int i = 0; i < n; ++i)
+            result[leader_buf[i]].push_back(i);
+        result.erase(
+            remove_if(result.begin(), result.end(),
+                      [](const vector<int>& v) { return v.empty(); }),
+            result.end());
+        return result;
+    }
+};
+
+int main() {
+    int N;
+    cin >> N;
+    vector<int> u(N - 1), v(N - 1);
+    vector<int> deg(N, 0);
+    for (int i = 0; i < N - 1; ++i) {
+        cin >> u[i] >> v[i];
+        --u[i];
+        --v[i];  // Convert to 0-based indexing
+        deg[u[i]]++;
+        deg[v[i]]++;
+    }
+
+    DSU d(N);
+    vector<int> c2(N, 0);
+    for (int i = 0; i < N - 1; ++i) {
+        if (deg[u[i]] == 3 && deg[v[i]] == 3) {
+            d.merge(u[i], v[i]);
+        } else if (deg[u[i]] == 3 && deg[v[i]] == 2) {
+            c2[u[i]]++;
+        } else if (deg[u[i]] == 2 && deg[v[i]] == 3) {
+            c2[v[i]]++;
+        }
+    }
+
+    long long ans = 0;
+    auto groups = d.groups();
+    for (const auto& g : groups) {
+        int c = 0;
+        for (int v : g) {
+            c += c2[v];
+        }
+        ans += static_cast<long long>(c) * (c - 1) / 2;
+    }
+    cout << ans << endl;
     return 0;
 }
