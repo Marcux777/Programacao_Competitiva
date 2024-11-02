@@ -47,61 +47,68 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
+
+bool nah_ih_win(vvi &a, const vector<array<int, 3>>& req, int mid){
+    for(auto &[r, op, c] : req){
+        if(op == 0){
+            if((a[mid][r] >= c)){
+                return false;
+            }
+        }
+        else{
+            if((a[mid][r] <= c)){
+                return false;
+            }
+        }
+    }
+    return true;
 }
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
-
-class FenwickTree {
-public:
-    int n;
-    vector<long long> tree;
-
-    FenwickTree(int n) : n(n), tree(n + 1, 0) {}
-
-    void add(int index, long long value) {
-        for (++index; index <= n; index += index & -index)
-            tree[index] += value;
-    }
-
-    // prefix sum[0..index)
-    long long sum(int index) {
-        long long result = 0;
-        for (; index > 0; index -= index & -index)
-            result += tree[index];
-        return result;
-    }
-
-    // sum over [left, right)
-    long long sum(int left, int right) {
-        return sum(right) - sum(left);
-    }
-};
 
 void solve()
 {
-    int n, m; cin >> n >> m;
-    vi a(n);
-    for(auto &i :a) cin >> i;
-    vi s(n+1);
-    rep(i, 1, n+1)
-        s[i] = (s[i-1] + a[i-1])%m;
-
-    FenwickTree fenwick(m);
-    int sum, ans;
-    sum = ans = 0;
-    rep(i, 0, n+1){
-        ans += s[i] * i - sum + fenwick.sum(s[i] + 1, m)*m;
-        sum += s[i];
-        fenwick.add(s[i], 1);
+    int n, k, q;
+    cin >> n >> k >> q;
+    vvi a(n, vi(k)), prefix(n, vi(k));
+    
+    rep(i, 0, n)
+        rep(j, 0, k)
+            cin >> a[i][j];
+    
+    rep(j, 0, k){
+        prefix[0][j] = a[0][j];
+        rep(i, 1, n)
+            prefix[i][j] = prefix[i-1][j] | a[i][j];
     }
-    cout << ans << endl;
-}
 
+    while(q--) {
+        int m;
+        cin >> m;
+        int ans = -1;
+        
+        vector<array<int, 3>> req(m);
+        rep(i, 0, m) {
+            int r, c;
+            char o;
+            cin >> r >> o >> c;
+            r--;
+            req[i] = {r, (o == '<' ? 0 : 1), c};
+        }
+        
+        int l = 0, r = n - 1;
+        while(l <= r){
+            int mid = l + (r - l) / 2;
+            if(nah_ih_win(prefix, req, mid)){
+                ans = mid + 1;
+                r = mid - 1;
+            }
+            else{
+                l = mid + 1;
+            }
+        }
+        
+        cout << ans << endl;
+    }
+}
 
 int32_t main()
 {
