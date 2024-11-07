@@ -47,6 +47,8 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
+const int MOD = mod;
+const int BASE = 31;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -56,54 +58,55 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-int result;
-int D;
+struct PrefixHash {
+    int n;
+    vector<ll> hash;
+    vector<ll> power;
 
-ll pow_int(ll base, int exp) {
-    ll result = 1;
-    while (exp--) {
-        if (result > LINF / base) return LINF; // Check overflow
-        result *= base;
+    PrefixHash(const string &s) {
+        n = s.size();
+        hash.assign(n + 1, 0LL);
+        power.assign(n + 1, 1LL);
+        rep(i, 0, n){
+            hash[i+1] = (hash[i] * BASE + (s[i]-'a' +1)) % MOD;
+            power[i+1] = (power[i] * BASE) % MOD;
+        }
     }
-    return result;
-}
 
-vi primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71};
+    ll get_hash(int L, int R){
+        return (hash[R+1] - hash[L] * power[R-L+1] % MOD + MOD) % MOD;
+    }
+};
 
-void dfs(int index, ll curr, ll d, int last_e) {
-    if (d == 1) {
-        result = min(result, curr);
-        return;
-    }
-    if (index >= primes.size()) return;
-    for(int e = 1; e <= last_e; e++) {
-        if(d % (e +1) != 0) continue;
-        if(curr > LINF / pow_int(primes[index], e)) break;
-        ll next_n = curr * (ll)pow(primes[index], e);
-        if(next_n > LINF) break;
-        dfs(index +1, next_n, d / (e +1), e);
-    }
-}
 
 void solve()
 {
-    cin >> D;
-    if(D ==1){
-        cout << 1 << endl;
-        return;
+    string s; cin >> s;
+    int n = sz(s);
+    PrefixHash st(s);
+    int p = n;
+    rep(i, 1, n+1){
+        if(n%i != 0) continue;
+        bool ok = 1;
+        int hash = st.get_hash(0, i-1);
+        for(int j=i; j < n; j+=i){
+            if(st.get_hash(j, j+i-1) != hash){
+                ok = 0;
+                break;
+            }
+        }
+        if(ok){
+            p = i;
+            break;
+        }
     }
-    result = LINF;
-    dfs(0, 1, D, 60);
-    if(result <= 1e18){
-        cout << result << endl;
-    }
-    else{
-        cout << -1 << endl;
-    }
+    int m = n/p;
+    cout << m << "\n" << s.substr(0, p) << endl;
 }
 
 int32_t main()
 {
+    IOS;
     int tt;
     tt = 1;
     while (tt--)

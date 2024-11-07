@@ -56,54 +56,69 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-int result;
-int D;
+class DSU
+{
+    vi parent, rank;
 
-ll pow_int(ll base, int exp) {
-    ll result = 1;
-    while (exp--) {
-        if (result > LINF / base) return LINF; // Check overflow
-        result *= base;
+public:
+    DSU(int n)
+    {
+        parent.assign(n, -1);
+        rank.assign(n, 1);
     }
-    return result;
-}
 
-vi primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71};
+    int find(int i)
+    {
+        if (parent[i] == -1)
+            return i;
 
-void dfs(int index, ll curr, ll d, int last_e) {
-    if (d == 1) {
-        result = min(result, curr);
-        return;
+        return parent[i] = find(parent[i]);
     }
-    if (index >= primes.size()) return;
-    for(int e = 1; e <= last_e; e++) {
-        if(d % (e +1) != 0) continue;
-        if(curr > LINF / pow_int(primes[index], e)) break;
-        ll next_n = curr * (ll)pow(primes[index], e);
-        if(next_n > LINF) break;
-        dfs(index +1, next_n, d / (e +1), e);
+
+    void unite(int x, int y)
+    {
+        int s1 = find(x);
+        int s2 = find(y);
+
+        if (s1 != s2)
+        {
+            if (rank[s1] < rank[s2])
+            {
+                parent[s1] = s2;
+            }
+            else if (rank[s1] > rank[s2])
+            {
+                parent[s2] = s1;
+            }
+            else
+            {
+                parent[s2] = s1;
+                rank[s1] += 1;
+            }
+        }
     }
-}
+};
 
 void solve()
 {
-    cin >> D;
-    if(D ==1){
-        cout << 1 << endl;
-        return;
+    int n; cin >> n;
+    int ans = -1;
+    DSU uf(n+1);
+    rep(i, 0, n){
+        int x, y;
+        cin >> x >> y;
+        if(uf.find(x) == uf.find(y))
+            ans = i+1;
+        else uf.unite(x, y);
+        
     }
-    result = LINF;
-    dfs(0, 1, D, 60);
-    if(result <= 1e18){
-        cout << result << endl;
-    }
-    else{
-        cout << -1 << endl;
-    }
+    cout << ans << endl;
+
 }
 
 int32_t main()
 {
+    IOS;
     int tt;
     tt = 1;
     while (tt--)

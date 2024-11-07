@@ -56,54 +56,29 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-int result;
-int D;
-
-ll pow_int(ll base, int exp) {
-    ll result = 1;
-    while (exp--) {
-        if (result > LINF / base) return LINF; // Check overflow
-        result *= base;
-    }
-    return result;
-}
-
-vi primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71};
-
-void dfs(int index, ll curr, ll d, int last_e) {
-    if (d == 1) {
-        result = min(result, curr);
-        return;
-    }
-    if (index >= primes.size()) return;
-    for(int e = 1; e <= last_e; e++) {
-        if(d % (e +1) != 0) continue;
-        if(curr > LINF / pow_int(primes[index], e)) break;
-        ll next_n = curr * (ll)pow(primes[index], e);
-        if(next_n > LINF) break;
-        dfs(index +1, next_n, d / (e +1), e);
-    }
-}
-
 void solve()
 {
-    cin >> D;
-    if(D ==1){
-        cout << 1 << endl;
-        return;
-    }
-    result = LINF;
-    dfs(0, 1, D, 60);
-    if(result <= 1e18){
-        cout << result << endl;
-    }
-    else{
-        cout << -1 << endl;
+    int n, p;
+    cin >> n >> p;
+    vii v(n);
+    rep(i, 0, n) cin >> v[i].f >> v[i].s;
+
+    sort(all(v), [](pii a, pii b) {
+        if(a.f != b.f) 
+            return a.f > b.f;
+        return a.s < b.s;
+    });
+
+    if(v[0].f == p){
+        cout << v[0].f << " " << v[0].s-1 << endl;
+    }else{
+        cout << v[0].f+1 << " " << v[0].s << endl;
     }
 }
 
 int32_t main()
 {
+    IOS;
     int tt;
     tt = 1;
     while (tt--)
