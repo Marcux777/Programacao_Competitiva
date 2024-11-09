@@ -58,16 +58,29 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    /*If we list all the natural numbers below 10
-    that are multiples of 3 or 5, we get 3, 5, 6 and 9. 
-    The sum of these multiples is 23.
+    int n, q; cin >> n >> q;
+    vi h(n+2, 0);
+    rep(i, 1, n+2) cin >> h[i];
 
-    Find the sum of all the multiples of 3 or 5 below 1000.*/
-    int sum = 0;
-    rep(i, 1, 1000)
-        if (i % 3 == 0 || i % 5 == 0)
-            sum += i;
-    cout << sum << endl;
+    vi nxt(n+2, INF);
+    stack<int> st;
+
+    for(int i = n; i >= 1; --i){
+        while(!st.empty() && h[st.top()] <= h[i]) st.pop();
+        if(!st.empty()) nxt[i] = st.top();
+        st.push(i);
+    }
+
+    while(q--){
+        int l, r; cin >> l >> r;
+        int vis_l = nxt[l] - 1;
+        int vis_r = nxt[r] - 1;
+        int start = r + 1;
+        int end = min(vis_l, vis_r);
+        int count = max(0LL, end - start + 1);
+        cout << count << endl;
+    }
+
 }
 
 int32_t main()
