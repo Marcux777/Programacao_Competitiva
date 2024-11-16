@@ -56,7 +56,30 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+int n;
+string s;
+
 void solve() {
+    cin >> n >> s;
+    vi a(n);
+    rep(i, 0, n)
+        a[i] = (i+1) * (s[i] - '0');
+
+    rep(i, 1, n)
+        a[i] += a[i-1];
+
+    int i = 0;
+    int c = 0;
+    vi ans;
+    while(i < n || c > 0){
+        if(i < n) c+= a[n - i - 1];
+        ans.pb(c%10);
+        c/=10;
+        i++;
+    }
+    for(int j = sz(ans)-1; j >= 0; j--) cout << ans[j];
+
+    cout << endl;
 }
 
 int32_t main()
