@@ -58,6 +58,45 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    string s;
+    cin >> s;
+    int q; cin >> q;
+    
+    int l = sz(s), max_s = 0;
+    vi len;
+    len.pb(l);
+    while(1){
+        int total = len.back()*2;
+        len.pb(total);
+        if(total > 1e18) break;
+        
+        max_s++;
+    }
+
+    rep(i, 0, q){
+        int k; cin >> k;
+        bool bcase = false;
+        int si= 0;
+        while(si < sz(len) && len[si] < k) si++;
+
+        if(si == sz(len)) si--;
+        for(int idx = si; idx >= 1; idx--){
+            int la = len[idx - 1];
+            if(k > la){
+                k -= la;
+                bcase = !bcase;
+            }
+        }
+        char c = s[k - 1];
+        if(bcase){
+            if(islower(c))
+                c = toupper(c);
+            else if(isupper(c))
+                c = tolower(c);
+            
+        }
+        cout << c << " ";
+    }
 }
 
 int32_t main()

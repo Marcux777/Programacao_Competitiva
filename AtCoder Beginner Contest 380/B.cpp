@@ -58,6 +58,22 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    string s;
+    cin >> s;
+    vi a;
+    int c = 0;
+    rep(i, 0, sz(s)){
+        if(s[i] == '-'){
+            c++;
+        }else{
+            if(i > 0 && s[i] == '|'){
+                a.pb(c);
+                c = 0;
+            }
+        }
+    }
+    for(auto i : a) cout << i << " ";
+    cout << endl;
 }
 
 int32_t main()
