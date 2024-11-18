@@ -58,6 +58,16 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    string n;
+    cin >> n;
+    int c1 = 0, c2 = 0, c3 = 0;
+    for(auto c: n){
+        if(c == '1')c1++;
+        else if(c=='2')c2++;
+        else if(c=='3')c3++;
+    }
+    if(c1 == 1 && c2 == 2 && c3 == 3) cout << "Yes" << endl;
+    else cout << "No" << endl;
 }
 
 int32_t main()

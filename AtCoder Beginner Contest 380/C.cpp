@@ -58,6 +58,27 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, k; cin >> n >> k;
+    string s; cin >> s;
+    vii b;
+    int i = 0;
+    while(i < n){
+        if(s[i] == '1'){
+            int st = i;
+            while(i+1 < n && s[i+1] == '1') i++;
+            int end = i;
+            b.pb({st, end});
+        }
+        i++;
+    }
+    int l = b[k-1].f;
+    int r = b[k-1].s;
+    int prev = b[k-2].s;
+    string sub = s.substr(l, r - l + 1);
+    s.erase(l, r - l + 1);
+    s.insert(prev + 1, sub);
+
+    cout << s << endl;
 }
 
 int32_t main()
