@@ -72,40 +72,46 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    string n;
-    int total = 0; 
-    cin >> n;
-    for(auto i : n) total += (i - '0');
-
-    if(total % 9 == 0) {cout << "YES" << endl; return;}
-
-    vi difs;
-    for(auto i : n){
-        int x = i - '0';
-        if(x <= 3) difs.pb(x*x - x);
-    }
-    vector<bool> dp(9, 0);
-    dp[0] = 1;
-    for(auto i : difs){
-        vector<bool> aux(9, 0);
-        rep(j, 0, 9){
-            if(dp[j]){
-                aux[(j+i)%9] = 1;
-                aux[j] = 1;
-            }
+    int h, w, d;
+    cin >> h >> w >> d;
+    vector<string> s(h);
+    for(auto &i : s) cin >> i;
+    vii f;
+    rep(i, 0, h){
+        rep(j, 0, w){
+            if(s[i][j] == '.')f.pb({i, j});
         }
-        dp = aux;
     }
-    if(dp[(9 - total%9)%9]) cout << "YES" << endl;
-    else cout << "NO" << endl;
+    int n = sz(f);
+    int maxh = 0;
+
+    rep(i, 0, n){
+        rep(j, i+1, n){
+            set<int> st;
+            auto [x1, y1] = f[i];
+            auto [x2, y2] = f[j];
+
+            for(auto &[x, y]: f){
+                if(abs(x - x1) + abs(y - y1)<= d){
+                    st.insert(x*w + y);
+                }
+                else if(abs(x - x2) + abs(y - y2)<= d){
+                    st.insert(x*w + y);
+                }
+            }
+            maxh = max(maxh, sz(st));
+        }
+    }
+
+    cout << maxh << endl;
 }
+
 
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;
