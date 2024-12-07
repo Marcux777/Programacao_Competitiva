@@ -70,34 +70,51 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+vi primes;
+
+void sieve(int n){
+    vector<bool> is_prime(n + 1, true);
+
+    rep(i, 2, n+1){
+        if(is_prime[i]){
+            primes.pb(i);
+            if(i*i <= n){
+                for(int j = i*i; j <= n; j += i)
+                    is_prime[j] = false;
+            }
+            
+        }
+    }
+}
+
 void solve()
 {
-    string n;
-    int total = 0; 
-    cin >> n;
-    for(auto i : n) total += (i - '0');
+    int x; cin >> x;
+    ll max_p = pow(x, 1.0 / 2) + 1;
+    sieve(min(max_p, (ll)1e6 + 5));
+    int c=  0;
 
-    if(total % 9 == 0) {cout << "YES" << endl; return;}
+    for(auto p : primes){
+        if(p > 40) break;
+        int pr = 1;
+        rep(i, 0, 8) pr *= p;
 
-    vi difs;
-    for(auto i : n){
-        int x = i - '0';
-        if(x <= 3) difs.pb(x*x - x);
+        if(pr <= x) c++;
+        else break;
     }
-    vector<bool> dp(9, 0);
-    dp[0] = 1;
-    for(auto i : difs){
-        vector<bool> aux(9, 0);
-        rep(j, 0, 9){
-            if(dp[j]){
-                aux[(j+i)%9] = 1;
-                aux[j] = 1;
-            }
+    rep(i, 0, sz(primes)){
+        ll p2 = (ll)primes[i] * primes[i];
+        if(p2 > x) break;
+        rep(j, i+1, sz(primes)){
+            ll q2 = (ll)primes[j] * primes[j];
+            if(q2 > x /p2) break;
+
+            if(p2*q2 <= x) 
+                c++;
+            else break;
         }
-        dp = aux;
     }
-    if(dp[(9 - total%9)%9]) cout << "YES" << endl;
-    else cout << "NO" << endl;
+    cout <<  c << endl;
 }
 
 int32_t main()
@@ -105,7 +122,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

@@ -72,32 +72,21 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    string n;
-    int total = 0; 
+    int n;
     cin >> n;
-    for(auto i : n) total += (i - '0');
+    vi t(n), v(n);
+    rep(i, 0, n) cin >> t[i] >> v[i];
 
-    if(total % 9 == 0) {cout << "YES" << endl; return;}
+    int w = 0, l = 0;
+    rep(i, 0, n){
+        w -= (t[i] - l);
+        if(w < 0) w = 0;
 
-    vi difs;
-    for(auto i : n){
-        int x = i - '0';
-        if(x <= 3) difs.pb(x*x - x);
+        w += v[i];
+        l = t[i];
     }
-    vector<bool> dp(9, 0);
-    dp[0] = 1;
-    for(auto i : difs){
-        vector<bool> aux(9, 0);
-        rep(j, 0, 9){
-            if(dp[j]){
-                aux[(j+i)%9] = 1;
-                aux[j] = 1;
-            }
-        }
-        dp = aux;
-    }
-    if(dp[(9 - total%9)%9]) cout << "YES" << endl;
-    else cout << "NO" << endl;
+    cout << w << endl;
+
 }
 
 int32_t main()
@@ -105,7 +94,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;
