@@ -72,7 +72,27 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    long long k, l1, r1, l2, r2;
+        cin >> k >> l1 >> r1 >> l2 >> r2;
+
+        long long countPairs = 0;
+        
+        // Para cada x, tentamos gerar y a partir de potências de k:
+        // y = x * k^m, verificando se l2 <= y <= r2.
+        for (long long x = l1; x <= r1; x++) {
+            long long val = x;
+            // Começamos de k^1, já que se m=0 (k^0=1), y=x e pode não formar o padrão desejado.
+            // O usuário listou apenas casos onde m=1 ou m=2.
+            // Mas vamos geralizar para todas as potências possíveis dentro do intervalo.
+            while (val <= r2 / k) { // prevenir overflow e manter val*k <= r2
+                val *= k;
+                if (val >= l2 && val <= r2) {
+                    countPairs++;
+                }
+            }
+        }
+
+        cout << countPairs << "\n";
 }
 
 int32_t main()

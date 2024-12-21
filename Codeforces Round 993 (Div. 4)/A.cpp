@@ -72,7 +72,13 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n, ans = 0; cin >> n;
+    rep(i, 1, n*n+1){
+        rep(j, 1, n*n+1){
+            if(i + j == n) ans++;
+        }
+    }
+    cout << ans << endl;
 }
 
 int32_t main()

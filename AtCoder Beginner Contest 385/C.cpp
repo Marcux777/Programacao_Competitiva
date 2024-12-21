@@ -72,7 +72,33 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+    map<int, vi> mp;
+    rep(i, 0, n)
+        mp[a[i]].pb(i);
+
+    int ans = 1;
+    for(auto &[h, ind] : mp){
+        int size = sz(ind);
+        if(size == 1){
+            ans = max(ans, 1LL);
+            continue;
+        }
+        rep(i, 0, size){
+            rep(j, i+1, size){
+                int c = 2;
+                int nxt = ind[j] + ind[j] - ind[i];
+                while(binary_search(all(ind), nxt)){
+                    c++;
+                    nxt += ind[j] - ind[i];
+                }
+                ans = max(ans, c);
+            }
+        }
+    }
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -80,7 +106,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

@@ -72,7 +72,15 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    string a;
+    cin >> a;
+    reverse(all(a));
+    for(auto i : a){
+        if(i == 'p') cout << 'q';
+        else if(i == 'q') cout << 'p';
+        else cout << i;
+    }
+    cout << endl;
 }
 
 int32_t main()

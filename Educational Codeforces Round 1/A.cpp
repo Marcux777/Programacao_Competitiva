@@ -72,6 +72,14 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    int s = n*(n+1)/2;
+    int pot = 1;
+    for(int i = 1; i<=n; i*=2)
+        s -= 2*i;
+    
+
+    cout << s << endl;
     
 }
 

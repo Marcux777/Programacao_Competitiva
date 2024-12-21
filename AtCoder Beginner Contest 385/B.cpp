@@ -72,7 +72,29 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int h, w, x, y; cin >> h >> w >> x >> y;
+    vector<string> v(h);
+    for(auto &i : v) cin >> i;
+
+    string mov; cin >> mov;
+    x--;y--;
+    set<pii> vis;
+    if(v[x][y] == '@') vis.insert({x, y});
+
+    for(char m : mov){
+        int nx = x, ny = y;
+        if(m == 'U') nx--;
+        else if(m == 'D') nx++;
+        else if(m == 'L') ny--;
+        else ny++;
+
+        if(nx >= 0 && nx < h && ny >= 0 && ny < w && v[nx][ny] != '#'){
+            x = nx;
+            y = ny;
+            if(v[x][y] == '@') vis.insert({x, y});
+        }
+    }
+    cout << x+1 << " " << y+1 << " " << sz(vis) << endl;
 }
 
 int32_t main()
@@ -80,7 +102,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;
