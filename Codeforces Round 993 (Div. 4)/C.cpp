@@ -72,7 +72,10 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int a,b,c,m;
+    cin >> m >> a >> b >> c;
+    cout << min(a, m) + min(b, m) + min(c, (m - min(a, m)) + (m - min(b, m))) << endl;
+
 }
 
 int32_t main()

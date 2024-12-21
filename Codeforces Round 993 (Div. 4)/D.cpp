@@ -72,6 +72,14 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    map<int, int> mp;
+    for(auto &i : a) {
+        cin >> i;
+        mp[i]++;
+    }
+    
     
 }
 

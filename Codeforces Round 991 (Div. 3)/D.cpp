@@ -71,18 +71,7 @@ void dbg_out(Head H, Tail... T)
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
 void solve() {
-    string s;
-    cin >> s;
-    int n = s.size();
-    string res = s;
-    for (int i = 1; i < n; ++i) {
-        if (s[i] > '0' && s[i] - 1 > res[i - 1]) {
-            char temp = res[i - 1];
-            res[i - 1] = s[i] - 1;
-            res[i] = temp;
-        }
-    }
-    cout << res << '\n';
+    
 }
 
 int32_t main()

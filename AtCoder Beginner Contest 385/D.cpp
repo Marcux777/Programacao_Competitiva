@@ -72,7 +72,65 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n, m, sx, sy; cin >> n >> m >> sx >> sy;
+
+    vii h(n);
+    rep(i, 0, n) cin >> h[i].f >> h[i].s; 
+
+    vector<pair<char, int>> mov(m);
+    rep(i, 0, m) cin >> mov[i].f >> mov[i].s;
+
+    map<int, vii> mpx, mpy;
+    rep(i, 0, n){
+        int x = h[i].f, y = h[i].s;
+        mpx[x].pb({y, i});
+        mpy[y].pb({x, i});
+    }
+
+    for(auto i : mpx) sort(all(i.s), 
+    [](auto& a, auto& b){return a.f < b.f;});
+    for(auto i : mpy) sort(all(i.s),
+    [](auto& a, auto& b){return a.f < b.f;});
+
+    set<int> st;
+    int currx = sx, curry = sy;
+    auto lb_vec = [&](auto &vec, int val){
+        return (int)(lower_bound(all(vec), make_pair(val, -1LL),
+               [](auto &a, auto &b){ return a.first < b.first; }) - vec.begin());
+    };
+
+    rep(i,0, m){
+        char d = mov[i].f;
+        int c = mov[i].s;
+        if(d == 'U' || d == 'D'){
+            int ny = (d == 'U') ? (curry + c) : (curry - c);
+            int minY = min(curry, ny), maxY = max(curry, ny);
+            if(mpx.count(currx)){
+                auto &lst = mpx[currx];
+                int li = lb_vec(lst, minY);
+                int hi = lb_vec(lst, maxY + 1) - 1;
+                for(int j = li; j <= hi && j < (int)lst.size(); j++){
+                    st.insert(lst[j].second);
+                }
+            }
+            curry = ny;
+        }
+        else{
+            int nx = (d == 'R') ? (currx + c) : (currx - c);
+            int minX = min(currx, nx), maxX = max(currx, nx);
+            if(mpy.count(curry)){
+                auto &lst = mpy[curry];
+                int li = lb_vec(lst, minX);
+                int hi = lb_vec(lst, maxX + 1) - 1;
+                for(int j = li; j <= hi && j < (int)lst.size(); j++){
+                    st.insert(lst[j].second);
+                }
+            }
+            currx = nx;
+        }
+    }
+
+    cout << currx << " " << curry << " " << sz(st) << "\n";
 }
 
 int32_t main()
@@ -80,7 +138,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

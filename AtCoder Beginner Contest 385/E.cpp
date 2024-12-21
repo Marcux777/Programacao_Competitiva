@@ -72,7 +72,40 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    vvi adj(n + 1);
+    vi deg(n + 1, 0);
+    rep(i, 0, n - 1)
+    {
+        int u, v;
+        cin >> u >> v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+        deg[u]++;
+        deg[v]++;
+    }
+
+    int ans = 0LL;
+    rep(c, 1, n+1){
+        int k = deg[c];
+        if(k == 0LL) {
+            ans = max(ans, 1LL);   
+            continue;
+        }
+        vi l;
+        l.reserve(k);
+        for(auto i : adj[c])
+            l.pb(deg[i]-1);
+        
+        sor(l);
+        rep(j, 0, k){
+            int y = l[j], x = (k - j);
+            // 1 + x*(1+y) = número de vértices
+            ans = max(ans, 1 + x*(1+y));
+        }
+    }
+    cout << max(0LL, n - ans) << endl;
 }
 
 int32_t main()
@@ -80,7 +113,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

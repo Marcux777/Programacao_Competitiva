@@ -74,10 +74,11 @@ void solve()
 {
     int n; cin >> n;
     
-    if(n == 1 || n == 2) {cout << n << endl; return;}
-    cout << ceil(log2(n)) << endl;
-    cout << log2(n-n%2) << endl;
-    
+    int c = 1;
+    for (int i = 1; i < n; i = 2 * (i + 1)) {
+        c++;
+    }
+    cout << c << endl;
 }
 
 int32_t main()

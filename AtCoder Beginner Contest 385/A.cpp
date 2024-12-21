@@ -72,7 +72,12 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int a, b, c;
+    cin >> a >> b >> c;
+    if (a + b == c || a + c == b || b + c == a || (a == b && b == c))
+        cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
 }
 
 int32_t main()
@@ -80,7 +85,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;
