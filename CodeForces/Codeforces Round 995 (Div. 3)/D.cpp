@@ -70,38 +70,34 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve()
-{
-    int n; 
-    cin >> n; // Leia o número de elementos
-    vi a(n); 
-    for(auto &i : a) 
-        cin >> i; // Leia os elementos no vetor 'a'
+int f(vi& a, int x){
+    if(x < 2) return 0;
     
-    map<int, vi> mp; 
-    rep(i, 0, n)
-        mp[a[i]].pb(i); // Mapeie cada elemento para seus índices no vetor
-
-    int ans = 1; // Inicialize a resposta com 1
-    for(auto &[h, ind] : mp){
-        int size = sz(ind); // Obtenha o tamanho do vetor de índices
-        if(size == 1){
-            ans = max(ans, 1LL); // Se houver apenas um índice, o comprimento máximo da sequência é 1
-            continue;
-        }
-        rep(i, 0, size){
-            rep(j, i+1, size){
-                int c = 2; // Comece com uma sequência de comprimento 2
-                int nxt = ind[j] + ind[j] - ind[i]; // Calcule o próximo índice esperado na sequência
-                while(binary_search(all(ind), nxt)){ // Verifique se o próximo índice existe no vetor de índices
-                    c++; // Incremente o comprimento da sequência
-                    nxt += ind[j] - ind[i]; // Atualize o próximo índice esperado
-                }
-                ans = max(ans, c); // Atualize a resposta com o comprimento máximo da sequência encontrada
-            }
+    int l = 0, r = sz(a) - 1, c = 0;
+    while(l < r){
+        if(a[l] + a[r] <= x){
+            c += (r - l);
+            l++;
+        }else{
+            r--;
         }
     }
-    cout << ans << endl; // Imprima a resposta
+    return c;
+}
+
+void solve()
+{
+    int n, x, y, sum = 0LL; cin >> n >> x >> y;
+    vi a(n);
+    for(auto &i : a) {
+        cin >> i;
+        sum += i;
+    }
+    int l = sum - y, r = sum - x;
+    sor(a);
+
+    cout << f(a, r) - f(a, l-1) << endl;
+
 }
 
 int32_t main()
@@ -109,6 +105,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
