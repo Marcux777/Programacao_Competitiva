@@ -72,14 +72,19 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, m, sx, sy; cin >> n >> m >> sx >> sy;
+    // Leitura das variáveis de entrada
+    int n, m, sx, sy; 
+    cin >> n >> m >> sx >> sy;
 
+    // Leitura das coordenadas dos pontos
     vii h(n);
     rep(i, 0, n) cin >> h[i].f >> h[i].s; 
 
+    // Leitura dos movimentos
     vector<pair<char, int>> mov(m);
     rep(i, 0, m) cin >> mov[i].f >> mov[i].s;
 
+    // Mapas para armazenar as coordenadas dos pontos
     map<int, vii> mpx, mpy;
     rep(i, 0, n){
         int x = h[i].f, y = h[i].s;
@@ -87,22 +92,28 @@ void solve()
         mpy[y].pb({x, i});
     }
 
+    // Ordenação dos pontos nos mapas
     for(auto i : mpx) sort(all(i.s), 
     [](auto& a, auto& b){return a.f < b.f;});
     for(auto i : mpy) sort(all(i.s),
     [](auto& a, auto& b){return a.f < b.f;});
 
+    // Conjunto para armazenar os índices dos pontos visitados
     set<int> st;
     int currx = sx, curry = sy;
+
+    // Função lambda para encontrar o índice do lower_bound
     auto lb_vec = [&](auto &vec, int val){
         return (int)(lower_bound(all(vec), make_pair(val, -1LL),
                [](auto &a, auto &b){ return a.first < b.first; }) - vec.begin());
     };
 
+    // Processamento dos movimentos
     rep(i,0, m){
         char d = mov[i].f;
         int c = mov[i].s;
         if(d == 'U' || d == 'D'){
+            // Movimento vertical
             int ny = (d == 'U') ? (curry + c) : (curry - c);
             int minY = min(curry, ny), maxY = max(curry, ny);
             if(mpx.count(currx)){
@@ -116,6 +127,7 @@ void solve()
             curry = ny;
         }
         else{
+            // Movimento horizontal
             int nx = (d == 'R') ? (currx + c) : (currx - c);
             int minX = min(currx, nx), maxX = max(currx, nx);
             if(mpy.count(curry)){
@@ -130,6 +142,7 @@ void solve()
         }
     }
 
+    // Impressão das coordenadas finais e do número de pontos visitados
     cout << currx << " " << curry << " " << sz(st) << "\n";
 }
 
