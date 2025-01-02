@@ -72,6 +72,19 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    string s; cin >> s;
+    int n = sz(s);
+    vector<string> bb = {"00", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    vi dp(n+1, INF);
+    dp[0] = 0;
+    rep(i, 0, n){
+        if(dp[i] == n+1) continue;
+        for(auto &b : bb){
+            if(i + sz(b) <= n && s.substr(i, sz(b)) == b)
+                dp[i+sz(b)] = min(dp[i+sz(b)], dp[i]+1);
+        }
+    }
+    cout << (dp[n] <= n ? dp[n] : -1) << endl;
 }
 
 int32_t main()

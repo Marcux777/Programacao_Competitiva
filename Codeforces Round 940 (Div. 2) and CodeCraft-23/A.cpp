@@ -72,6 +72,19 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    map<int, int> mp;
+    rep(i, 0, n){
+        int x; cin >> x;
+        mp[x]++;
+    }
+    int ans = 0;
+    for(auto i : mp)
+        ans += i.s / 3;
+
+
+    cout << ans << endl;
+
 }
 
 int32_t main()
@@ -79,6 +92,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

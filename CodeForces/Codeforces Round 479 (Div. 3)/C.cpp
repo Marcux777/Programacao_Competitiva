@@ -72,6 +72,36 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    vi a(n);
+    for (auto &i : a)
+        cin >> i;
+
+    sor(a);
+    if(k == 0){
+        if(a[0] > 1) cout << a[0] - 1 << endl;
+        else cout << -1 << endl;
+        
+        return;
+    }
+    
+    int l = 1, r = 1e9, ans = -1;
+    while (l <= r)
+    {
+        int mid = l + (r - l) / 2;
+        int dist = UB(a, mid);
+        if (dist == k)
+        {
+            ans = mid;
+            break;
+        }
+        else if(dist < k)
+            l = mid + 1;
+        else
+            r = mid - 1;
+    }
+    cout << ans << endl;
 }
 
 int32_t main()

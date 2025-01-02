@@ -70,8 +70,11 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+
 void solve()
 {
+    int n; cin >> n;
+    cout << (1<<n) - 1 << endl;
 }
 
 int32_t main()
@@ -79,6 +82,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

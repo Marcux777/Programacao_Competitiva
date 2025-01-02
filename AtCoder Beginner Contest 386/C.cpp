@@ -70,8 +70,51 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+bool f(string &s, string& t){
+    int i = 0, j = 0;
+    bool ok = false;
+    while (i < sz(s) && j < sz(t)) {
+        if (s[i] == t[j]) {
+            i++; j++;
+        } else {
+            if (ok) return false;
+            ok = true;
+            i++;
+        }
+    }
+    return true;
+}
+
 void solve()
 {
+    int k; cin >> k;
+    string s, t; cin >> s >> t;
+    int n = sz(s), m = sz(t);
+    if(abs(n - m) > 1)
+    {
+        cout << "No" << endl;
+        return;
+    }
+    if(n == m){
+        int c = 0;
+        rep(i, 0, n){
+            if(s[i] != t[i]){
+                c++;
+                if(c > 1){
+                    cout << "No" << endl;
+                    return;
+                }
+            }
+        }
+        cout << "Yes" << endl;
+        return;
+    }else if(n == m+1){
+        bool ok = f(s, t);
+        cout << (ok ? "Yes" : "No") << endl;
+    }else{
+        bool ok = f(t, s);
+        cout << (ok ? "Yes" : "No") << endl;
+    }
 }
 
 int32_t main()

@@ -72,6 +72,16 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    string a, b; cin >> a >> b;
+    int c1, c2; c1 = c2 = 0;
+    rep(i, 0, n){
+        if(a[i] > b[i]) c1++;
+        else if(b[i] > a[i]) c2++;
+    }
+    if(c1 == c2) cout << "EQUAL" << endl;
+    else if(c1 > c2) cout << "RED" << endl;
+    else cout << "BLUE" << endl;
 }
 
 int32_t main()
@@ -79,6 +89,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

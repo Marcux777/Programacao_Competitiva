@@ -72,6 +72,14 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int a, b; 
+    cin >> a >> b;
+    int m = max(a, b);
+    int x = 7 - m;
+    int val = __gcd(x, 6LL);
+    int num = x / val;
+    int denom = 6 / val;
+    cout << num << "/" << denom << endl;
 }
 
 int32_t main()

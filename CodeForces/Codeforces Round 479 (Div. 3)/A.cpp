@@ -72,6 +72,23 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    while (k > 0)
+    {
+        if (n % 10 == 0)
+        {
+            n /= 10;
+            k--;
+        }
+        while (n % 10 != 0 && k)
+        {
+            n--;
+            k--;
+        }
+    }
+
+    cout << n << endl;
 }
 
 int32_t main()
@@ -79,6 +96,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    // cin >> tt;
     while (tt--)
         solve();
     return 0;
