@@ -70,8 +70,35 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void solve()
-{
+vi buildXorBasis(const vi &arr) {
+    vi basis;
+
+    for (ll num : arr) {
+        for (ll b : basis) {
+            num = min(num, num ^ b);  
+        }
+        if (num != 0) {
+            basis.pb(num);
+        }
+    }
+    sort(all(basis), greater<ll>());
+    return basis;
+}
+
+
+void solve(){
+    int n, k;
+    cin >> n >> k;
+    vi a(n);
+    for(auto &x : a) cin >> x;
+
+    vi basis = buildXorBasis(a);
+    ll ans = 0LL;
+    for (auto b : basis) {
+        ans = max(ans, ans ^ b);
+    }
+
+    cout << ans << "\n";
 }
 
 int32_t main()

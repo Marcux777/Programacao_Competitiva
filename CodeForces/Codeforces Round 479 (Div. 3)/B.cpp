@@ -72,6 +72,23 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    string s; cin >> s;
+    map<string, int> mp;
+    rep(i, 0, n-1)
+    {
+        string t = s.substr(i, 2);
+        mp[t]++;
+    }
+    string ans;
+    int max_f = 0;
+    for(auto &[a, b]:mp){
+        if(b > max_f){
+            max_f = b;
+            ans = a;
+        }
+    }
+    cout << ans << endl;
 }
 
 int32_t main()

@@ -72,7 +72,27 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    vi cards(4);
+    for(auto &i : cards) cin >> i;
+    map<int, int> count;
+    for(auto x : cards) count[x]++;
+    bool ok = false;
+    rep(i, 1,15) {
+        count[i]++;
+        int t = 0, d = 0;
+        for(auto &[num, cnt] : count){
+            if(cnt >= 3) t++;
+            if(cnt >= 2) d++;
+        }
+        if(t >=1 && d >=2){
+            ok = true;
+            break;
+        }
+        count[i]--;
+    }
+    cout << (ok ? "Yes" : "No") << '\n';
 }
+
 
 int32_t main()
 {

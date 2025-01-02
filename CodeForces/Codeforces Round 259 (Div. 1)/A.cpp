@@ -72,6 +72,7 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    
 }
 
 int32_t main()

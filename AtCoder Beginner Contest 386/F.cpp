@@ -72,6 +72,73 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int k;
+    cin >> k;
+    string s, t;
+    cin >> s >> t;
+    int n = sz(s);
+    int m = sz(t);
+    if (abs(m - n) > k)
+    {
+        cout << "No" << endl;
+        return;
+    }
+    vi dp_prev(2 * k + 5, 0), dp_curr(2 * k + 5, 0);
+    rep(j, 0, min(m, k) + 1)
+        dp_prev[j] = j;
+
+    
+
+    rep(j, min(m, k) + 1, sz(dp_prev))
+    {
+        dp_prev[j] = INF;
+    }
+    rep(i, 1, n + 1)
+    {
+        int l = max(0LL, i - k);
+        int r = min(m, i + k);
+
+        fill(all(dp_curr), LINF);
+        rep(j, l, r + 1)
+        {
+            int aux = j - (i - k);
+
+            if (j == 0)
+            {
+                dp_curr[aux] = i;
+                continue;
+            }
+
+            if (j - 1 >= 0 && (aux - 1) >= 0)
+            {
+                int cost = dp_prev[aux - 1];
+                if (s[i - 1] != t[j - 1])
+                    cost++;
+                dp_curr[aux] = min(dp_curr[aux], cost);
+            }   
+
+            if ((j - 1) >= l && (aux - 1) > 0)
+            {
+                int cost = dp_curr[aux - 1] + 1;
+                dp_curr[aux] = min(dp_curr[aux], cost);
+            }
+
+            if (aux < sz(dp_prev))
+            {
+                int cost = dp_prev[aux] + 1;
+                dp_curr[aux] = min(dp_curr[aux], cost);
+            }
+        }
+        dp_prev.swap(dp_curr);
+    }
+    int final_pos = m - (n - k);
+    if (final_pos < 0 || final_pos >= sz(dp_prev))
+    {
+        cout << "No" << endl;
+        return;
+    }
+
+    cout << (dp_prev[final_pos] <= k ? "Yes" : "No") << endl;
 }
 
 int32_t main()

@@ -72,6 +72,16 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    rep(i, 0, n){
+        a[i] = (i + 1) % n + 1;
+    }
+    
+    for(auto x: a){
+        cout << x << " ";
+    }
+    cout << endl;
 }
 
 int32_t main()
@@ -79,6 +89,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

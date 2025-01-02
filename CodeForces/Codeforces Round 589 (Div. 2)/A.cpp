@@ -70,8 +70,27 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+bool ok(int x){
+    vi a(10);
+    while(x){
+        a[x%10]++;
+        if(a[x%10] > 1) return false;
+        x /= 10;
+    }
+    return true;
+}
+
 void solve()
 {
+    int l, r; cin >> l >> r;
+    int x = l;
+    rep(i, l, r+1){
+        if(ok(i)){
+            cout << i << endl;
+            return;
+        }
+    }
+    cout << -1 << endl;
 }
 
 int32_t main()

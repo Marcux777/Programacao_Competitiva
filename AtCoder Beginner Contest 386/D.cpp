@@ -72,6 +72,76 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    vvi a(n, vi(m));
+    rep(i, 0, m)
+    {
+        int x, y;
+        char c;
+        cin >> x >> y >> c;
+        a[x - 1][y - 1] = (c == 'B' ? 0 : 1);
+    }
+    vi row(n, 0);
+    rep(i, 0, n)
+    {
+        rep(j, 0, n)
+        {
+            if (a[i][j])
+            {
+                row[i] = j;
+                break;
+            }
+        }
+    }
+    vi col(n, 0);
+    rep(j, 0, n)
+    {
+        rep(i, 0, n)
+        {
+            if (a[i][j])
+            {
+                col[j] = i;
+                break;
+            }
+        }
+    }
+    bool possible = 1;
+    for (int i = 0; i < n && possible; ++i)
+    {
+        for (int j = 0; j < n && possible; ++j)
+        {
+            if (j < row[i] && i >= col[j])
+            {
+                possible = false;
+            }
+            if (i < col[j] && j >= row[i])
+            {
+                possible = false;
+            }
+            if (a[i][j] == 0 && j >= row[i])
+            {
+                possible = false;
+            }
+            if (a[i][j] == 0 && i >= col[j])
+            {
+                possible = false;
+            }
+            if (a[i][j] == 1)
+            { // Alterado de 'W' para '1'
+                if (j < row[i])
+                {
+                    possible = false;
+                }
+                if (i < col[j])
+                {
+                    possible = false;
+                }
+            }
+        }
+    }
+
+    cout << (possible ? "Yes" : "No") << endl;
 }
 
 int32_t main()

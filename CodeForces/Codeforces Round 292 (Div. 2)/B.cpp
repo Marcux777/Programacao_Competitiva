@@ -72,6 +72,53 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    int b, g;
+    cin >> b;
+    vi x(b);
+    if (b > 0)
+    {
+
+        for (auto &i : x)
+            cin >> i;
+    }
+    cin >> g;
+    vi y(g);
+    if (g > 0)
+    {
+
+        for (auto &i : y)
+            cin >> i;
+    }
+    bool ok = 1;
+    vi boys(n, 0), girls(m, 0);
+    for (auto &i : x)
+        boys[i] = 1;
+    for (auto &i : y)
+        girls[i] = 1;
+    rep(i, 0, 10*n*m)
+    {
+        if (boys[i % n] || girls[i % m])
+        {
+            boys[i % n] = 1;
+            girls[i % m] = 1;
+        }
+    }
+    for (auto &i : boys)
+        if (i == 0)
+        {
+            ok = false;
+            break;
+        }
+    for (auto &i : girls)
+        if (i == 0)
+        {
+            ok = false;
+            break;
+        }
+
+    cout << (ok ? "Yes" : "No") << endl;
 }
 
 int32_t main()
