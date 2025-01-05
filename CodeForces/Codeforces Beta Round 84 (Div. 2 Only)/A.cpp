@@ -70,26 +70,18 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-double fast_pow(double base, int exp){
-    double res = 1.0;
-    while(exp > 0){
-        if(exp & 1)
-            res *= base;
-        base *= base;
-        exp /= 2;
-    }
-    return res;
-}
-
 void solve()
 {
-    int m, n; cin >> m >> n;
-    double esp = 0.0;
-    rep(i, 1, m+1){
-        esp += i * (fast_pow((double)i/m, n) - fast_pow((double)(i-1)/m, n));
+    string s; cin >> s;
+    map<char, int> mp;
+    for(auto i : s)
+    {
+        mp[i]++;
     }
-    cout << fixed << setprecision(12);
-    cout << esp << endl;
+
+    if(mp['4'] + mp['7'] == 4 || mp['4'] + mp['7'] == 7){
+        cout << "YES" << endl;
+    }else cout << "NO" << endl;
 }
 
 int32_t main()

@@ -70,26 +70,17 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-double fast_pow(double base, int exp){
-    double res = 1.0;
-    while(exp > 0){
-        if(exp & 1)
-            res *= base;
-        base *= base;
-        exp /= 2;
-    }
-    return res;
-}
-
 void solve()
 {
-    int m, n; cin >> m >> n;
-    double esp = 0.0;
-    rep(i, 1, m+1){
-        esp += i * (fast_pow((double)i/m, n) - fast_pow((double)(i-1)/m, n));
-    }
-    cout << fixed << setprecision(12);
-    cout << esp << endl;
+    int n; cin >> n;
+    vi a(n);
+    for(auto&i : a) cin >> i;
+
+    int maior = 0;
+    rep(i, 0, n-1)
+        maior = max(maior, a[i]*a[i+1]);
+    
+    cout << maior << endl;
 }
 
 int32_t main()
@@ -97,6 +88,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

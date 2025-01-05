@@ -70,26 +70,41 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-double fast_pow(double base, int exp){
-    double res = 1.0;
-    while(exp > 0){
-        if(exp & 1)
-            res *= base;
-        base *= base;
-        exp /= 2;
+int sum(int x){
+    int ans = 0;
+    while(x){
+        ans += x%10;
+        x /= 10;
     }
-    return res;
+    return ans;
 }
 
 void solve()
 {
-    int m, n; cin >> m >> n;
-    double esp = 0.0;
-    rep(i, 1, m+1){
-        esp += i * (fast_pow((double)i/m, n) - fast_pow((double)(i-1)/m, n));
+    string n; cin >> n;
+    string ansx, ansy;
+    ansx.reserve(sz(n)), ansy.reserve(sz(n));
+    for(auto i : n){
+        int x = i - '0';
+        if(x%2 == 0){
+            ansx.pb('0' + x/2);
+            ansy.pb('0' + x/2);
+        }else{
+            ansx.pb('0' + x/2);
+            ansy.pb('0' + x/2 + 1);
+        }
     }
-    cout << fixed << setprecision(12);
-    cout << esp << endl;
+    int x = stoll(ansx), y = stoll(ansy);
+    while(abs(sum(x) - sum(y)) > 1){
+        if(sum(x) > sum(y)){
+            x--;
+            y++;
+        }else{
+            x++;
+            y--;
+        }
+    }
+    cout << x << " " << y << endl;
 }
 
 int32_t main()
@@ -97,6 +112,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
