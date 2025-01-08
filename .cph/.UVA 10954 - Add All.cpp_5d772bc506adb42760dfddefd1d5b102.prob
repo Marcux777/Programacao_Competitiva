@@ -1,1 +1,0 @@
-{"name":"Local: UVA 10954 - Add All","url":"/home/marcux777/Programacao_Competitiva/UVA 10954 - Add All.cpp","tests":[{"id":1727137427988,"input":"3\n1 2 3\n4\n1 2 3 4\n0\n","output":"9\n19"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/marcux777/Programacao_Competitiva/UVA 10954 - Add All.cpp","group":"local","local":true}
