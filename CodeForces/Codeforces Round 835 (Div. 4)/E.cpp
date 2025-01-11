@@ -72,12 +72,11 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int r; cin >> r;
-	cout << "Division ";
-	if(r <= 1399) cout << 4 << endl;
-	else if(r <= 1599) cout << 3 << endl;
-	else if(r <= 1899) cout << 2 << endl;
-	else cout << 1 << endl;
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+
+    
 }
 
 int32_t main()
@@ -85,7 +84,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-	cin>>tt;
     while (tt--)
         solve();
     return 0;

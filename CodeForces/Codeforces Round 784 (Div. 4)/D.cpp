@@ -72,20 +72,41 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int r; cin >> r;
-	cout << "Division ";
-	if(r <= 1399) cout << 4 << endl;
-	else if(r <= 1599) cout << 3 << endl;
-	else if(r <= 1899) cout << 2 << endl;
-	else cout << 1 << endl;
+    int n; cin >> n;
+    string s; cin >> s;
+
+    vector<string> blocks;
+    string cur = "";
+    for(auto c : s){
+        if(c == 'W'){
+            if(sz(cur)) blocks.pb(cur);
+            cur = "";
+        }
+        else cur += c;
+    }
+    if(sz(cur)) blocks.pb(cur);
+
+    bool ok = false;
+
+    for(auto i : blocks){
+        bool R = i.find('R') != string::npos;
+        bool B = i.find('B') != string::npos;
+
+        if(R ^ B){
+            ok = true;
+            break;
+        }
+    }
+    cout << (ok ? "NO" : "YES") << endl;
 }
+
 
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
-	cin>>tt;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
