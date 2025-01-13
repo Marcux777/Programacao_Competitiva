@@ -70,11 +70,70 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+vvvi dp;
+
+int f(int n, int a, int b, int turn){
+    if(dp[a][b][turn] == -2){
+        dp[a][b][turn] = 0;
+        return 0;
+    }
+    if(dp[a][b][turn] != -1){
+        return dp[a][b][turn];
+    }
+
+    dp[a][b][turn] = -2;
+
+    if(turn == 0){
+        bool ok = false;
+        if(a > 1 && (a -1) != b){
+            ok = true;
+            int nxt = f(n, a - 1, b, 1);
+            if(nxt == 0){
+                dp[a][b][turn] = 1;
+                return 1;
+            }
+
+        }
+        if(a < n && (a + 1) != b){
+            ok = true;
+            int nxt = f(n, a+1, b, 1);
+            if(nxt == 0){
+                dp[a][b][turn] = 1;
+                return 1;
+            }
+        }
+        dp[a][b][turn] = 0;
+        return dp[a][b][turn];
+    }else{
+        bool ok = false;
+        if(b > 1 && (b - 1) != a){
+            ok = true;
+            int nxt = f(n, a, b-1, 0);
+            if(nxt == 0){
+                dp[a][b][turn] = 1;
+                return 1;
+            }
+        }
+        if(b < n && (b + 1) != a){
+            ok = true;
+            int nxt = f(n, a, b+1, 0);
+            if(nxt == 0){
+                dp[a][b][turn] = 1;
+                return 1;
+            }
+        }
+        dp[a][b][turn] = 0;
+        return dp[a][b][turn];
+    }
+}
+
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    cout << k + (k-1) / (n-1) << endl;
+    int n, a, b;
+    cin >> n >> a >> b;
+    dp.assign(n+1, vvi(n+1, vi(2, -1)));
+    int ans = f(n, a, b, 0);
+    cout << (ans ? "YES" : "NO") << endl;
 }
 
 int32_t main()

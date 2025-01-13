@@ -72,9 +72,50 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    cout << k + (k-1) / (n-1) << endl;
+    int n, k; cin >> n >> k;
+    //if(n < k){
+    //    cout << "NO" << endl;
+    //    return;
+    //}
+    vi a(k, n/k);
+    a[0] += n%k;
+
+    if(a[0]%2 == 0){
+        int acc = 0;
+        rep(i, 1, k){
+            if(a[i]%2 != 0){
+                a[i]--;
+                acc++;
+            }
+        }
+        a[0] += acc;
+    }else{
+        int acc = 0;
+        rep(i, 1, k){
+            if(a[i]%2 == 0){
+                a[i]--;
+                acc++;
+            }
+        }
+        a[0] += acc;
+    }
+
+    bool ok = a[0] > 0;
+    //cout << a[0] << " ";
+    rep(i, 1, k){
+        //cout << a[i] << " ";
+        ok = (a[i]%2 == a[0]%2 && a[i] > 0);
+        if(!ok) break;
+    }
+    //cout << endl;
+    cout << (ok ? "YES" : "NO") << endl;
+    if(ok){
+        rep(i, 0, k){
+            cout << a[i] << " ";
+        }
+        cout << endl;
+    }
+
 }
 
 int32_t main()

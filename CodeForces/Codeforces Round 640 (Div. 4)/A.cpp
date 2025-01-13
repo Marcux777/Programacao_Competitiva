@@ -72,9 +72,23 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    cout << k + (k-1) / (n-1) << endl;
+    int x; cin >> x;
+    int p = 0;
+    vi ans;
+    while(x > 0){
+        int v = x%10 * pow(10, p);
+        if(v) ans.pb(v);
+        x /= 10;
+        p++;
+    }
+    cout << sz(ans) << endl;
+    for(auto  i : ans) {
+        if(i == 0) continue;
+        cout << i << " ";
+    }
+
+    cout << endl;
+
 }
 
 int32_t main()

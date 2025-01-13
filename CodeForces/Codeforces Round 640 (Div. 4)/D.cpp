@@ -72,9 +72,44 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    cout << k + (k-1) / (n-1) << endl;
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+    int l = 0, r = n - 1;
+    int totalA = 0, totalB = 0;
+    int moves = 0;
+    int prev = 0;
+    
+    bool turn = true;
+
+    while(l <= r){
+        int curr = 0;
+        int cnt = 0;
+        
+        if(turn){
+            // Alice come da esquerda
+            while(l <= r && curr <= prev){
+                curr += a[l];
+                l++;
+                cnt++;
+            }
+            totalA += curr;
+        }
+        else{
+            // Bob come da direita
+            while(l <= r && curr <= prev){
+                curr += a[r];
+                r--;
+                cnt++;
+            }
+            totalB += curr;
+        }
+        
+        moves++;
+        prev = curr;
+        turn = !turn;
+    }
+    cout << moves << " " << totalA << " " << totalB << endl;
 }
 
 int32_t main()

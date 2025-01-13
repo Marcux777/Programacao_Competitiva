@@ -41,7 +41,7 @@ using namespace std;
 #define rep(i, a, b) for (int i = a; i < (b); ++i)
 #define MIN(v) *min_element(all(v))
 #define MAX(v) *max_element(all(v))
-#define LB(c, x) distance((c).begin(), lower_bound(all(c), (x)))
+#define LB(c, x) distance((c).begin(), ler_bound(all(c), (x)))
 #define UB(c, x) distance((c).begin(), upper_bound(all(c), (x)))
 typedef vector<double> vd;
 typedef vector<vd> vvd;
@@ -72,9 +72,48 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    cout << k + (k-1) / (n-1) << endl;
+
+    int n;
+    cin >> n;
+    vi a(n), b(n);
+    int S = 0, B = 0;
+    for(auto &i : a) cin >> i, S += i;
+    for(auto &i : b) cin >> i, B += i;
+    if(S < B){
+        cout << "NO\n";
+        return;
+    }
+    if(n == 2){
+        cout << (S >= B ? "YES\n" : "NO\n");
+        return;
+    }
+    ll maxOp = (S - B) / (n - 2);
+    if(maxOp < 0){
+        cout << "NO\n";
+        return;
+    }
+    auto f = [&](ll x){
+        int p = 0LL;
+        rep(i,0,n){
+            ll diff = b[i] - a[i] + x;
+            ll need = 0;
+            if(diff > 0) need = (diff + 1)/2;
+            p += need;
+            if(p > x) return false;
+        }
+        return p <= x;
+    };
+    int l = 0, r = maxOp, ans = -1;
+    while(l <= r){
+        int mid = (l + r) >> 1;
+        if(f(mid)){
+            ans = mid;
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+    cout << (ans == -1 ? "NO\n" : "YES\n");
 }
 
 int32_t main()
