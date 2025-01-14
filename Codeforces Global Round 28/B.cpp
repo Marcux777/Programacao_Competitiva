@@ -72,30 +72,21 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n; cin >> n;
-    vi a(n), prefix(n+1), mp(n+1, 0);
-    rep(i, 0, n){
-        cin >> a[i];
-        if(a[i] <= n)
-            mp[a[i]]++;
-        prefix[i+1] = prefix[i] + a[i];
-    }
-
-    vector<bool> st(n+1, false);
-    rep(i, 0, n){
-        rep(j, i+2, n+1){
-            int s = prefix[j] - prefix[i];
-            if(s <= n && mp[s] > 0)
-                st[s] = true;
+    int n, k; cin >> n >> k;
+    vi ans;
+    int x = n, y = 1;
+    rep(c, 1, n+1){
+        if(c%k == 0){
+            ans.pb(y);
+            y++;
+        }else{
+            ans.pb(x);
+            x--;
         }
     }
 
-    int ans = 0;
-    for(auto i : a){
-        if(i <= n && st[i])
-            ans++;
-    }
-    cout << ans << endl;
+    for(auto i : ans) cout << i << " ";
+    cout << endl;
 }
 
 int32_t main()
