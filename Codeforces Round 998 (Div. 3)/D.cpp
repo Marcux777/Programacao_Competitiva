@@ -74,7 +74,7 @@ void solve()
 {
     int n; cin >> n;
     vi a(n), ans(n);
-    for(auto& i: a)cin >> i;
+    for(auto& i: a)cin >> i;    
 
 
     rep(i, 0, n-1){

@@ -75,7 +75,17 @@ void solve()
     int n, m; cin >> n >> m;
     vi a(m);
     for(auto &i : a) cin >> i;
-    
+    int time = 0;
+    int curr = 1;
+    for(auto &i : a){
+        if(i >= curr){
+            time += i - curr;
+        }else{
+            time += n - curr + i;
+        }
+        curr = i;
+    }
+    cout << time << endl;
 }
 
 int32_t main()
