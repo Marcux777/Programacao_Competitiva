@@ -1,3 +1,17 @@
+/*
+~~ Alguma parte/frase foda de um livro/mangá para dar sorte ~~
+
+Uma vez eu gritei, gradualmente, perdi minha voz.
+Uma vez eu chorei, gradualmente, perdi minhas lágrimas.
+Uma vez eu sofri, gradualmente, me tornei capaz de suportar tudo.
+Uma vez me alegrei, gradualmente, me tornei indiferente ao mundo.
+E agora, tudo o que me resta é um rosto sem expressão,
+meu olhar é tão firme quanto um monólito,
+apenas a perseverança permanece no meu coração.
+Este sou eu, um personagem insignificante,
+Fang Yuan — A Perseverança.
+
+*/
 #if defined(LOCAL) or not defined(LUOGU)
 #pragma GCC optimize(3)
 #pragma GCC optimize("Ofast,unroll-loops")
@@ -58,6 +72,12 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    if(n == 0) cout << 1 << endl;
+    else if(n%4 == 1) cout << 8 << endl;
+    else if(n%4 == 2) cout << 4 << endl;
+    else if(n%4 == 3) cout << 2 << endl;
+    else cout << 6 << endl;
 }
 
 int32_t main()
