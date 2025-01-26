@@ -72,28 +72,15 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int l, u, r, cs = 1;
+    int a, b;
+    cin >> a >> b;
+    a = abs(a);
+    b = abs(b);
     
-    while(cin >> l >> u >> r && (l || u || r)){
-        vi rv(r), dist(1e5+10, -1);
-        rep(i, 0, r) cin >> rv[i];
-        dist[l] = 0;
-        queue<int> q;
-        q.push(l);
-        while(!q.empty()){
-            int x = q.front(); q.pop();
-            rep(i, 0, r){
-                int v = (x + rv[i]) % 10000;
-                if(dist[v] == -1){
-                    dist[v] = dist[x] + 1;
-                    q.push(v);
-                }
-            }
-        }
-        cout << "Case " << cs++ << ": ";
-        if(dist[u] != -1) cout << dist[u] << endl;
-        else cout << "Permanently Locked\n";
-    }
+    if(a == b)
+        cout << a + b << endl;
+    else
+        cout << 2 * max(a, b) - 1 << endl;
 }
 
 int32_t main()
@@ -101,8 +88,8 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
 }
-

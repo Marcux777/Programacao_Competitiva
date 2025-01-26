@@ -72,27 +72,44 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int l, u, r, cs = 1;
+    string s;
+    set<string> st;
+    while(cin >> s && s != "*"){
+        st.insert(s);
+    }
+    string a, b;
+    cin.ignore();
     
-    while(cin >> l >> u >> r && (l || u || r)){
-        vi rv(r), dist(1e5+10, -1);
-        rep(i, 0, r) cin >> rv[i];
-        dist[l] = 0;
-        queue<int> q;
-        q.push(l);
+    while(getline(cin, s) && s != ""){
+        stringstream ss(s);
+        ss >> a >> b;
+        if(a == b){
+            cout << a << " " << b << " 0\n";
+            continue;
+        }
+        map<string, int> dist;
+        queue<pair<string, int>> q;
+        q.push({a, 0});
+        dist[a] = 0;
         while(!q.empty()){
-            int x = q.front(); q.pop();
-            rep(i, 0, r){
-                int v = (x + rv[i]) % 10000;
-                if(dist[v] == -1){
-                    dist[v] = dist[x] + 1;
-                    q.push(v);
+            auto [u, d] = q.front();
+            q.pop();
+            if(u == b){
+                cout << a << " " << b << " " << d << endl;
+                break;
+            }
+            for(auto &v : st){
+                if(v.size() != u.size()) continue;
+                int cnt = 0;
+                rep(i, 0, sz(v)){
+                    if(v[i] != u[i]) cnt++;
+                }
+                if(cnt == 1 && !dist.count(v)){
+                    dist[v] = d + 1;
+                    q.push({v, d + 1});
                 }
             }
         }
-        cout << "Case " << cs++ << ": ";
-        if(dist[u] != -1) cout << dist[u] << endl;
-        else cout << "Permanently Locked\n";
     }
 }
 
@@ -101,8 +118,10 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    while (tt--)
+    cin >> tt;
+    while (tt--){
         solve();
+        if(tt) cout << endl;
+    }
     return 0;
 }
-
