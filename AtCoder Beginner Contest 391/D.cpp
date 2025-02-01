@@ -70,58 +70,39 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
-}
-
 void solve()
 {
-    string s; cin >> s;
-
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
-
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
-            }
-        }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
+    int n, w; cin >> n >> w;
+    vii a(n);
+    vector<vii> cols(w);
+    rep(i, 0, n){
+        cin >> a[i].f >> a[i].s;
+        a[i].f--;
+        cols[a[i].f].pb({a[i].s, i});
     }
+
+    rep(i, 0, w){
+        sort(all(cols[i]),
+             [](pii x, pii y){
+                 return x.f < y.f;
+             });
+    }
+
+    vector<tiii> b;
+    b.reserve(n);
+    rep(i, 0, w){
+        rep(j, 0, sz(cols[i])){
+            b.pb({cols[i][j].f, i, cols[i][j].s});
+        }
+    }
+    sort(all(b), [](tiii x, tiii y){
+        return get<0>(x) < get<0>(y);
+    });
+
+    vi timne(n, LINF);
+    vi c(w, -1);
+    int cnt = 0;
+
 }
 
 int32_t main()
@@ -129,7 +110,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

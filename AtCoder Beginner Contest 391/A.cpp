@@ -70,58 +70,19 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
-}
-
 void solve()
 {
-    string s; cin >> s;
-
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
-
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
-            }
-        }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
-    }
+    map<string, string> mp;
+    string d; cin >> d;
+    mp["N"] = "S";
+    mp["S"] = "N";
+    mp["E"] = "W";
+    mp["W"] = "E";
+    mp["NE"] = "SW";
+    mp["SW"] = "NE";
+    mp["NW"] = "SE";
+    mp["SE"] = "NW";
+    cout << mp[d] << endl;
 }
 
 int32_t main()
@@ -129,7 +90,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

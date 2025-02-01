@@ -21,6 +21,10 @@ Fang Yuan — A Perseverança.
 
 using namespace std;
 
+#ifndef M_PI
+#define M_PI acos(-1.0)
+#endif
+
 #define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
@@ -70,58 +74,55 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
+double gcd(double a, double b){
+    if(a < 1e-3) return b;
+    if(b < 1e-3) return a;
+    return gcd(b, fmod(a, b));
 }
 
 void solve()
 {
-    string s; cin >> s;
-
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
-
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
-            }
-        }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
+    vvd x(2);
+    rep(i,0,3){
+        double a, b;
+        cin >> a >> b;
+        x[0].pb(a);
+        x[1].pb(b);
     }
+    double x1 = x[0][0], y1 = x[1][0];
+    double x2 = x[0][1], y2 = x[1][1];
+    double x3 = x[0][2], y3 = x[1][2];
+
+    double d = 2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
+    double ox = ((x1 * x1 + y1 * y1) * (y2 - y3) +
+                 (x2 * x2 + y2 * y2) * (y3 - y1) +
+                 (x3 * x3 + y3 * y3) * (y1 - y2)) / d;
+    double oy = ((x1 * x1 + y1 * y1) * (x3 - x2) +
+                 (x2 * x2 + y2 * y2) * (x1 - x3) +
+                 (x3 * x3 + y3 * y3) * (x2 - x1)) / d;
+
+    double r = sqrt((ox - x1) * (ox - x1) + (oy - y1) * (oy - y1));
+
+    vd ang;
+    ang.pb(atan2(y1 - oy, x1 - ox));
+    ang.pb(atan2(y2 - oy, x2 - ox));
+    ang.pb(atan2(y3 - oy, x3 - ox));
+
+    rep(i, 0, 3){
+        if(ang[i] < 0) ang[i] += 2 * M_PI;
+    }
+    sor(ang);
+
+    double a = ang[2] - ang[0];
+    double b = ang[2] - ang[1];
+    double c = 2*M_PI - ang[1] + ang[0];
+
+    double g = gcd(a, gcd(b, c));
+
+    int n = (int)round(2*M_PI / g);
+
+    cout << fixed << setprecision(8) << (n*r*r*sin(2*M_PI/n))/2.0 << endl;
+
 }
 
 int32_t main()
@@ -129,7 +130,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

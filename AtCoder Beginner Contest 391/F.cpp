@@ -70,66 +70,71 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
-}
 
 void solve()
 {
-    string s; cin >> s;
+    int n, k;
+    cin >> n >> k;
+    vi a(n), b(n), c(n);
+    for (int &x : a) cin >> x;
+    for (int &x : b) cin >> x;
+    for (int &x : c) cin >> x;
 
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
+    sort(all(a), greater<int>());
+    sort(all(b), greater<int>());
+    sort(all(c), greater<int>());
+    // Estado: valor, i, j, k
+    using State = tuple<int, int, int, int>;
+    auto cmp = [](const State &s1, const State &s2) {
+        return get<0>(s1) < get<0>(s2);
+    };
+    priority_queue<State, vector<State>, decltype(cmp)> pq(cmp);
+    // modificar a hash
+    struct Hash {
+        size_t operator()(const tiii& t) const {
+            auto [i, j, k] = t;
+            size_t res = 17;
+            res = res * 31 + hash<int>()(i);
+            res = res * 31 + hash<int>()(j);
+            res = res * 31 + hash<int>()(k);
+            return res;
+        }
+    };
 
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
+    unordered_set<tiii, Hash> vis;
+
+    auto push_state = [&](int i, int j, int k) {
+        if(i < n && j < n && k < n) {
+            tuple<int, int, int> idx = make_tuple(i, j, k);
+            if (!vis.count(idx)) {
+                vis.insert(idx);
+                int v = a[i]*b[j] + b[j]*c[k] + c[k]*a[i];
+                pq.push(make_tuple(v, i, j, k));
             }
         }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
+    };
+
+    push_state(0, 0, 0);
+
+    int ans = 0;
+    rep (cnt, 0, k) {
+        auto [val, i, j, l] = pq.top();
+        pq.pop();
+        ans = val;
+        push_state(i+1, j, l);
+        push_state(i, j+1, l);
+        push_state(i, j, l+1);
     }
+
+    cout << ans << endl;
 }
+
 
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

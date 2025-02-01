@@ -70,57 +70,38 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
-}
-
 void solve()
 {
-    string s; cin >> s;
+    int n, m;
+    cin >> n >> m;
+    vector<string> s(n), t(m);
+    for (auto &i : s)
+        cin >> i;
+    for (auto &i : t)
+        cin >> i;
 
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
-
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
+    rep(i, 0, n - m + 1)
+    {
+        rep(j, 0, n - m + 1)
+        {
+            bool ok = true;
+            rep(k, 0, m)
+            {
+                rep(l, 0, m)
+                {
+                    if (s[i + k][j + l] != t[k][l])
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+            if (ok)
+            {
+                cout << i + 1 << " " << j + 1 << endl;
+                return;
             }
         }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
     }
 }
 
@@ -129,7 +110,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

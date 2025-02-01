@@ -70,58 +70,45 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
-}
-
 void solve()
 {
+    int n; cin >> n;
     string s; cin >> s;
-
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
-
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
-            }
-        }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
+    int L = s.size();
+    vector<array<int, 2>> dp(L);
+    vi nat(L);
+    rep (i, 0, L) {
+        int val = s[i] - '0';
+        dp[i] = { (val == 0 ? 0 : 1), (val == 1 ? 0 : 1) };
+        nat[i] = val;
     }
+    while (dp.size() > 1) {
+        vector<array<int, 2>> ndp;
+        vi nnat;
+        for (int i = 0; i < sz(dp); i += 3) {
+            array<int, 2> cur = {LINF, LINF};
+            int m = (nat[i] + nat[i + 1] + nat[i + 2] >= 2) ? 1 : 0;
+            rep (target, 0, 3) {
+                rep (mask, 0, 9) {
+                    int cnt = 0, cost = 0;
+                    rep (j, 0, 4) {
+                        int bit = (mask >> j) & 1;
+                        cost += dp[i + j][bit];
+                        if (bit == target)
+                            cnt++;
+                    }
+                    if (cnt >= 2)
+                        cur[target] = min(cur[target], cost);
+                }
+            }
+            ndp.pb(cur);
+            nnat.pb(m);
+        }
+        dp = move(ndp);
+        nat = move(nnat);
+    }
+    int natural = nat[0];
+    cout << dp[0][1 - natural] << endl;
 }
 
 int32_t main()
@@ -129,7 +116,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;

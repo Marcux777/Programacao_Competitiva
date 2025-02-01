@@ -70,57 +70,35 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-string conv(int value){
-    string col;
-    while(value > 0){
-        value--;
-        col += (value % 26) + 'A';
-        value /= 26;
-    }
-    reverse(all(col));
-    return col;
-}
-
-int desconv(string col){
-    int value = 0;
-    for(char c : col){
-        value *= 26;
-        value += c - 'A' + 1;
-    }
-    return value;
-}
-
 void solve()
 {
-    string s; cin >> s;
+    int n, q;
+    cin >> n >> q;
+    vi local(n+1), nxt(n+1, 0);
+    rep (i, 1, n+1){
+        local[i] = i;
+        nxt[i] = 1;
+    }
+    int c = 0;
 
-    bool isRC = (s[0] == 'R' && isdigit(s[1]) && s.find('C') != string::npos);
+    while(q--){
+        int t;
+        cin >> t;
+        if(t == 1){
+            int p, h;
+            cin >> p >> h;
+            if(local[p] == h) continue;
+            int ant = local[p];
+            if(nxt[ant] == 2) c--;
+            nxt[ant]--;
 
-    if(isRC){
-        string linha = "";
-        int j = 0;
-        rep(i, 1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                linha += s[i];
-            }else{
-                j = i;
-                break;
-            }
-        }
-        rep(i, j+1, sz(s)){
-            if(s[i] >= '0' && s[i] <= '9'){
-                cout << conv(stoll(s.substr(i))) << linha << endl;
-                break;
-            }
-        }
-    }else{
-        string value = "", linha = "";
-        rep(i, 0, sz(s)){
-            if(isalpha(s[i]))
-                value += s[i];
-            else linha += s[i];
-        }
-        cout << "R" << linha << "C" << desconv(value) << endl;
+            if(nxt[h] == 1) c++;
+            nxt[h]++;
+
+            local[p] = h;
+        } else
+            cout << c << endl;
+
     }
 }
 
@@ -129,7 +107,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt--)
         solve();
     return 0;
