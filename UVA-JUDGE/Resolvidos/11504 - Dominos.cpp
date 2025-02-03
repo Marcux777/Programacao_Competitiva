@@ -60,7 +60,6 @@ typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-const int LOG = 20;
 const int mod = 1e9 + 7;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
@@ -71,72 +70,98 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-vi deaph,dist;
-vvi parent;
+vi g[MAXN], rg[MAXN];
+vector<bool> vis;
+vi order;
 
-vector<vii> g;
-
-void dfs(int u, int p){
-    parent[u][0] = p;
-    rep(i, 1, LOG){
-        if(parent[u][i-1] != -1)
-            parent[u][i] = parent[parent[u][i - 1]][i - 1];
-    }
-    for(auto &i : g[u]){
-        if(i.f == p) continue;
-        deaph[i.f] = deaph[u] + 1;
-        dist[i.f] = dist[u] + i.s;
-        dfs(i.f, u);
-    }
-}
-
-int lca(int u, int v){
-    if(deaph[u] < deaph[v]) swap(u, v);
-    for(int i = LOG-1; i>=0; i--){
-        if(parent[u][i] != -1 && deaph[parent[u][i]] >= deaph[v])
-            u = parent[u][i];
-    }
-    if(u == v) return u;
-    for(int i = LOG-1; i>=0; i--){
-        if(parent[u][i] != parent[v][i]){
-            u = parent[u][i];
-            v = parent[v][i];
-        }
-    }
-    return parent[u][0];
-}
-
-
-
-
-void solve(int n)
+void dfs1(int v)
 {
-    parent.assign(MAXN, vi(LOG, -1));
-    dist.assign(MAXN, 0);
-    deaph.assign(MAXN, 0);
-    g.assign(MAXN, vii());
-    rep(i, 1, n){
-        int v, w;
-        cin >> v >> w;
-        g[i].pb({v, w});
-        g[v].pb({i, w});
-    }
-    deaph[0] = dist[0] = 0;
-    dfs(0, -1);
+    vis[v] = true;
+    for (auto u : g[v])
+        if (!vis[u])
+            dfs1(u);
+    order.pb(v);
+}
 
-    int q; cin >> q;
-    while(q--){
-        int u, v;
-        cin >> u >> v;
-        cout << dist[u] + dist[v] - 2*dist[lca(u, v)] << (q > 0? " "  : endl);
+void dfs2(int v, int cid, vi &comp_id)
+{
+    comp_id[v] = cid;
+    for (auto u : rg[v])
+        if (comp_id[u] == -1)
+            dfs2(u, cid, comp_id);
+}
+
+int kosaraju(int n, vi &comp_id)
+{
+    vis.assign(n, false);
+    order.clear();
+    rep(i, 0, n)
+        if (!vis[i])
+            dfs1(i);
+
+    reverse(all(order));
+    comp_id.assign(n, -1);
+    int cid = 0;
+    for (auto v : order)
+        if (comp_id[v] == -1) {
+            dfs2(v, cid, comp_id);
+            cid++;
+        }
+    return cid;
+}
+
+vvi condensation(int n, const vi &comp_id, int compCount)
+{
+    vvi condensed(compCount);
+    vector<set<int>> temp(compCount);
+    rep(u, 0, n)
+        for (auto v : g[u])
+            if (comp_id[u] != comp_id[v])
+                temp[comp_id[u]].insert(comp_id[v]);
+
+    rep(i, 0, compCount)
+        for (auto v : temp[i])
+            condensed[i].pb(v);
+
+    return condensed;
+}
+
+void solve()
+{
+    int n, m; cin >> n >> m;
+    rep(i, 0, n) {
+        g[i].clear();
+        rg[i].clear();
     }
+    rep(i, 0, m){
+        int x, y; cin >> x >> y;
+        x--; y--;
+        g[x].pb(y);
+        rg[y].pb(x);
+    }
+    vi comp_id;
+    int count = kosaraju(n, comp_id);
+    auto condensed = condensation(n, comp_id, count);
+    vi indegree(count, 0);
+    rep (i, 0, count) {
+        for (int v : condensed[i])
+            indegree[v]++;
+    }
+    int ans = 0;
+    rep (i, 0, count) {
+        if (indegree[i] == 0)
+            ans++;
+    }
+    cout << ans << endl;
 }
 
 int32_t main()
 {
     IOS;
-    int n;
-    while (cin >> n && n)
-        solve(n);
+    int tt;
+    tt = 1;
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

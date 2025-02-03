@@ -60,7 +60,6 @@ typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-const int LOG = 20;
 const int mod = 1e9 + 7;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
@@ -71,72 +70,44 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-vi deaph,dist;
-vvi parent;
-
-vector<vii> g;
-
-void dfs(int u, int p){
-    parent[u][0] = p;
-    rep(i, 1, LOG){
-        if(parent[u][i-1] != -1)
-            parent[u][i] = parent[parent[u][i - 1]][i - 1];
-    }
-    for(auto &i : g[u]){
-        if(i.f == p) continue;
-        deaph[i.f] = deaph[u] + 1;
-        dist[i.f] = dist[u] + i.s;
-        dfs(i.f, u);
-    }
-}
-
-int lca(int u, int v){
-    if(deaph[u] < deaph[v]) swap(u, v);
-    for(int i = LOG-1; i>=0; i--){
-        if(parent[u][i] != -1 && deaph[parent[u][i]] >= deaph[v])
-            u = parent[u][i];
-    }
-    if(u == v) return u;
-    for(int i = LOG-1; i>=0; i--){
-        if(parent[u][i] != parent[v][i]){
-            u = parent[u][i];
-            v = parent[v][i];
-        }
-    }
-    return parent[u][0];
-}
-
-
-
-
-void solve(int n)
+void solve()
 {
-    parent.assign(MAXN, vi(LOG, -1));
-    dist.assign(MAXN, 0);
-    deaph.assign(MAXN, 0);
-    g.assign(MAXN, vii());
-    rep(i, 1, n){
-        int v, w;
-        cin >> v >> w;
-        g[i].pb({v, w});
-        g[v].pb({i, w});
+    int n; cin >> n;
+    int sum = n*(n+1)/2;
+    if(sum%2 != 0){
+        cout << "NO" << endl;
+        return;
     }
-    deaph[0] = dist[0] = 0;
-    dfs(0, -1);
+    cout << "YES" << endl;
+    int m = n/2;
+    vi a, b;
+    int p = 0;
+    rep(i, 1, m+1){
+        a.pb(i*2);
+        p += i*2;
+    }
+    int e = 0;
+    rep(i, 1, m){
+        b.pb(2*i-1);
+        e += (2*i-1);
+    }
 
-    int q; cin >> q;
-    while(q--){
-        int u, v;
-        cin >> u >> v;
-        cout << dist[u] + dist[v] - 2*dist[lca(u, v)] << (q > 0? " "  : endl);
-    }
+    b.pb(p-e);
+
+    for(auto i : a) cout << i << " ";
+    for(auto i : b) cout << i << " ";
+
+    cout << endl;
 }
+
 
 int32_t main()
 {
     IOS;
-    int n;
-    while (cin >> n && n)
-        solve(n);
+    int tt;
+    tt = 1;
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
