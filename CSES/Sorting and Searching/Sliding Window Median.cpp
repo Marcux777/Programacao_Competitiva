@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -70,83 +70,30 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-
-vector<vector<int>> tree;
-vii arr;
-int n;
-
-// Constrói a Merge Sort Tree com compressão de coordenadas
-void build(int node, int start, int end) {
-    if(start == end) {
-        tree[node].push_back(arr[start].s);
-        return;
-    }
-
-    int mid = (start + end) / 2;
-    build(2*node, start, mid);
-    build(2*node+1, mid+1, end);
-
-    // Merge dos vetores ordenados dos filhos
-    tree[node].reserve(tree[2*node].size() + tree[2*node+1].size());
-    merge(tree[2*node].begin(), tree[2*node].end(),
-          tree[2*node+1].begin(), tree[2*node+1].end(),
-          back_inserter(tree[node]));
-}
-
-int query(int node, int start, int end, int l, int r, int k) {
-    if(start > r || end < l)
-        return 0;
-
-    if(l <= start && end <= r) {
-        return upper_bound(tree[node].begin(), tree[node].end(), k) - tree[node].begin();
-    }
-
-    int mid = (start + end) / 2;
-    return query(2*node, start, mid, l, r, k) +
-           query(2*node+1, mid+1, end, l, r, k);
-}
-
 void solve()
 {
-    int n, m; cin >> n >> m;
-
-    arr.resize(n);
-    rep(i, 0, n) cin >> arr[i].f >> arr[i].s;
-    sor(arr);
-
-    tree.resize(4*n);
-    build(1, 0, n-1);
-
-    while(m--){
-        int c;
-        cin >> c;
-        vi pnt(c);
-        rep(i, 0, c) cin >> pnt[i];
-
-        vii gaps;
-        if(pnt[0] > 1) gaps.push_back({1, pnt[0]-1});
-
-        rep(i, 0, c-1){
-            if(pnt[i] + 1 <= pnt[i+1] - 1) gaps.push_back({pnt[i]+1, pnt[i+1]-1});
-        }
-
-        if(pnt.back() < 1000000){
-            gaps.push_back({pnt.back()+1, 1000000});
-        }
-        int p = 0;
-        for(auto &i : gaps){
-            int A = i.f, B = i.s;
-            auto comp = [](const pii &p, int x) {
-                return p.f < x;
-            };
-            int i_low = lower_bound(all(arr), A, comp) - arr.begin();
-            int i_high = upper_bound(all(arr), B,
-                                [](int x, const pii &p){ return x < p.f; }) - arr.begin();
-            if(i_low < i_high)
-                p += query(1, 0, n - 1, i_low, i_high - 1, B);
-        }
-        cout << n - p << endl;
+    int n, k; cin >> n >> k;
+    vi a(n);
+    multiset<int> s;
+    for(auto &i : a) {
+        cin >> i;
     }
+    rep(i, 0, k){
+        s.insert(a[i]);
+    }
+    auto it = next(s.begin(), (k - 1) / 2);
+
+    cout << *it << " ";
+    rep(i, k, n){
+        s.insert(a[i]);
+        if(a[i] < *it) it--;
+
+        if(a[i-k] <= *it)it++;
+        s.erase(s.lower_bound(a[i-k]));
+        cout << *it << " ";
+    }
+    cout << endl;
+
 }
 
 int32_t main()
