@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -60,7 +60,7 @@ typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-const int mod = 1e9 + 7;
+const int mod = 998244353;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -70,79 +70,38 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-class DSU {
-    vector<int> p, sz;
-public:
-    DSU(int n) {
-        p.resize(n);
-        sz.resize(n, 1);
-        iota(p.begin(), p.end(), 0);
-    }
-
-    int find(int x) {
-        return x == p[x] ? x : p[x] = find(p[x]);
-    }
-
-    void unite(int x, int y) {
-        x = find(x), y = find(y);
-        if (x == y) return;
-        if (sz[x] < sz[y]) swap(x, y);
-        p[y] = x;
-        sz[x] += sz[y];
-    }
-
-    int size(int x) {
-        return sz[find(x)];
-    }
-
-    bool same(int x, int y) {
-        return find(x) == find(y);
-    }
-};
+int fix_sum(int x, int y){
+    int s = x + y;
+    return (s >= mod ? s - mod : s);
+}
 
 void solve()
 {
-    int n, m; cin >> n >> m;
-    DSU dsu(n+1);
-    vector<tiii> edges;
-    rep(i, 1, m+1){
-        int a, b; cin >> a >> b;
-        if(dsu.same(a, b)){
-            edges.pb({a, b, i});
-        }
-        else dsu.unite(a, b);
-    }
+    int w, h, l, r, d, u;
+    cin >> w >> h >> l >> r >> d >> u;
 
-    set<int> s;
-    rep(i, 1, n+1){
-        s.insert(dsu.find(i));
-    }
-    cout << sz(s) - 1 << endl;
+    // dp(x, y) = dp(x-1, y) + dp(x, y-1) + 1
+    // dp(x-1, y) vindo da esquerda
+    // dp(x, y-1) vindo de baixo
+    vi dp(h+1, 0), dp2(h+1, 0);
 
-    if(sz(s) == 1) return;
+    auto f = [&](int x, int y){
+        return (l <= x && x <= r && d <= y && y <= u);
+    };
+    int ans = 0;
+    rep(x, 0, w+1){
+        if(x) dp2.swap(dp);
+        else fill(all(dp2), 0);
 
-    for (auto tup : edges) {
-        auto [u, v, id] = tup;
-        int f1 = dsu.find(u);
-        if (sz(s) == 1) break;
-
-        if (f1 == *s.begin()) { 
-            int f2 = dsu.find(*next(s.begin()));
-            cout << id << " " << u << " " << *next(s.begin()) << endl;
-            dsu.unite(f1, f2);
-            s.erase(f1);
-            s.erase(f2);
-            s.insert(dsu.find(u));
-        } else {
-            int f2 = dsu.find(*s.begin());
-            cout << id << " " << u << " " << *s.begin() << endl;
-            dsu.unite(f1, f2);
-            s.erase(f1);
-            s.erase(f2);
-            s.insert(dsu.find(u));
+        rep(y, 0, h+1){
+            if(f(x, y)) dp[y] = 0;
+            else{
+                dp[y] = fix_sum(dp2[y], fix_sum((y ? dp[y-1] : 0), 1));
+            }
+            ans = fix_sum(ans, dp[y]);
         }
     }
-
+    cout << ans % mod << "\n";
 }
 
 int32_t main()

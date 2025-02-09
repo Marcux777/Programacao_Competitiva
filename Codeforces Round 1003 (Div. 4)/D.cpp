@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -70,79 +70,32 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-class DSU {
-    vector<int> p, sz;
-public:
-    DSU(int n) {
-        p.resize(n);
-        sz.resize(n, 1);
-        iota(p.begin(), p.end(), 0);
-    }
-
-    int find(int x) {
-        return x == p[x] ? x : p[x] = find(p[x]);
-    }
-
-    void unite(int x, int y) {
-        x = find(x), y = find(y);
-        if (x == y) return;
-        if (sz[x] < sz[y]) swap(x, y);
-        p[y] = x;
-        sz[x] += sz[y];
-    }
-
-    int size(int x) {
-        return sz[find(x)];
-    }
-
-    bool same(int x, int y) {
-        return find(x) == find(y);
-    }
-};
-
 void solve()
 {
     int n, m; cin >> n >> m;
-    DSU dsu(n+1);
-    vector<tiii> edges;
-    rep(i, 1, m+1){
-        int a, b; cin >> a >> b;
-        if(dsu.same(a, b)){
-            edges.pb({a, b, i});
+    vvi a(n, vi(m));
+    vi tot(n, 0), pont(n, 0);
+    rep(i, 0, n){
+        int s = 0, p = 0;
+        rep(j, 0, m){
+            cin >> a[i][j];
+            s+= a[i][j];
+            p+= s;
         }
-        else dsu.unite(a, b);
+        tot[i] = s;
+        pont[i] = p;
     }
-
-    set<int> s;
-    rep(i, 1, n+1){
-        s.insert(dsu.find(i));
+    vi ord(n);
+    iota(all(ord), 0);
+    sort(all(ord), [&](int i, int j){
+        return tot[i] > tot[j];
+    });
+    int ans = 0, acc = 0;
+    for(auto i : ord){
+        ans += pont[i] + acc * m;
+        acc += tot[i];
     }
-    cout << sz(s) - 1 << endl;
-
-    if(sz(s) == 1) return;
-
-    for (auto tup : edges) {
-        auto [u, v, id] = tup;
-        int f1 = dsu.find(u);
-        if (sz(s) == 1) break;
-
-        if (f1 == *s.begin()) { 
-            int f2 = dsu.find(*next(s.begin()));
-            cout << id << " " << u << " " << *next(s.begin()) << endl;
-            dsu.unite(f1, f2);
-            s.erase(f1);
-            s.erase(f2);
-            s.insert(dsu.find(u));
-        } else {
-            int f2 = dsu.find(*s.begin());
-            cout << id << " " << u << " " << *s.begin() << endl;
-            dsu.unite(f1, f2);
-            s.erase(f1);
-            s.erase(f2);
-            s.insert(dsu.find(u));
-        }
-    }
-
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -150,6 +103,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
