@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -72,20 +72,55 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, x; cin >> n >> x;
-    vii a(n);
-    for(auto &i : a) cin >> i.f, i.s = &i - &a[0];
-    sor(a);
-    int l = 0, r = n-1;
-    while(l < r){
-        if(a[l].f + a[r].f == x){
-            cout << a[l].s+1 << " " << a[r].s+1 << endl;
-            return;
-        }
-        if(a[l].f + a[r].f < x) l++;
-        else r--;
+    int n, m; cin >> n >> m;
+    vi a(n+1), pos(n+1);
+    rep(i, 1, n+1){
+        cin >> a[i];
+        pos[a[i]] = i;
     }
-    cout << "IMPOSSIBLE" << endl;
+
+    vector<bool> ok(n+2, false);
+    int breaks = 0;
+    rep(i, 1, n){
+        ok[i] = (pos[i] < pos[i+1]);
+        if(!ok[i])breaks++;
+    }
+
+    auto update = [&](int i) {
+        if(i >= 1 and i < n) {
+            bool newGood = (pos[i] < pos[i+1]);
+            if(ok[i] != newGood) {
+                if(ok[i] && !newGood) breaks++; // passou de bom para não bom
+                else if(!ok[i] && newGood) breaks--; // passou de não bom para bom
+                ok[i] = newGood;
+            }
+        }
+    };
+
+    while(m--){
+        int x, y; cin >> x >> y;
+        int u = a[x], v = a[y];
+        set<int> idx;
+        idx.insert(u);
+        idx.insert(v);
+        idx.insert(u-1);
+        idx.insert(v-1);
+
+        for(auto it = idx.begin(); it != idx.end(); ) {
+            if(*it < 1 || *it >= n) {
+                it = idx.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        swap(a[x], a[y]);
+        swap(pos[u], pos[v]);
+
+        for(auto i : idx){
+            update(i);
+        }
+        cout << breaks+1 << endl;
+    }
 }
 
 int32_t main()

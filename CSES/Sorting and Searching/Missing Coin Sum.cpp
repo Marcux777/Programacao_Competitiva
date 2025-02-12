@@ -77,7 +77,12 @@ void solve()
     for(auto &i : a) cin >> i;
     sor(a);
 
-    
+    int ans = 1;
+    for(auto i : a){
+        if(i > ans) break;
+        ans += i;
+    }
+    cout << ans << endl;
 
 }
 

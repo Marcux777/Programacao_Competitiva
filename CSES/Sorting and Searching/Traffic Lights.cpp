@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -72,20 +72,28 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    int n, x; cin >> n >> x;
-    vii a(n);
-    for(auto &i : a) cin >> i.f, i.s = &i - &a[0];
-    sor(a);
-    int l = 0, r = n-1;
-    while(l < r){
-        if(a[l].f + a[r].f == x){
-            cout << a[l].s+1 << " " << a[r].s+1 << endl;
-            return;
-        }
-        if(a[l].f + a[r].f < x) l++;
-        else r--;
+    int n, x;cin >> x >> n;
+    set<int> s;
+    multiset<int> seg;
+    seg.insert(x);
+    s.insert(0);
+    s.insert(x);
+
+    rep(i, 0, n){
+        int a; cin >> a;
+        auto it = s.lower_bound(a);
+        int r = *it;
+        int l = *prev(it);
+        seg.erase(seg.find(r - l));
+        seg.insert(a - l);
+        seg.insert(r - a);
+
+        s.insert(a);
+
+        cout << *seg.rbegin() << " ";
     }
-    cout << "IMPOSSIBLE" << endl;
+    cout << endl;
+
 }
 
 int32_t main()
