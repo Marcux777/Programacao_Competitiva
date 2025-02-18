@@ -18,13 +18,8 @@ Fang Yuan — A Perseverança.
 #endif
 
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
 
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using namespace std;
 
 #define int long long
 #define IOS                           \
@@ -66,7 +61,6 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-const int LOGN = 21;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -76,9 +70,26 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+
+    vi prefix(n + 1, 0);
+    rep(i, 0, n) prefix[i + 1] = prefix[i] + (a[i] > 0 ? a[i] : 0);
+
+    vi suffix(n + 1, 0);
+    suffix[n] = 0;
+    for(int i = n-1; i >= 0; i--){
+        suffix[i] = suffix[i + 1] + (a[i] < 0 ? -a[i] : 0);
+    }
+    int ans = 0;
+
+    rep(i, 0, n+1) ans = max(ans, prefix[i] + suffix[i]);
+
+    cout << ans << endl;
+
 }
 
 int32_t main()
@@ -86,6 +97,8 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
+
     while (tt--)
         solve();
     return 0;

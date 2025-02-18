@@ -79,6 +79,26 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, k; cin >> n >> k;
+    vii v(n);
+    rep(i, 0, n) cin >> v[i].f >> v[i].s;
+    sort(all(v), [](pii a, pii b){
+        return a.s < b.s;
+    });
+    multiset<int> disp;
+    rep(i, 0, k) disp.insert(0);
+
+    int ans = 0;
+    for(auto &i : v){
+        auto it = disp.upper_bound(i.f);
+        if(it != disp.begin()){
+            --it;
+            disp.erase(it);
+            disp.insert(i.s);
+            ++ans;
+        }
+    }
+    cout << ans << endl;
 }
 
 int32_t main()

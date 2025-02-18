@@ -18,13 +18,8 @@ Fang Yuan — A Perseverança.
 #endif
 
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
 
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using namespace std;
 
 #define int long long
 #define IOS                           \
@@ -66,7 +61,6 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-const int LOGN = 21;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -76,9 +70,17 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+vvi dp;
+
+
 
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    rep(i, 0, n) cin >> a[i];
+    dp = vvi(n, vi(4, -1));
+
 }
 
 int32_t main()

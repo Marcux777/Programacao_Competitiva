@@ -18,13 +18,8 @@ Fang Yuan — A Perseverança.
 #endif
 
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
 
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using namespace std;
 
 #define int long long
 #define IOS                           \
@@ -66,7 +61,6 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-const int LOGN = 21;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -76,9 +70,33 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+vi dp, total;
+int n;
+int f(int x){
+    if(x <= 0) return 0;
+    if(x == 1) return total[1];
+
+    if(dp[x] != -1) return dp[x];
+
+    return dp[x] = max(f(x-1), f(x-2) + total[x]);
+}
 
 void solve()
 {
+    cin >> n;
+    vi a(n);
+    dp.resize(MAXN, -1);
+    total.resize(MAXN, 0);
+    vi cnt(MAXN, 0);
+    for(auto &i : a){cin >> i;
+        cnt[i]++;
+    }
+    rep(i, 1, MAXN){
+        total[i] = cnt[i]*i;
+    }
+
+    cout << f(MAXN-1) << endl;
+
 }
 
 int32_t main()

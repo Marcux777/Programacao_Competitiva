@@ -79,6 +79,17 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n; cin >> n;
+    queue<int> q;
+    rep(i, 1, n+1) q.push(i);
+    while(sz(q) > 1)
+    {
+        q.push(q.front());
+        q.pop();
+        cout << q.front() << " ";
+        q.pop();
+    }
+    cout << q.front() << endl;
 }
 
 int32_t main()

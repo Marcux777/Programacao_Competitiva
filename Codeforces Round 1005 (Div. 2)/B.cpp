@@ -18,13 +18,8 @@ Fang Yuan — A Perseverança.
 #endif
 
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
 
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using namespace std;
 
 #define int long long
 #define IOS                           \
@@ -66,7 +61,6 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-const int LOGN = 21;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -76,9 +70,35 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    rep(i, 0, n) cin >> a[i];
+
+    vi freq(MAXN, 0);
+    for(int x : a) freq[x]++;
+
+    vi len(n+1, 0);
+    len[0] = len[a[0]] == 1;
+
+    rep(i, 1, n){
+        if(freq[a[i]] == 1)
+            len[i] = len[i-1] + 1;
+    }
+
+    int mx = *max_element(all(len));
+
+    if(mx == 0){
+        cout << 0 << endl;
+        return;
+    }
+    rep(i, 0, n){
+        if(len[i] == mx){
+            cout << i - len[i] + 2 << ' ' << i+1 << endl;
+            return;
+        }
+    }
 }
 
 int32_t main()
@@ -86,6 +106,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

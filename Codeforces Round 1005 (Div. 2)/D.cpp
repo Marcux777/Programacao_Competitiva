@@ -18,13 +18,8 @@ Fang Yuan — A Perseverança.
 #endif
 
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
 
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using namespace std;
 
 #define int long long
 #define IOS                           \
@@ -66,7 +61,7 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-const int LOGN = 21;
+const int LOGN = 32;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -76,9 +71,54 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+const int W = 30;
 
 void solve()
 {
+    int n, q;
+    cin >> n >> q;
+
+    vi a(n);
+    for (int &x : a) cin >> x;
+
+    vi pre(n + 1);
+    pre[0] = a[0];
+    for (int i = 1; i < n; i++){
+        pre[i] = pre[i - 1] ^a[i];
+    }
+
+    vector<array<int, W>> last(n);
+    for (int i = 0; i < n; i++){
+            fill(all(last[i]), 0);
+        if (i > 0) last[i] = last[i - 1];
+        last[i][__lg(a[i])] = i;
+
+        for (int j = W - 2; j >= 0; j--){
+            last[i][j] = max(last[i][j], last[i][j + 1]);
+        }
+    }
+
+    while (q--) {
+        int x;
+        cin >> x;
+
+        int idx = n - 1;
+        while (idx >= 0 && x > 0){
+            int msb = __lg(x);
+
+            int nxt = last[idx][msb];
+            x ^= pre[idx] ^ pre[nxt];
+            idx = nxt;
+            if (nxt == -1 || a[nxt] > x) break;
+
+            x ^= a[nxt];
+            idx--;
+        }
+
+        cout << n - idx - 1 << " ";
+    }
+    cout << endl;
+
 }
 
 int32_t main()
@@ -86,6 +126,8 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
+
     while (tt--)
         solve();
     return 0;

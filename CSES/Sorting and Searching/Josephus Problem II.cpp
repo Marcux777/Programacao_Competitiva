@@ -23,9 +23,6 @@ Fang Yuan — A Perseverança.
 using namespace std;
 using namespace __gnu_pbds;
 
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
 #define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
@@ -75,10 +72,23 @@ void dbg_out(Head H, Tail... T)
     dbg_out(T...);
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
-
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void solve()
 {
+    int n, k; cin >> n >> k;
+
+    ordered_set<int> s;
+    rep(i, 1, n+1) s.insert(i);
+
+    int pos = 0;
+    while(sz(s)){
+        pos = (pos + k) % sz(s);
+        cout << *s.find_by_order(pos) << " ";
+        s.erase(s.find_by_order(pos));
+    }
+    cout << endl;
 }
 
 int32_t main()

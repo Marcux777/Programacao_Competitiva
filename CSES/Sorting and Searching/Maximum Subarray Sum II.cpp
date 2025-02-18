@@ -79,6 +79,24 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, a, b; cin >> n >> a >> b;
+    vi v(n);
+    for(auto &i : v) cin >> i;
+
+    vi prefix(n+1, 0);
+    rep(i, 1, n+1) prefix[i] = prefix[i-1] + v[i-1];
+
+    int ans = -LINF;
+    multiset<int> window;
+    int l = 0;
+    rep(i, a, n+1){
+        window.insert(prefix[i-a]);
+
+        if(i - b - 1 >= 0)
+            window.erase(window.find(prefix[i-b-1]));
+        ans = max(ans, prefix[i] - *window.begin());
+    }
+    cout << ans << endl;
 }
 
 int32_t main()
