@@ -76,38 +76,23 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
-
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
-        pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
-        }
-    }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
-}
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    int n, k; cin >> n >> k;
+    string s; cin >> s;
+    map<char, int> mp;
+    for(auto c : s) mp[c]++;
+
+    int impar = 0;
+    for(auto [c, qtd] : mp) {
+        if(qtd % 2 == 1) impar++;
     }
-    paths(n, graph, k);
+    int res = n - k;
+
+    if(k >= max(0LL, abs(impar - (res % 2))) && (k - max(0LL, abs(impar - (res % 2)))) % 2 == 0)
+        cout << "YES" << endl;
+    else cout << "NO" << endl;
 }
 
 int32_t main()
@@ -115,6 +100,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

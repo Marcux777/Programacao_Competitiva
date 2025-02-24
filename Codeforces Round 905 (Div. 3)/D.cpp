@@ -76,45 +76,46 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
 
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
-        pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
-        }
-    }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
-}
+// ...existing code...
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    int q;
+    cin >> q;
+
+    multiset<int> lo, hi;
+    while(q--){
+        char c; int l, r;
+        cin >> c >> l >> r;
+        if(c == '+'){
+            lo.insert(l);
+            hi.insert(r);
+        }else{
+            auto i = lo.find(l);
+            if(i != lo.end()) lo.erase(i);
+            auto j = hi.find(r);
+            if(j != hi.end()) hi.erase(j);
+        }
+        if(lo.empty()){
+            cout << "NO" << endl;
+            continue;
+        }else{
+            int minr = *hi.begin();
+            int maxl = *prev(lo.end());
+            cout << (minr >= maxl ? "NO" : "YES") << endl;
+        }
     }
-    paths(n, graph, k);
+
 }
 
+// ...existing code...
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
+    //cin >> tt;
     while (tt--)
         solve();
     return 0;

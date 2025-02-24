@@ -76,38 +76,23 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
-
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
-        pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
-        }
-    }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
-}
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    string s; cin >> s;
+    stack<char> st;
+    for (char c : s) {
+        if (!st.empty() && (
+            (st.top() == '(' && c == ')') ||
+            (st.top() == '[' && c == ']') ||
+            (st.top() == '<' && c == '>')
+        )) {
+            st.pop();
+        } else {
+            st.push(c);
+        }
     }
-    paths(n, graph, k);
+    cout << (st.empty() ? "Yes" : "No") << endl;
 }
 
 int32_t main()

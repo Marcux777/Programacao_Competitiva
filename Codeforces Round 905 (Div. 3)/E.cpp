@@ -26,7 +26,9 @@ using namespace __gnu_pbds;
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-#define int long long
+using int128 = __int128;
+
+#define int unsigned long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
@@ -76,45 +78,29 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
-
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
-        pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
-        }
-    }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
-}
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+    int prev = a[0];
+    int ans = 0;
+    rep(i, 1, n){
+        int xi = 0;
+        while(a[i] * (1ULL << xi) < prev) xi++;
+        ans += xi;
+        prev = a[i] * (1ULL << xi);
     }
-    paths(n, graph, k);
+    cout << ans << endl;
 }
 
 int32_t main()
 {
     IOS;
     int tt;
-    tt = 1;
+    tt = 1LL;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;

@@ -76,38 +76,38 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
-
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
-        pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
-        }
-    }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
-}
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    int n; cin >> n;
+    vector<string> s(n);
+    for(auto&i : s) cin >> i;
+    vvi dist(n, vi(n, INF));
+    queue<pii> q;
+    rep(i, 0, n){
+        q.push({i, i});
+        dist[i][i] = 0;
     }
-    paths(n, graph, k);
+    rep(i, 0, n) rep(j, 0, n){
+        if(i == j or s[i][j] == '-')continue;
+        q.push({i, j});
+        dist[i][j] = 1;
+    }
+    while(q.size()){
+        auto [i, j] = q.front(); q.pop();
+        rep(k, 0, n){
+            rep(l, 0, n){
+                if(s[k][i] != '-' && s[j][l] != '-' && s[j][l] == s[k][i] && dist[k][l] == INF){
+                    dist[k][l] = dist[i][j] + 2;
+                    q.push({k, l});
+                }
+            }
+        }
+    }
+    rep(i, 0, n) rep(j, 0, n){
+        cout << (dist[i][j] == INF ? -1 : dist[i][j]) << " \n"[j == n-1];
+    }
+    cout << endl;
 }
 
 int32_t main()

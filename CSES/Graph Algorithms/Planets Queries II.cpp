@@ -1,128 +1,92 @@
+/*
+~~ Alguma parte/frase foda de um livro/mangá para dar sorte ~~
+
+Uma vez eu gritei, gradualmente, perdi minha voz.
+Uma vez eu chorei, gradualmente, perdi minhas lágrimas.
+Uma vez eu sofri, gradualmente, me tornei capaz de suportar tudo.
+Uma vez me alegrei, gradualmente, me tornei indiferente ao mundo.
+E agora, tudo o que me resta é um rosto sem expressão,
+meu olhar é tão firme quanto um monólito,
+apenas a perseverança permanece no meu coração.
+Este sou eu, um personagem insignificante,
+Fang Yuan — A Perseverança.
+
+*/
+#if defined(LOCAL) or not defined(LUOGU)
+#pragma GCC optimize(3)
+#pragma GCC optimize("Ofast,unroll-loops")
+#endif
+
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define int long long
-#define IOS ios_base::sync_with_stdio(false); cin.tie(0)
+#define IOS                           \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0)
 #define pb push_back
-#define vi vector<int>
-#define vvi vector<vi>
+#define all(v) v.begin(), v.end()
+#define f first
+#define s second
+#define Unique(v)                     \
+    sort(all(v));                     \
+    v.erase(unique(all(v)), v.end()); \
+    v.shrink_to_fit()
+#define sz(v) ((int)v.size())
+#define sor(x) sort(all(x))
+#define ft front()
+#define bk back()
+#define endl "\n"
+#define rep(i, a, b) for (int i = a; i < (b); ++i)
+#define MIN(v) *min_element(all(v))
+#define MAX(v) *max_element(all(v))
+#define LB(c, x) distance((c).begin(), lower_bound(all(c), (x)))
+#define UB(c, x) distance((c).begin(), upper_bound(all(c), (x)))
+typedef vector<double> vd;
+typedef vector<vd> vvd;
+typedef vector<vvd> vvvd;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<vvi> vvvi;
+typedef long long ll;
+typedef double db;
+typedef long double ld;
+typedef pair<int, int> pii;
+typedef pair<int, pii> piii;
+typedef vector<pii> vii;
+typedef vector<piii> viii;
+typedef tuple<int, int, int> tiii;
 const int MAXN = 2e5 + 5;
-const int LOG = 20;
-const int INF = 1e18;
+const int INF = 0x3f3f3f3f;
+const ll LINF = 0x3f3f3f3f3f3f3f3fll;
+const int mod = 1e9 + 7;
+const int LOGN = 21;
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-int n, q;
-vi tel(MAXN);
-vvi up(MAXN, vi(LOG));
-vi scc_id(MAXN), scc_size(MAXN), dist(MAXN);
-vector<bool> visited(MAXN);
-stack<int> st;
-int scc_count = 0;
 
-void tarjan(int u, int& time, vi& disc, vi& low, vvi& adj) {
-    disc[u] = low[u] = ++time;
-    st.push(u);
-    visited[u] = true;
-
-    int v = tel[u];
-    if (disc[v] == -1) {
-        tarjan(v, time, disc, low, adj);
-        low[u] = min(low[u], low[v]);
-    } else if (visited[v]) {
-        low[u] = min(low[u], disc[v]);
-    }
-
-    if (low[u] == disc[u]) {
-        while (st.top() != u) {
-            int v = st.top();
-            st.pop();
-            visited[v] = false;
-            scc_id[v] = scc_count;
-            scc_size[scc_count]++;
-        }
-        st.pop();
-        visited[u] = false;
-        scc_id[u] = scc_count;
-        scc_size[scc_count]++;
-        scc_count++;
-    }
+void solve()
+{
 }
 
-void preprocess() {
-    for (int i = 1; i <= n; ++i) {
-        up[i][0] = tel[i];
-    }
-    for (int j = 1; j < LOG; ++j) {
-        for (int i = 1; i <= n; ++i) {
-            up[i][j] = up[up[i][j-1]][j-1];
-        }
-    }
-
-    vi disc(n + 1, -1), low(n + 1, -1);
-    int time = 0;
-    for (int i = 1; i <= n; ++i) {
-        if (disc[i] == -1) {
-            tarjan(i, time, disc, low, up);
-        }
-    }
-
-    for (int i = 1; i <= n; ++i) {
-        if (scc_size[scc_id[i]] > 1) {
-            dist[i] = 0;
-        } else {
-            dist[i] = INF;
-        }
-    }
-
-    for (int i = 1; i <= n; ++i) {
-        if (dist[i] == 0) {
-            queue<int> que;
-            que.push(i);
-            while (!que.empty()) {
-                int u = que.front();
-                que.pop();
-                int v = tel[u];
-                if (dist[v] == INF) {
-                    dist[v] = dist[u] + 1;
-                    que.push(v);
-                }
-            }
-        }
-    }
-}
-
-int min_teleports(int a, int b) {
-    if (scc_id[a] == scc_id[b]) {
-        return dist[b] - dist[a];
-    }
-    if (a == b) return 0;
-    int steps = 0;
-    for (int j = LOG - 1; j >= 0; --j) {
-        if (up[a][j] != 0 && scc_id[up[a][j]] != scc_id[b]) {
-            a = up[a][j];
-            steps += (1 << j);
-        }
-    }
-    a = up[a][0];
-    return (scc_id[a] == scc_id[b]) ? steps + 1 : -1;
-}
-
-void solve() {
-    cin >> n >> q;
-    for (int i = 1; i <= n; ++i) {
-        cin >> tel[i];
-    }
-
-    preprocess();
-
-    while (q--) {
-        int a, b;
-        cin >> a >> b;
-        cout << min_teleports(a, b) << endl;
-    }
-}
-
-int32_t main() {
+int32_t main()
+{
     IOS;
-    solve();
+    int tt;
+    tt = 1;
+    while (tt--)
+        solve();
     return 0;
 }

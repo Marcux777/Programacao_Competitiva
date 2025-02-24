@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -76,38 +76,57 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
+void dijkstra(vector<int> &dist, vector<vector<pair<int, int>>> &adj, int s, int n) {
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    dist[s] = 0;
+    pq.push({0, s});
 
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
+    while (!pq.empty()) {
+        int d = pq.top().first;
+        int u = pq.top().second;
         pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
+
+        if (d > dist[u]) continue;
+
+        for (auto edge : adj[u]) {
+            int v = edge.first;
+            int weight = edge.second;
+
+            if (dist[v] > dist[u] + weight) {
+                dist[v] = dist[u] + weight;
+                pq.push({dist[v], v});
+            }
         }
     }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
 }
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    int p, t;
+    while(cin >> p >> t){
+    vector<tiii> edges(t);
+    vector<vii> adj(p), adj_rev(p);
+    rep(i, 0, t){
+        int a, b, c; cin >> a >> b >> c;
+        edges[i] = {a, b, c};
+        adj[a].pb({b, c});
+        adj[b].pb({a, c});
+
+        adj_rev[b].pb({a, c});
+        adj_rev[a].pb({b, c});
     }
-    paths(n, graph, k);
+    vi dist(p, LINF), dist_rev(p, LINF);
+    dijkstra(dist, adj, 0, p);
+    int pico = p - 1;
+    dijkstra(dist_rev, adj_rev, pico, p);
+    int total = 0;
+    for(auto i : edges){
+        auto [a, b, c] = i;
+        if(dist[a] + c + dist_rev[b] == dist[pico] ||
+           dist[b] + c + dist_rev[a] == dist[pico]) total += c;
+    }
+    cout << 2*total << endl;
+    }
 }
 
 int32_t main()

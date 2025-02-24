@@ -76,45 +76,51 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
-void paths(int n, auto & graph, int k){
-    vvi best(n+1);
-    priority_queue<pii, vii, greater<pii>> pq;
-    pq.push({0, 1});
-
-    while(!pq.empty()){
-        auto [d, u] = pq.top();
-        pq.pop();
-        if(sz(best[u]) >= k) continue;
-        best[u].pb(d);
-        for(auto [v, w] : graph[u]){
-            if(sz(best[v]) < k)
-                pq.push({d + w, v});
-        }
-    }
-    sor(best[n]);
-    rep(i, 0, k){
-        cout << best[n][i] << " ";
-    }
-    cout << endl;
-}
 
 void solve()
 {
-    int n, m, k; cin >> n >> m >> k;
-    vector<vii> graph(n + 1);
-    rep(i, 0, m){
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a].pb({b, c});
+    int n, k; cin >> n >> k;
+    vi a(n);
+
+    for(auto &i : a) {
+        cin >> i;
     }
-    paths(n, graph, k);
-}
+    if(k == 2 || k == 3 || k == 5){
+        int p = k;
+
+        for(auto i : a){
+            if(i % p == 0){
+                cout << 0 << endl;
+                return;
+            }
+        }
+        int ans = LINF;
+        for(auto i : a){
+            ans = min(ans, (p - i % p)%p);
+        }
+        cout << ans << endl;
+    }
+    else{
+        int c1 = LINF;
+        for(auto i : a){
+            c1 = min(c1, (4 - i % 4)%4);
+        }
+        int cnt = 0;
+        for(auto i : a){
+            cnt += (i%2==0);
+        }
+        int c2 = (n == 1 ? LINF : max(0LL, 2LL - cnt));
+        cout << min(c1, c2) << endl;
+    }
+
+    }
 
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt--)
         solve();
     return 0;
