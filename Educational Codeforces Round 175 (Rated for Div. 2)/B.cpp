@@ -77,9 +77,81 @@ void dbg_out(Head H, Tail... T)
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
 
-void solve()
-{
-    
+tuple<int,int, bool> sim(int pos, const string &s) {
+    int t = 0;
+    for (char c : s) {
+        t++;
+        if (c == 'L') pos--;
+        else pos++;
+        if (pos == 0) {
+            return {0, t, true};
+        }
+    }
+    return {pos, t, false};
+}
+
+bool sim2(int start, const string &s, int limit) {
+    int pos = start;
+    rep(i, 0, min(limit, sz(s))) {
+        if (s[i] == 'L') pos--;
+        else pos++;
+        if (pos == 0) return true;
+    }
+    return false;
+}
+
+void solve() {
+    int n, k;
+    int x;
+    cin >> n >> x >> k;
+    string s;
+    cin >> s;
+
+    auto ciclo = [&](int pos) -> pii {
+        ll t = 0;
+        for(char c : s){
+            t++;
+            if(c=='L') pos--; else pos++;
+            if(pos==0) return {t, 0};
+        }
+        return {t, pos};
+    };
+
+    auto parcial = [&](int pos, ll lim){
+        rep(i,0, min(lim, sz(s))){
+            if(s[i]=='L') pos--; else pos++;
+            if(pos==0) return true;
+        }
+        return false;
+    };
+
+    ll ans = 0, usado = 0;
+
+    auto [t1, p1] = ciclo(x);
+    if(p1 != 0){
+        if(t1 > k) ans = parcial(x, k) ? 1 : 0;
+        cout << ans << endl;
+        return;
+    }
+    ans++;
+    usado += t1;
+    if(usado >= k){ cout << ans << endl; return; }
+
+    auto [t, p2] = ciclo(0);
+    if(p2 != 0){
+        cout << ans << endl;
+        return;
+    }
+
+    int r = k - usado;
+    int cheio = r / t;
+    ans += cheio;
+    usado += cheio * t;
+
+    int sobra = k - usado;
+    if(sobra > 0 && parcial(0, sobra)) ans++;
+
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -87,6 +159,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

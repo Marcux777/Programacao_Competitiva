@@ -79,7 +79,9 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n; cin >> n;
+    int r = n%15;
+    cout << (n/15) * 3 + min(r+1, 3LL) << endl;
 }
 
 int32_t main()
@@ -87,6 +89,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

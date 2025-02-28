@@ -18,8 +18,13 @@ Fang Yuan — A Perseverança.
 #endif
 
 #include <bits/stdc++.h>
-
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define int long long
 #define IOS                           \
@@ -61,6 +66,7 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
+const int LOGN = 21;
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
@@ -70,8 +76,51 @@ void dbg_out(Head H, Tail... T)
 }
 #define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+
 void solve()
 {
+    int n,m ,k; cin >> n >> m >> k;
+    vector<string> mat(n);
+    for(auto& i : mat) cin >> i;
+
+    int dx[] = {0, 0, 1, -1};
+    int dy[] = {1, -1, 0, 0};
+    vvi dp(n, vi(m, -1));
+    vvi vis(n, vi(m, 0));
+
+    rep(i, 0, n) rep(j, 0, m){
+        if(vis[i][j] || mat[i][j] == '*') continue;
+        vii comp;
+        int t = 0;
+        queue<pii> q;
+        q.push({i, j});
+        vis[i][j] = 1;
+        while(!q.empty()){
+            auto [x, y] = q.front();
+            q.pop();
+            comp.pb({x, y});
+            rep(k, 0, 4){
+                int nx = x + dx[k];
+                int ny = y + dy[k];
+                if(nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+                if(mat[nx][ny] == '*') t++;
+                else if(mat[nx][ny] == '.' && !vis[nx][ny]){
+                    vis[nx][ny] = 1;
+                    q.push({nx, ny});
+                }
+            }
+        }
+        for(auto &[x, y]: comp){
+            dp[x][y] = t;
+        }
+    }
+
+
+    rep(t, 0, k){
+        int x, y; cin >> x >> y;
+        x--, y--;
+        cout << dp[x][y] << endl;
+    }
 }
 
 int32_t main()
@@ -79,8 +128,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
-    while (tt--)
+    while (tt --> 0)
         solve();
     return 0;
 }

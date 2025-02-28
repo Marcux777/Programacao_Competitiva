@@ -81,7 +81,25 @@ void solve()
 {
         int n, x;
         cin >> n >> x;
-
+        vi a(n, x);
+        int or_val = 0;
+        bool ok = true;
+        rep(i, 0, n-1){
+            if (((or_val | i) & x) == (or_val | i)) {
+                or_val |= i;
+                a[i] = i;
+            }else{
+                ok = false;
+                break;
+            }
+        }
+        if(ok && (or_val | (n - 1)) == x){
+            a[n-1] = n - 1;
+        }
+        for(auto i : a){
+            cout << i << " ";
+        }
+        cout << endl;
 }
 
 int32_t main()
@@ -90,7 +108,7 @@ int32_t main()
     int tt;
     tt = 1;
     cin >> tt;
-    while (tt--)
+    while (tt --> 0)
         solve();
     return 0;
 }

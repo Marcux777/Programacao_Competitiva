@@ -86,7 +86,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    while (tt--)
+    while (tt --> 0)
         solve();
     return 0;
 }

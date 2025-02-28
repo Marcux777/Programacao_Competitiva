@@ -72,19 +72,14 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    string s;
-    int m;
-    cin >> s;
-    cin>> m;
+    string s; cin >> s;
+    int m; cin >> m;
     while(m--){
-        int l,r,k; cin >> l >> r >> k;
-        l--; r--;
-        int len = r - l + 1;
-        k = k % len;
-        if (k > 0) {
-            string rotated = s.substr(r - k + 1, k) + s.substr(l, len - k);
-            s.replace(l, len, rotated);
-        }
+        int l, r, k;cin >> l>>r>>k;
+        l--, r--;
+        k = k%(r - l + 1);
+        string t = s.substr(r - k + 1, k) + s.substr(l, r-l+1 - k);
+        s.replace(l, r-l+1, t);
     }
     cout << s << endl;
 }

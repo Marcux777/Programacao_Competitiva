@@ -79,7 +79,40 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
-    
+    int n, k; cin >> n >> k;
+    string s; cin >> s;
+    vi a(n);
+    for(auto& x : a) cin >> x;
+
+    auto check = [&](int m){
+        int need = 0;
+        bool ok = false;
+        rep(i, 0, n) {
+            if(a[i] >= m) {
+                if(s[i] == 'B') {
+                    if(!ok) {
+                        need++;
+                        ok = true;
+                    }
+                } else {
+                    ok = false;
+                }
+            }
+        }
+
+        return need <= k;
+    };
+
+    int l = 0, r = *max_element(all(a));
+    int ans = 0;
+    while(l <= r){
+        int m = l + (r-l)/2;
+        if(check(m)){
+            ans = m;
+            r = m-1;
+        }else l = m+1;
+    }
+    cout << max(0LL, r) << endl;
 }
 
 int32_t main()
@@ -87,6 +120,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;
