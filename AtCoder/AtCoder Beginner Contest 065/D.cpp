@@ -26,6 +26,25 @@ using namespace __gnu_pbds;
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
+template <typename T>
+ostream& operator<<(ostream &os, const vector<T> &v) {
+    os << "[";
+    for (size_t i = 0; i < v.size(); ++i) {
+        os << v[i] << (i + 1 == v.size() ? "" : ", ");
+    }
+    os << "]";
+    return os;
+}
+
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+
 #define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
@@ -67,34 +86,72 @@ const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
+struct DSU{
+    vi par;
+    DSU(int n){
+        par.resize(n);
+        iota(all(par), 0);
+    }
+    int find(int x){
+        return x == par[x] ? x : par[x] = find(par[x]);
+    }
+    bool unite(int x, int y){
+        x = find(x);
+        y = find(y);
+        if(x != y){
+            par[x] = y;
+            return true;
+        }
+        return false;
+    }
+};
 
 void solve()
 {
     int n; cin >> n;
-    bool ok = true;
-    int dist = 0;
-    int x1, y1;
-    x1=y1=0;
+    vector<tiii> cities(n);
     rep(i, 0, n){
-        int ti, xi, yi;
-        cin >> ti >> xi >> yi;
-
-        int d = abs(xi - x1) + abs(yi - y1);
-        int dt = ti - dist;
-        if(dt < d || (dt - d)%2 != 0) ok = false;
-        x1 = xi, y1 = yi;
-        dist = ti;
+        int x, y; cin >> x >> y;
+        cities[i] = {x, y, i};
     }
-    cout << (ok ? "Yes" : "No") << endl;
+    vector<tiii> edges;
+
+    sort(all(cities), [&](auto&a, auto& b){
+        return get<0>(a) < get<0>(b);
+    });
+    rep(i, 0, n-1){
+        int u = get<2>(cities[i]);
+        int v = get<2>(cities[i+1]);
+        int w = min(abs(get<0>(cities[i+1]) - get<0>(cities[i])),
+                abs(get<1>(cities[i+1]) - get<1>(cities[i])));
+
+        edges.pb({w, u, v});
+    }
+
+    sort(all(cities), [&](auto&a, auto& b){
+        return get<1>(a) < get<1>(b);
+    });
+    rep(i, 0, n-1){
+        int u = get<2>(cities[i]);
+        int v = get<2>(cities[i+1]);
+        int w = min(abs(get<0>(cities[i+1]) - get<0>(cities[i])),
+                abs(get<1>(cities[i+1]) - get<1>(cities[i])));
+
+        edges.pb({w, u, v});
+    }
+
+    sor(edges);
+
+    DSU dsu(n);
+    int ans = 0;
+    for(auto &[w, u, v]: edges){
+        if(dsu.unite(u, v)){
+            ans += w;
+        }
+    }
+    cout << ans << endl;
+
 }
 
 int32_t main()
