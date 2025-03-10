@@ -26,25 +26,6 @@ using namespace __gnu_pbds;
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-template <typename T>
-ostream& operator<<(ostream &os, const vector<T> &v) {
-    os << "[";
-    for (size_t i = 0; i < v.size(); ++i) {
-        os << v[i] << (i + 1 == v.size() ? "" : ", ");
-    }
-    os << "]";
-    return os;
-}
-
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
-
 #define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
@@ -86,9 +67,48 @@ const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vi a(n), b(n), c(n);
+    for(auto &i : a) cin >> i;
+    for(auto &i : b) cin >> i;
+    for(auto &i : c) cin >> i;
+
+    int s0 = 0;
+    rep(i, 0, n) if(a[i] == 1) s0 += c[i];
+
+    vi t, u;
+    rep(i, 0, n){
+        if(a[i] && !b[i]) t.pb(c[i]);
+        if(!a[i] && b[i]) u.pb(c[i]);
+    }
+
+    sort(all(t), greater<int>());
+    sor(u);
+
+    int currSum = s0, cost = 0;
+    for(auto i : t){
+        currSum -= i;
+        cost += currSum;
+    }
+    for(auto i : u){
+        cost += (currSum + i);
+        currSum += i;
+    }
+
+    cout << cost << endl;
 }
 
 int32_t main()

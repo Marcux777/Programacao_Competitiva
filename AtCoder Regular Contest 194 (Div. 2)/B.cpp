@@ -26,25 +26,6 @@ using namespace __gnu_pbds;
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-template <typename T>
-ostream& operator<<(ostream &os, const vector<T> &v) {
-    os << "[";
-    for (size_t i = 0; i < v.size(); ++i) {
-        os << v[i] << (i + 1 == v.size() ? "" : ", ");
-    }
-    os << "]";
-    return os;
-}
-
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
-
 #define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
@@ -86,10 +67,62 @@ const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+
+class Fenwick {
+private:
+    vector<int> fenw;
+    int n;
+public:
+    Fenwick(int n) : n(n), fenw(n + 1, 0) {}
+    void update(int idx, int val) {
+        for (; idx <= n; idx += idx & -idx)
+            fenw[idx] += val;
+    }
+    int query(int idx) const {
+        int sum = 0;
+        for (; idx > 0; idx -= idx & -idx)
+            sum += fenw[idx];
+        return sum;
+    }
+};
 
 void solve()
 {
+    int n; cin >> n;
+    vi p(n);
+    for(auto &i : p) cin >> i;
+
+    vi pos(n+1);
+    rep(i, 0, n) pos[p[i]] = i+1;
+
+    Fenwick fenw(n);
+
+    auto s = [&](ll x){
+        return x * (x+1LL) / 2LL;
+    };
+    int ans = 0;
+    for(int k = n; k >= 1; k--){
+        int curr = pos[k] - fenw.query(pos[k]);
+
+        if(curr > k){
+            ans += (s(curr - 1) - s(k - 1));
+        }else if (curr < k){
+            ans += (s(k-1) - s(curr-1));
+        }
+
+        fenw.update(pos[k], 1);
+    }
+    cout << ans << endl;
 }
+
 
 int32_t main()
 {

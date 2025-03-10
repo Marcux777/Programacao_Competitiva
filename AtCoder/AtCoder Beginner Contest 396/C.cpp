@@ -9,7 +9,7 @@ E agora, tudo o que me resta é um rosto sem expressão,
 meu olhar é tão firme quanto um monólito,
 apenas a perseverança permanece no meu coração.
 Este sou eu, um personagem insignificante,
-Fang Yuan — A Perseverança.
+Fang Yuan — A Perseverança.
 
 */
 #if defined(LOCAL) or not defined(LUOGU)
@@ -25,25 +25,6 @@ using namespace __gnu_pbds;
 
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
-template <typename T>
-ostream& operator<<(ostream &os, const vector<T> &v) {
-    os << "[";
-    for (size_t i = 0; i < v.size(); ++i) {
-        os << v[i] << (i + 1 == v.size() ? "" : ", ");
-    }
-    os << "]";
-    return os;
-}
-
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
 #define int long long
 #define IOS                           \
@@ -86,9 +67,55 @@ const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+
+template <typename T>
+ostream& operator<<(ostream &os, const vector<T> &v) {
+    os << "[";
+    for (size_t i = 0; i < v.size(); ++i) {
+        os << v[i] << (i + 1 == v.size() ? "" : ", ");
+    }
+    os << "]";
+    return os;
+}
+
+
 
 void solve()
 {
+    int n, m; cin >> n >> m;
+    vi b(n), w(m);
+    int ans = -LINF;
+    for(auto &i : b) cin >> i;
+    for(auto &i : w) cin >> i;
+    sort(all(b), greater<int>()); sort(all(w), greater<int>());
+    //cout << b << endl;
+    //cout << w << endl;
+    vi prefixb(n+1), prefixw(m+1);
+    rep(i, 1, n+1) prefixb[i] = prefixb[i-1] + b[i-1];
+    rep(i, 1, m+1) prefixw[i] = prefixw[i-1] + w[i-1];
+
+    //cout << "prefixos" << endl;
+    //cout << prefixb << endl;
+    //cout << prefixw << endl;
+
+    vi v(n+1);
+    v[n] = prefixb[n];
+    for(int k = n-1; k >= 0; k--){
+        v[k] = max(v[k+1], prefixb[k]);
+    }
+    int lmt = min(m, n);
+    rep(i, 0, lmt+1){
+        ans = max(ans, v[i] + prefixw[i]);
+    }
+    cout << ans << endl;
 }
 
 int32_t main()

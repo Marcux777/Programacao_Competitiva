@@ -79,6 +79,42 @@ void dbg_out(Head H, Tail... T)
 
 void solve()
 {
+    int n, k; cin >> n >> k;
+    vvi c(n, vi(n));
+    rep(i, 0, n) rep(j, 0, n) cin >> c[i][j];
+
+    rep(p, 0, n)
+        rep(i, 0, n)
+            rep(j, 0, n)
+                c[i][j] = min(c[i][j], c[i][p] + c[p][j]);
+
+    vvvi dp(1<<k, vvi(k+5, vi(n+5, LINF)));
+    rep(i, 0, k) rep(j, 0, n) dp[i][j][j] = 0;
+
+    rep(i, 0, k) dp[1<<i][n][i] = 0;
+
+    rep(i, 0, k){
+        for(int p = ((i-1)&i); p > 0; p = (p - 1)&i){
+            rep(j, 0, n+1) rep(l, 0, n) dp[i][j][l] = min(dp[i][j][l], dp[p][n][l] + dp[i - p][j][l]);
+        }
+
+        rep(j, 0, n) rep(l, 0, n) dp[i][n][l] = min(dp[i][n][l], dp[i][n][j] + c[j][l]);
+
+        rep(j, 0, n) rep(l, 0, n) dp[i][j][l] = min(dp[i][j][l], dp[i][n][l] + dp[0][j][l]);
+
+        rep(j, 0, n) rep(l, 0, n) dp[i][j][l] = min(dp[i][j][l], dp[i][j][l] + c[j][l]);
+    }
+
+
+
+    int q;
+    cin >> q;
+    while(q--){
+        int s, t; cin >> s >> t;
+        s--, t--;
+        cout << dp[(1 << k) - 1][s][t] << endl;
+
+    }
 }
 
 int32_t main()

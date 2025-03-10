@@ -89,6 +89,60 @@ const int LOGN = 21;
 
 void solve()
 {
+    int n,m; cin >> n >> m;
+    vector<vii> graph(n);
+    rep(i, 0, m){
+        int x, y, z; cin >> x >> y >> z;
+        x--, y--;
+        graph[x].pb({y, z});
+        graph[y].pb({x, z});
+    }
+    vi a(n, -1);
+    bool ok = 1;
+    rep(i, 0, n){
+        if(a[i] == -1){
+            queue<int> q;
+            q.push(i);
+            a[i] = 0;
+            vi cmp;
+            cmp.pb(i);
+            while(sz(q)){
+                int u = q.front(); q.pop();
+                for(auto [v, w] : graph[u]){
+                    if(a[v] == -1){
+                        a[v] = a[u] ^ w;
+                        q.push(v);
+                        cmp.pb(v);
+                    }else if(a[v] != (a[u] ^ w)){
+                        ok = 0; break;
+                    }
+                }
+                if(!ok) break;
+            }
+            if(!ok) break;
+
+            int r = 0LL;
+            rep(bit, 0, 32){
+                int mask = 1LL << bit;
+                int cnt = 0;
+                for(auto v : cmp){
+                    if(a[v] & mask) cnt++;
+                }
+                if(cnt > sz(cmp) - cnt){
+                    r |= mask;
+                }
+            }
+            for(auto i : cmp){
+                a[i] ^= r;
+            }
+        }
+        if(!ok) break;
+    }
+    if(!ok)
+        cout << -1 << endl;
+    else for(auto i : a) cout << i << " ";
+
+    cout << endl;
 }
 
 int32_t main()

@@ -89,6 +89,12 @@ const int LOGN = 21;
 
 void solve()
 {
+    set<int> st;
+    rep(i, 0, 3){
+        int x; cin >> x;
+        st.insert(x);
+    }
+    cout << sz(st) << endl;
 }
 
 int32_t main()

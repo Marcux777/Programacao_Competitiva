@@ -89,6 +89,29 @@ const int LOGN = 21;
 
 void solve()
 {
+    int n, m; cin >> n >> m;
+    vector<vii> graph(n+1);
+    rep(i, 0, m){
+        int x, y, w; cin >> x >> y >> w;
+        graph[x].pb({y, w});
+        graph[y].pb({x, w});
+    }
+    vi vis(n+1, 0);
+    int ans = LINF;
+    function<void(int, int)> dfs;
+    dfs = [&](int u, int curr){
+        vis[u] = 1;
+        if(u == n) ans = min(ans, curr);
+        for(auto [v, w] : graph[u]){
+            if(!vis[v]){
+                dfs(v, curr ^ w);
+            }
+        }
+        vis[u] = 0;
+    };
+
+    dfs(1, 0);
+    cout << ans << endl;
 }
 
 int32_t main()

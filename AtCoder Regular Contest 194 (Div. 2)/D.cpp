@@ -26,25 +26,6 @@ using namespace __gnu_pbds;
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-template <typename T>
-ostream& operator<<(ostream &os, const vector<T> &v) {
-    os << "[";
-    for (size_t i = 0; i < v.size(); ++i) {
-        os << v[i] << (i + 1 == v.size() ? "" : ", ");
-    }
-    os << "]";
-    return os;
-}
-
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
-
 #define int long long
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
@@ -86,6 +67,15 @@ const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+
 
 void solve()
 {

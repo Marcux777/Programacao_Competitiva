@@ -87,8 +87,66 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+/**
+ * @brief Resolve o problema de encontrar o custo mínimo para organizar linhas.
+ *
+ * Esta função:
+ * 1. Lê uma grade de tamanho h×w composta por caracteres '0' e '1'.
+ * 2. Usa programação dinâmica para calcular o custo de diferentes arranjos.
+ * 3. dp[j][mask] representa o número de linhas que têm j bits definidos como 1 e correspondem ao padrão de bits 'mask'.
+ * 4. Para cada padrão de bits, calcula o custo total onde o custo para cada linha é min(número de 1s, número de 0s).
+ * 5. Retorna o custo mínimo possível entre todos os padrões de bits.
+ *
+ * Complexidade de Tempo: O(h + w * 2^w)
+ * Complexidade de Espaço: O(w * 2^w)
+ */
 void solve()
 {
+    // Leitura das dimensões da grade
+    int h, w; cin >> h >> w;
+    // Inicializa a tabela de DP: dp[i][mask] = número de linhas com i bits 1 no padrão mask
+    vvi dp((w+1), vi(1<<w, 0));
+    // Inicializa a resposta com um valor muito grande
+    int ans = LINF;
+    // Leitura da grade
+    vector<string> grid(h);
+    rep(i, 0, h) {
+        cin >> grid[i];
+    }
+
+    // Processa as linhas da grade, contando quantas linhas correspondem a cada padrão de bits
+    rep(i, 0, h) {
+        int mask = 0;
+        rep(j, 0, w) {
+            // Se o caractere for '1', ativa o bit correspondente no mask
+            if (grid[i][j] == '1') {
+                mask |= (1 << j);
+            }
+        }
+        // Incrementa a contagem para este padrão com 0 bits alterados
+        dp[0][mask]++;
+    }
+
+    // Preenche a tabela DP
+    rep(i, 0, w) {
+        for (int j = i; j >= 0; j--) {
+            rep(bit, 0, (1 << w)) {
+                // Altera o bit na posição i e atualiza dp
+                dp[j + 1][bit ^ (1 << i)] += dp[j][bit];
+            }
+        }
+    }
+
+    // Encontra o custo mínimo entre todas as configurações possíveis
+    rep(bit, 0, (1 << w)) {
+        int res = 0;
+        rep(i, 0, w + 1) {
+            res += min(i, w - i) * dp[i][bit];
+        }
+        ans = min(ans, res);
+    }
+
+    cout << ans << endl;
 }
 
 int32_t main()
