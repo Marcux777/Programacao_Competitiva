@@ -1,11 +1,49 @@
+/*
+~~ Alguma parte/frase foda de um livro/mangá para dar sorte ~~
+
+Uma vez eu gritei, gradualmente, perdi minha voz.
+Uma vez eu chorei, gradualmente, perdi minhas lágrimas.
+Uma vez eu sofri, gradualmente, me tornei capaz de suportar tudo.
+Uma vez me alegrei, gradualmente, me tornei indiferente ao mundo.
+E agora, tudo o que me resta é um rosto sem expressão,
+meu olhar é tão firme quanto um monólito,
+apenas a perseverança permanece no meu coração.
+Este sou eu, um personagem insignificante,
+Fang Yuan — A Perseverança.
+
+*/
 #if defined(LOCAL) or not defined(LUOGU)
 #pragma GCC optimize(3)
 #pragma GCC optimize("Ofast,unroll-loops")
 #endif
 
 #include <bits/stdc++.h>
-
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+template <typename T>
+ostream& operator<<(ostream &os, const vector<T> &v) {
+    os << "[";
+    for (size_t i = 0; i < v.size(); ++i) {
+        os << v[i] << (i + 1 == v.size() ? "" : ", ");
+    }
+    os << "]";
+    return os;
+}
+
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T)
+{
+    cerr << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
 
 #define int long long
 #define IOS                           \
@@ -47,18 +85,18 @@ const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
-{
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << _VA_ARGS_ << "):", dbg_out(_VA_ARGS_), cerr << endl
+const int LOGN = 21;
 
 void solve()
 {
-    
+    int n; cin >> n;
+    int s = 0;
+    rep(i, 0, n) {
+        int x; cin >> x;
+        s += x;
+    }
+    cout << s - (n - 1) << endl;
+
 }
 
 int32_t main()
@@ -66,7 +104,8 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    while (tt--)
+    cin >> tt;
+    while (tt --> 0)
         solve();
     return 0;
 }

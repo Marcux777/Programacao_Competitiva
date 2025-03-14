@@ -89,27 +89,24 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, k; cin >> n >> k;
-    vi a(n);
-    ordered_set<pii> s;
-    rep(i, 0, n){
-        cin >> a[i];
-        if(i < k) // Insere apenas os primeiros k elementos.
-            s.insert({a[i], i});
+    int x; cin >> x;
+    int l = 1, r = x;
+
+
+    // condições do triangulo se reduzem a isso
+    // x + y > (x ^ y) <-> 2*(x & y) > 0 <-> (x & y) > 0
+    // y + (x ^ y) > x <-> y > (x & y)
+
+    auto check = [&](int mid) -> bool {
+        return mid > (x & mid) && (x & mid) > 0;
+    };
+
+    while(l < r){
+        int mid = l + (r - l) / 2;
+        if(check(mid)) r = mid;
+        else l = mid + 1;
     }
-    // a mediana será o elemento na posição (k-1)/2 (0-indexed)
-    auto med = s.find_by_order((k-1)/2);
-    cout << med->f << ' ';
-    rep(i, k, n){
-        // Insere o novo elemento com seu índice.
-        s.insert({a[i], i});
-        // Remove o elemento que saiu da janela.
-        s.erase(s.find({a[i-k], i-k}));
-        // Busca a mediana da janela atual.
-        med = s.find_by_order((k-1)/2);
-        cout << med->f << ' ';
-    }
-    cout << endl;
+    cout << (l == x ? -1 : l) << endl;
 }
 
 int32_t main()
@@ -117,6 +114,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

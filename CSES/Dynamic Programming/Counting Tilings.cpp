@@ -89,27 +89,33 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, k; cin >> n >> k;
-    vi a(n);
-    ordered_set<pii> s;
-    rep(i, 0, n){
-        cin >> a[i];
-        if(i < k) // Insere apenas os primeiros k elementos.
-            s.insert({a[i], i});
+    int n, m; cin >> n >> m;
+    vvi dp(m+1, vi(1 << n));
+    dp[0][0] = 1;
+    rep(i, 0, m){
+        rep(mask, 0, 1<<n){
+            auto fillColumn = [&](auto &fillColumn, int pos, int curr_mask, int next_mask) -> void {
+                if(pos == n){
+                    // Terminamos a coluna atual, adiciona as formas.
+                    dp[i+1][next_mask] = (dp[i+1][next_mask] + dp[i][mask])%mod;
+                    return;
+                }
+                // Se já está preenchido na coluna atual, passa para a próxima linha.
+                if(curr_mask & (1<<pos)){
+                    fillColumn(fillColumn, pos+1, curr_mask, next_mask);
+                } else {
+                    // Tenta colocar um domino vertical se possível.
+                    if(pos+1 < n && !(curr_mask & (1<<(pos+1)))){
+                        fillColumn(fillColumn, pos+2, curr_mask, next_mask);
+                    }
+                    // Tenta colocar um domino horizontal (que afeta a próxima coluna)
+                    fillColumn(fillColumn, pos+1, curr_mask, next_mask | (1<<pos));
+                }
+            };
+            fillColumn(fillColumn, 0, mask, 0);
+        }
     }
-    // a mediana será o elemento na posição (k-1)/2 (0-indexed)
-    auto med = s.find_by_order((k-1)/2);
-    cout << med->f << ' ';
-    rep(i, k, n){
-        // Insere o novo elemento com seu índice.
-        s.insert({a[i], i});
-        // Remove o elemento que saiu da janela.
-        s.erase(s.find({a[i-k], i-k}));
-        // Busca a mediana da janela atual.
-        med = s.find_by_order((k-1)/2);
-        cout << med->f << ' ';
-    }
-    cout << endl;
+    cout << dp[m][0] << endl;
 }
 
 int32_t main()

@@ -89,27 +89,19 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, k; cin >> n >> k;
+    int n; cin >> n;
     vi a(n);
-    ordered_set<pii> s;
+    ordered_set<int> s;
     rep(i, 0, n){
         cin >> a[i];
-        if(i < k) // Insere apenas os primeiros k elementos.
-            s.insert({a[i], i});
+        s.insert(i);
     }
-    // a mediana será o elemento na posição (k-1)/2 (0-indexed)
-    auto med = s.find_by_order((k-1)/2);
-    cout << med->f << ' ';
-    rep(i, k, n){
-        // Insere o novo elemento com seu índice.
-        s.insert({a[i], i});
-        // Remove o elemento que saiu da janela.
-        s.erase(s.find({a[i-k], i-k}));
-        // Busca a mediana da janela atual.
-        med = s.find_by_order((k-1)/2);
-        cout << med->f << ' ';
+    rep(i, 0, n){
+        int p; cin >> p;
+        int pos = *s.find_by_order(p-1);
+        cout << a[pos] << " ";
+        s.erase(pos);
     }
-    cout << endl;
 }
 
 int32_t main()

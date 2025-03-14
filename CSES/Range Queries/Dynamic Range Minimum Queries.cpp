@@ -87,29 +87,78 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+// SegTree
+//
+// Recursiva com Lazy Propagation
+// Query: soma do range [a, b]
+// Update: soma x em cada elemento do range [a, b]
+// Pode usar a seguinte funcao para indexar os nohs:
+// f(l, r) = (l+r)|(l!=r), usando 2N de memoria
+//
+// Complexidades:
+// build - O(n)
+// query - O(log(n))
+// update - O(log(n))
+
+namespace seg {
+    ll seg[4*MAXN], lazy[4*MAXN];
+    int n, *v;
+
+    ll build(int p=1, int l=0, int r=n-1) {
+        lazy[p] = 0;
+        if (l == r) return seg[p] = v[l];
+        int m = (l+r)/2;
+        return seg[p] = min(build(2*p, l, m), build(2*p+1, m+1, r));
+    }
+    void build(int n2, int* v2) {
+        n = n2, v = v2;
+        build();
+    }
+    void prop(int p, int l, int r) {
+        seg[p] += lazy[p];
+        if (l != r) lazy[2*p] += lazy[p], lazy[2*p+1] += lazy[p];
+        lazy[p] = 0;
+    }
+    ll query(int a, int b, int p=1, int l=0, int r=n-1) {
+        prop(p, l, r);
+		if (a <= l and r <= b) return seg[p];
+		if (b < l or r < a) return LINF;
+		int m = (l+r)/2;
+		return min(query(a, b, 2*p, l, m), query(a, b, 2*p+1, m+1, r));
+	}
+	ll update(int a, int b, int x, int p=1, int l=0, int r=n-1) {
+		prop(p, l, r);
+		if (a <= l and r <= b) {
+			lazy[p] += x;
+			prop(p, l, r);
+			return seg[p];
+		}
+		if (b < l or r < a) return seg[p];
+		int m = (l+r)/2;
+		return seg[p] = min(update(a, b, x, 2*p, l, m),
+			update(a, b, x, 2*p+1, m+1, r));
+	}
+};
+
+
 void solve()
 {
-    int n, k; cin >> n >> k;
-    vi a(n);
-    ordered_set<pii> s;
-    rep(i, 0, n){
-        cin >> a[i];
-        if(i < k) // Insere apenas os primeiros k elementos.
-            s.insert({a[i], i});
+    int n, q; cin >> n >> q;
+    int v[n];
+    for(auto &i : v) cin >> i;
+    seg::build(n, v);
+    rep(i, 0, q){
+        int t; cin >> t;
+        if(t== 1){
+            int k, u; cin >> k >> u;
+            int diff = seg::query(k-1, k-1);
+            seg::update(k-1, k-1, u - diff);
+        }
+        else{
+            int a, b; cin >> a >> b;
+            cout << seg::query(a-1, b-1) << endl;
+        }
     }
-    // a mediana será o elemento na posição (k-1)/2 (0-indexed)
-    auto med = s.find_by_order((k-1)/2);
-    cout << med->f << ' ';
-    rep(i, k, n){
-        // Insere o novo elemento com seu índice.
-        s.insert({a[i], i});
-        // Remove o elemento que saiu da janela.
-        s.erase(s.find({a[i-k], i-k}));
-        // Busca a mediana da janela atual.
-        med = s.find_by_order((k-1)/2);
-        cout << med->f << ' ';
-    }
-    cout << endl;
 }
 
 int32_t main()

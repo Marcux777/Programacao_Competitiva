@@ -89,27 +89,29 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, k; cin >> n >> k;
-    vi a(n);
-    ordered_set<pii> s;
+    int n, m;
+    cin >> n >> m;
+    map<int, int> mp;
+    auto isqrt= [&](int x){
+        int val = sqrtl(x);
+        while(val*val > x) val--;
+        return val;
+    };
+    vi a(n), r(n);
+
+    for(auto &i : a) cin >> i;
+    for(auto &i : r) cin >> i;
     rep(i, 0, n){
-        cin >> a[i];
-        if(i < k) // Insere apenas os primeiros k elementos.
-            s.insert({a[i], i});
+        int aa = a[i], rr = r[i];
+        rep(x, aa-rr, aa+rr+1){
+            mp[x] = max(mp[x], 2*isqrt(rr*rr - (x-aa)*(x-aa))+1);
+        }
     }
-    // a mediana será o elemento na posição (k-1)/2 (0-indexed)
-    auto med = s.find_by_order((k-1)/2);
-    cout << med->f << ' ';
-    rep(i, k, n){
-        // Insere o novo elemento com seu índice.
-        s.insert({a[i], i});
-        // Remove o elemento que saiu da janela.
-        s.erase(s.find({a[i-k], i-k}));
-        // Busca a mediana da janela atual.
-        med = s.find_by_order((k-1)/2);
-        cout << med->f << ' ';
+    int ans = 0;
+    for(auto [k, v] : mp){
+        ans += v;
     }
-    cout << endl;
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -117,6 +119,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;
