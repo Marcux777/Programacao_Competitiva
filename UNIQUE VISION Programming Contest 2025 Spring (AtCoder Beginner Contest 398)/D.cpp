@@ -81,35 +81,40 @@ typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
 typedef tuple<int, int, int> tiii;
-const int MAX = 2e5 + 5;
+const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-
 void solve()
 {
-    int n, q; cin >> n >> q;
-    vi a(n);
-    ordered_set<pii> s;
-    for(auto &i : a){
-        cin >> i;
-        s.insert({i, &i - &a[0]});
+    int n, r, c;
+    string s;
+    cin >> n >> r >> c;
+    cin >> s;
+    vii p(n+1, {0, 0});
+    rep(i, 0, n){
+        p[i+1] = p[i];
+        if(s[i] == 'S') p[i+1].f++;
+        if(s[i] == 'N') p[i+1].f--;
+        if(s[i] == 'W') p[i+1].s--;
+        if(s[i] == 'E') p[i+1].s++;
     }
-    while(q--){
-        char c;
-        cin >> c;
-        if(c == '!'){
-            int k, x; cin >> k >> x;
-            s.erase({a[k - 1], k - 1});
-            a[k-1] = x;
-            s.insert({a[k-1], k - 1});
-        }else{
-            int a, b; cin >> a >> b;
-            cout << s.order_of_key({b + 1, 0}) - s.order_of_key({a, 0}) << endl;
+    map<pii, int> mp;
+    mp[p[0]] = 0;
+    vi ans(n, 0);
+    rep(i, 1, n+1){
+        pii a = {p[i].f - r, p[i].s - c};
+        if(mp.count(a)){
+            ans[i-1] = (mp[a] < i);
+        }
+        if(!mp.count(p[i])){
+            mp[p[i]] = i;
         }
     }
+    for(auto i : ans) cout << i;
+    cout << endl;
 }
 
 int32_t main()

@@ -81,35 +81,32 @@ typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
 typedef tuple<int, int, int> tiii;
-const int MAX = 2e5 + 5;
+const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-
 void solve()
 {
-    int n, q; cin >> n >> q;
-    vi a(n);
-    ordered_set<pii> s;
-    for(auto &i : a){
-        cin >> i;
-        s.insert({i, &i - &a[0]});
-    }
-    while(q--){
-        char c;
-        cin >> c;
-        if(c == '!'){
-            int k, x; cin >> k >> x;
-            s.erase({a[k - 1], k - 1});
-            a[k-1] = x;
-            s.insert({a[k-1], k - 1});
-        }else{
-            int a, b; cin >> a >> b;
-            cout << s.order_of_key({b + 1, 0}) - s.order_of_key({a, 0}) << endl;
+    int n; cin >> n;
+    string ans;
+    if(n%2 == 0){
+        rep(i, 0, n/2-1){
+            ans += '-';
         }
+        ans += '=';
+        string a = ans;
+        reverse(all(a));
+        cout << ans << a << endl;
+    }else{
+        rep(i, 0, n){
+            ans += '-';
+        }
+        ans[n/2] = '=';
+        cout << ans << endl;
     }
+
 }
 
 int32_t main()

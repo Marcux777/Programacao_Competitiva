@@ -81,35 +81,36 @@ typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
 typedef tuple<int, int, int> tiii;
-const int MAX = 2e5 + 5;
+const int MAXN = 2e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-
 void solve()
 {
-    int n, q; cin >> n >> q;
-    vi a(n);
-    ordered_set<pii> s;
-    for(auto &i : a){
-        cin >> i;
-        s.insert({i, &i - &a[0]});
+    string s; cin >> s;
+    string rv = s;
+    reverse(all(rv));
+    string t = rv + '#' + s;
+
+    vi pi(sz(t), 0);
+    rep(i, 1, sz(t)){
+        int j = pi[i - 1];
+        while(j > 0 && t[i] != t[j])
+            j = pi[j - 1];
+
+        if(t[i] == t[j])
+            j++;
+
+        pi[i] = j;
     }
-    while(q--){
-        char c;
-        cin >> c;
-        if(c == '!'){
-            int k, x; cin >> k >> x;
-            s.erase({a[k - 1], k - 1});
-            a[k-1] = x;
-            s.insert({a[k-1], k - 1});
-        }else{
-            int a, b; cin >> a >> b;
-            cout << s.order_of_key({b + 1, 0}) - s.order_of_key({a, 0}) << endl;
-        }
-    }
+    int l = pi.back();
+    string ans = s.substr(0, sz(s) - l);
+    reverse(all(ans));
+    cout << s + ans << endl;
+
+
 }
 
 int32_t main()
