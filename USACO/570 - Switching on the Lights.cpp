@@ -50,8 +50,8 @@ void dbg_out(Head H, Tail... T)
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
 #define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
-    freopen("saida.out", "w", stdout)
+    freopen("lightson.in", "r", stdin);\
+    freopen("lightson.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
 #define f first
@@ -92,11 +92,64 @@ const int LOGN = 21;
 
 void solve()
 {
+    int n, m;cin >>n>>m;
+
+    vector<vector<vector<pii>>> mp(n+1, vector<vector<pii>>(n+1));
+
+    rep(i, 0, m){
+        int x, y, a, b;
+        cin >> x >> y >> a >> b;
+        mp[x][y].pb({a, b});
+    }
+
+    vi dx = {1, -1, 0, 0};
+    vi dy = {0, 0, 1, -1};
+
+    vvi aceso(n+1, vi(n+1, 0));
+    vvi vis(n+1, vi(n+1, 0));
+    aceso[1][1] = vis[1][1] = 1;
+    int ans = 1;
+
+    queue<pii> q;
+    q.push({1, 1});
+
+    while(sz(q)){
+        auto [x, y] = q.front();
+        q.pop();
+        for(auto [a, b] : mp[x][y]){
+            if(!aceso[a][b]){
+                aceso[a][b] = 1;
+                ans++;
+
+                rep(k, 0, 4){
+                    int nx = a + dx[k];
+                    int ny = b + dy[k];
+                    if(nx >= 1 && ny >= 1 && nx <= n && ny <= n && vis[nx][ny]){
+                        q.push({nx, ny});
+                        vis[a][b] = 1;
+                        q.push({a, b});
+                        break;
+                    }
+                }
+            }
+        }
+        rep(i, 0, 4){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if(nx >= 1 && nx <= n && ny >= 1 && ny <= n && !vis[nx][ny] && aceso[nx][ny]){
+                vis[nx][ny] = 1;
+                q.push({nx, ny});
+            }
+        }
+    }
+
+    cout << ans << endl;
 }
 
 int32_t main()
 {
     IOS;
+    TXTIO;
     int tt;
     tt = 1;
     while (tt --> 0)

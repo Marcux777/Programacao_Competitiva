@@ -49,9 +49,10 @@ void dbg_out(Head H, Tail... T)
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
-#define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
-    freopen("saida.out", "w", stdout)
+
+#define TXTIO\
+    freopen("perimeter.in", "r", stdin);\
+    freopen("perimeter.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
 #define f first
@@ -92,11 +93,61 @@ const int LOGN = 21;
 
 void solve()
 {
+    int n; cin >> n;
+    vector<string> a(n);
+    for(auto &i : a) cin >> i;
+
+    vector<vector<bool>> vis(n, vector<bool>(n, false));
+
+    auto bfs = [&](int x, int y){
+        queue<pii> q;
+        q.push({x, y});
+        vis[x][y] = true;
+        vi dx = {0, 0, 1, -1};
+        vi dy = {1, -1, 0, 0};
+        int area = 1, peri = 0;
+        while(!q.empty()){
+            auto&[i, j] = q.front();
+            q.pop();
+            rep(k, 0, 4){
+                int nx = i + dx[k];
+                int ny = j + dy[k];
+                if(nx < 0 || ny < 0 || nx >= n || ny >= n || a[nx][ny] == '.'){
+                    peri++;
+                }else if(nx >= 0 && ny >= 0 && nx < n && ny < n && a[nx][ny] == '#' && !vis[nx][ny]){
+                    area++;
+                    vis[nx][ny] = true;
+                    q.push({nx, ny});
+                }
+            }
+        }
+        return make_pair(area, peri);
+    };
+
+    int ans_area = -LINF, ans_peri = LINF;
+
+    rep(i, 0, n){
+        rep(j, 0, sz(a[i])){
+            if(a[i][j] == '#'){
+                if(!vis[i][j]){
+                    auto [a, p] = bfs(i, j);
+                    if(a > ans_area){
+                        ans_area = a;
+                        ans_peri = p;
+                    }else if(a == ans_area){
+                        ans_peri = min(ans_peri, p);
+                    }
+                }
+            }
+        }
+    }
+    cout << ans_area << " " << ans_peri << endl;
 }
 
 int32_t main()
 {
     IOS;
+    TXTIO;
     int tt;
     tt = 1;
     while (tt --> 0)

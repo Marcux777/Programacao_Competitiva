@@ -49,9 +49,6 @@ void dbg_out(Head H, Tail... T)
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
-#define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
-    freopen("saida.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
 #define f first
@@ -92,6 +89,21 @@ const int LOGN = 21;
 
 void solve()
 {
+    int n; cin >> n;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+    int ans = -1;
+    rep(i, 0, n){
+        int f = 0;
+        for(auto j : a)
+            if(i < j) f++;
+
+        if(f == i){
+            ans = i;
+            break;
+        }
+    }
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -99,6 +111,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

@@ -49,9 +49,6 @@ void dbg_out(Head H, Tail... T)
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
-#define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
-    freopen("saida.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
 #define f first
@@ -90,8 +87,23 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+int f(int n){
+    int d = 2;
+    for(; d * d <= n; d++){
+        if(n % d == 0){
+            return d;
+        }
+    }
+    return n;
+}
+
 void solve()
 {
+    int n, m; cin >> n >> m;
+
+    int d = f(n);
+
+    cout << (d > m || n == 1 ? "YES" : "NO") << endl;
 }
 
 int32_t main()
@@ -99,6 +111,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

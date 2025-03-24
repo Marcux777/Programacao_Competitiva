@@ -50,8 +50,8 @@ void dbg_out(Head H, Tail... T)
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
 #define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
-    freopen("saida.out", "w", stdout)
+    freopen("ccski.in", "r", stdin);\
+    freopen("ccski.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
 #define f first
@@ -92,11 +92,82 @@ const int LOGN = 21;
 
 void solve()
 {
+    int n, m; cin >> n >> m;
+    vvi a(n, vi(m));
+    rep(i, 0, n){
+        rep(j, 0, m){
+            cin >> a[i][j];
+        }
+    }
+    vvi pass(n, vi(m));
+
+    rep(i, 0, n){
+        rep(j, 0, m){
+            cin >> pass[i][j];
+        }
+    }
+
+    vi dx = {0, 0, 1, -1};
+    vi dy = {1, -1, 0, 0};
+
+    auto bfs = [&](int d) -> bool{
+        int x = -1, y = -1;
+
+        rep(i, 0, n){
+            rep(j, 0, m){
+                if(pass[i][j] == 1){
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+            if(x != -1) break;
+        }
+        if(x == -1) return true;
+
+        queue<pii> q;
+        q.push({x, y});
+        vector<vector<bool>> vis(n, vector<bool>(m, false));
+        vis[x][y] = true;
+        while(!q.empty()){
+            auto [i, j] = q.front();
+            q.pop();
+            rep(k, 0, 4){
+                int nx = i + dx[k];
+                int ny = j + dy[k];
+                if(nx < 0 or nx >= n or ny < 0 or ny >= m or vis[nx][ny] or abs(a[i][j] - a[nx][ny]) > d) continue;
+
+                q.push({nx, ny});
+                vis[nx][ny] = true;
+            }
+        }
+
+        rep(i, 0, n)
+            rep(j, 0, m)
+                if(pass[i][j] == 1 and !vis[i][j]) return false;
+
+        return true;
+    };
+
+    int l = 0, r = 1e9;
+    int ans;
+    while(l <= r){
+        int mid = (l + r)/2;
+        if(bfs(mid)){
+            r = mid-1;
+            ans = mid;
+        }else{
+            l = mid + 1;
+        }
+    }
+    cout<<ans<<endl;
+
 }
 
 int32_t main()
 {
     IOS;
+    TXTIO;
     int tt;
     tt = 1;
     while (tt --> 0)

@@ -49,9 +49,6 @@ void dbg_out(Head H, Tail... T)
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
-#define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
-    freopen("saida.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
 #define f first
