@@ -84,52 +84,72 @@ typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
 typedef tuple<int, int, int> tiii;
-const int MAXN = 2e5 + 5;
+const int MAXN = 5e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-const int mod = 1e9 + 7;
+const int mod = 998244353;
 const int LOGN = 21;
+
+vi fact, invfact;
+
+int exp(int a, int b, int m){
+    int res = 1;
+    while (b) {
+        if (b & 1)
+            res = (res * a) % m;
+
+        a = (a * a) % m;
+        b >>= 1;
+    }
+    return res;
+}
+
+
+void computefac(int n, vi& fact, vi& invfact)
+{
+    fact.resize(n + 1);
+    invfact.resize(n + 1);
+    fact[0] = 1;
+    rep (i, 1, n+1)
+        fact[i] = (fact[i - 1] * i) % mod;
+
+    invfact[n] = exp(fact[n], mod - 2, mod);
+    for (int i = n - 1; i >= 0; i--)
+        invfact[i] = (invfact[i + 1] * (i + 1)) % mod;
+}
 
 void solve()
 {
-    int n; cin >> n;
-    const double e = 2.71828182845904523536;
-    const double pi = 3.14159265358979323846;
-    vector<pair<double, string>> dinos;
-    rep(i, 0, n){
-        string s; cin >> s;
-        double a, c; cin >> a >> c; // altura e comprimento
-        double p; cin >> p; // peso
-
-        int t = sz(s);
-        int v = 0, cons = 0; // vogais e consoantes
-        for(auto& j : s){
-            j = tolower(j);
-            if(j == 'a' || j == 'e' || j == 'i' || j == 'o' || j == 'u')
-                v++;
-        }
-        cons = t - v;
-
-        double soma = 0.0;
-        rep(k, 1, t+1){
-            soma += (pow(p, 1.0/k) * cos(k * pi));
-        }
-        soma = fabs(soma);
-        cout << soma << endl;
-        int mincv = min(cons, v)+1.0;
-        int maxcv = max(cons, v)-1.0;
-
-        soma *= ((maxcv) / (mincv));
-
-        double q = ceil(sqrt(pow(v, e) + pow(cons, e)));
-        double d = floor(pi + log10(1 + a * c));
-        soma *= (q / d);
-        dinos.pb({soma, s});
+    vi a(26);
+    int sum = 0;
+    for(auto&i : a){
+        cin >> i;
+        sum += i;
     }
-    sort(all(dinos), greater<pair<double, string>>());
-    for(auto &[a, b] : dinos){
-        cout << b << endl;
+
+    if(sum == 0) {cout << 0 << endl; return;}
+
+    int n = sum;
+    int o = (n+1)/2, e = n/2;
+
+    vi dp(o+1, 0);
+    dp[0] = 1;
+    rep(i, 0, 26){
+        if(a[i] == 0) continue;
+        for(int j = o; j >= a[i]; j--){
+            dp[j] = (dp[j] + dp[j - a[i]])%mod;
+        }
     }
+
+    if(dp[o] == 0) {cout << 0 << endl; return;}
+
+    int w = (1LL * fact[o] * fact[e]) % mod;
+    rep(i, 0, 26){
+        w = (w * invfact[a[i]]) % mod;
+    }
+    cout << (1LL * w * dp[o]) % mod << endl;
+
+
 }
 
 int32_t main()
@@ -137,6 +157,8 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    computefac(MAXN, fact, invfact);
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

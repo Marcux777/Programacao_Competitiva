@@ -93,43 +93,14 @@ const int LOGN = 21;
 void solve()
 {
     int n; cin >> n;
-    const double e = 2.71828182845904523536;
-    const double pi = 3.14159265358979323846;
-    vector<pair<double, string>> dinos;
-    rep(i, 0, n){
-        string s; cin >> s;
-        double a, c; cin >> a >> c; // altura e comprimento
-        double p; cin >> p; // peso
+    vi p(n+1), d (n+1);
+    rep(i, 1, n+1)
+        cin >> p[i];
 
-        int t = sz(s);
-        int v = 0, cons = 0; // vogais e consoantes
-        for(auto& j : s){
-            j = tolower(j);
-            if(j == 'a' || j == 'e' || j == 'i' || j == 'o' || j == 'u')
-                v++;
-        }
-        cons = t - v;
+    rep(i, 1, n+1)
+        cin >> d[i];
 
-        double soma = 0.0;
-        rep(k, 1, t+1){
-            soma += (pow(p, 1.0/k) * cos(k * pi));
-        }
-        soma = fabs(soma);
-        cout << soma << endl;
-        int mincv = min(cons, v)+1.0;
-        int maxcv = max(cons, v)-1.0;
-
-        soma *= ((maxcv) / (mincv));
-
-        double q = ceil(sqrt(pow(v, e) + pow(cons, e)));
-        double d = floor(pi + log10(1 + a * c));
-        soma *= (q / d);
-        dinos.pb({soma, s});
-    }
-    sort(all(dinos), greater<pair<double, string>>());
-    for(auto &[a, b] : dinos){
-        cout << b << endl;
-    }
+    
 }
 
 int32_t main()
@@ -137,6 +108,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

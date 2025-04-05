@@ -90,46 +90,56 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-void solve()
-{
+
+
+void solve(){
     int n; cin >> n;
-    const double e = 2.71828182845904523536;
-    const double pi = 3.14159265358979323846;
-    vector<pair<double, string>> dinos;
-    rep(i, 0, n){
-        string s; cin >> s;
-        double a, c; cin >> a >> c; // altura e comprimento
-        double p; cin >> p; // peso
-
-        int t = sz(s);
-        int v = 0, cons = 0; // vogais e consoantes
-        for(auto& j : s){
-            j = tolower(j);
-            if(j == 'a' || j == 'e' || j == 'i' || j == 'o' || j == 'u')
-                v++;
-        }
-        cons = t - v;
-
-        double soma = 0.0;
-        rep(k, 1, t+1){
-            soma += (pow(p, 1.0/k) * cos(k * pi));
-        }
-        soma = fabs(soma);
-        cout << soma << endl;
-        int mincv = min(cons, v)+1.0;
-        int maxcv = max(cons, v)-1.0;
-
-        soma *= ((maxcv) / (mincv));
-
-        double q = ceil(sqrt(pow(v, e) + pow(cons, e)));
-        double d = floor(pi + log10(1 + a * c));
-        soma *= (q / d);
-        dinos.pb({soma, s});
+    vi a(2*n);
+    vvi pos(n+1, vi(2, 0));
+    rep(i, 0, 2*n){
+        cin >> a[i];
+        if(pos[a[i]][0] == 0) pos[a[i]][0] = i+1;
+        else pos[a[i]][1] = i+1;
     }
-    sort(all(dinos), greater<pair<double, string>>());
-    for(auto &[a, b] : dinos){
-        cout << b << endl;
+
+    vector<bool> us(n+1, false);
+
+    rep(i, 1, n+1){
+        if(pos[i][1] == pos[i][0] + 1){
+            us[i] = true;
+        }
     }
+
+    map<pii, vi> mp;
+    rep(i, 0, 2*n-1){
+        if(a[i] != a[i+1]){
+            int x = min(a[i], a[i+1]);
+            int y = max(a[i], a[i+1]);
+            mp[{x, y}].pb(i+1);
+        }
+    }
+
+    int ans = 0;
+
+    for(auto& [p, l] : mp){
+        int x = p.f, y = p.s;
+        if(us[x] || us[y]) continue;
+
+        sor(l);
+        int m = sz(l);
+        int k = 0;
+        int curr = 0;
+
+        rep(i, 0, m){
+            while(k < m && l[k] < l[i] + 2){
+                k++;
+            }
+            curr += m - k;
+        }
+        ans += curr;
+    }
+
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -137,6 +147,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

@@ -90,46 +90,66 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+class DSU
+{
+    vector<int> parent;
+    vector<int> rank;
+
+public:
+    DSU(int n)
+    {
+        parent.assign(n, -1);
+        rank.assign(n, 1);
+    }
+
+    int find(int i)
+    {
+        if (parent[i] == -1)
+            return i;
+
+        return parent[i] = find(parent[i]);
+    }
+
+    void unite(int x, int y)
+    {
+        int s1 = find(x);
+        int s2 = find(y);
+
+        if (s1 != s2)
+        {
+            if (rank[s1] < rank[s2])
+            {
+                parent[s1] = s2;
+            }
+            else if (rank[s1] > rank[s2])
+            {
+                parent[s2] = s1;
+            }
+            else
+            {
+                parent[s2] = s1;
+                rank[s1] += 1;
+            }
+        }
+    }
+};
+
 void solve()
 {
-    int n; cin >> n;
-    const double e = 2.71828182845904523536;
-    const double pi = 3.14159265358979323846;
-    vector<pair<double, string>> dinos;
-    rep(i, 0, n){
-        string s; cin >> s;
-        double a, c; cin >> a >> c; // altura e comprimento
-        double p; cin >> p; // peso
+    int n,m; cin >> n >> m;
+    int remove_edges = 0;
+    DSU dsu(n+1);
+    rep(i, 0, m){
+        int u, v;
+        cin >> u >> v;
+        if(dsu.find(u) == dsu.find(v))
+            remove_edges++;
+        else
+            dsu.unite(u, v);
 
-        int t = sz(s);
-        int v = 0, cons = 0; // vogais e consoantes
-        for(auto& j : s){
-            j = tolower(j);
-            if(j == 'a' || j == 'e' || j == 'i' || j == 'o' || j == 'u')
-                v++;
-        }
-        cons = t - v;
-
-        double soma = 0.0;
-        rep(k, 1, t+1){
-            soma += (pow(p, 1.0/k) * cos(k * pi));
-        }
-        soma = fabs(soma);
-        cout << soma << endl;
-        int mincv = min(cons, v)+1.0;
-        int maxcv = max(cons, v)-1.0;
-
-        soma *= ((maxcv) / (mincv));
-
-        double q = ceil(sqrt(pow(v, e) + pow(cons, e)));
-        double d = floor(pi + log10(1 + a * c));
-        soma *= (q / d);
-        dinos.pb({soma, s});
     }
-    sort(all(dinos), greater<pair<double, string>>());
-    for(auto &[a, b] : dinos){
-        cout << b << endl;
-    }
+    cout << remove_edges << endl;
+
 }
 
 int32_t main()

@@ -93,43 +93,29 @@ const int LOGN = 21;
 void solve()
 {
     int n; cin >> n;
-    const double e = 2.71828182845904523536;
-    const double pi = 3.14159265358979323846;
-    vector<pair<double, string>> dinos;
-    rep(i, 0, n){
-        string s; cin >> s;
-        double a, c; cin >> a >> c; // altura e comprimento
-        double p; cin >> p; // peso
+    vi p(n);
+    for(auto &i : p) cin >> i;
 
-        int t = sz(s);
-        int v = 0, cons = 0; // vogais e consoantes
-        for(auto& j : s){
-            j = tolower(j);
-            if(j == 'a' || j == 'e' || j == 'i' || j == 'o' || j == 'u')
-                v++;
+    vi ranks(n, 0);
+    int r = 1;
+    while(any_of(all(ranks), [](int rank){return rank == 0;})){
+        int maxScore = 0;
+        rep(i, 0, n)
+            if(ranks[i] == 0) maxScore = max(maxScore, p[i]);
+
+        int cnt = 0;
+        rep(i, 0, n){
+            if(ranks[i] == 0 && p[i] == maxScore){
+                ranks[i] = r;
+                cnt++;
+            }
         }
-        cons = t - v;
 
-        double soma = 0.0;
-        rep(k, 1, t+1){
-            soma += (pow(p, 1.0/k) * cos(k * pi));
-        }
-        soma = fabs(soma);
-        cout << soma << endl;
-        int mincv = min(cons, v)+1.0;
-        int maxcv = max(cons, v)-1.0;
-
-        soma *= ((maxcv) / (mincv));
-
-        double q = ceil(sqrt(pow(v, e) + pow(cons, e)));
-        double d = floor(pi + log10(1 + a * c));
-        soma *= (q / d);
-        dinos.pb({soma, s});
+        r += cnt;
     }
-    sort(all(dinos), greater<pair<double, string>>());
-    for(auto &[a, b] : dinos){
-        cout << b << endl;
-    }
+
+    for(auto &i : ranks) cout << i << endl;
+
 }
 
 int32_t main()
