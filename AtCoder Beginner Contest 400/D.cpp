@@ -90,93 +90,60 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<string> s(n);
-    rep(i, 0, n) cin >> s[i];
-
-    pii A;
-    vvi dist(n, vi(m, INF));
-    queue<pii> mq;
-    rep(i, 0, n) rep(j, 0, m) {
-        if (s[i][j] == 'M') {
-            dist[i][j] = 0;
-            mq.push({i, j});
-        } else if (s[i][j] == 'A') {
-            A = {i, j};
+void solve()
+{
+    int h, w; cin >> h >> w;
+    vector<vector<bool>> a(h, vector<bool>(w));
+    rep(i, 0, h){
+        string s; cin >> s;
+        rep(j, 0, w){
+            a[i][j] = (s[j] == '.');
         }
     }
-    vii d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    int xi, yi, xf, yf;
+    cin >> xi >> yi >> xf >> yf;
+    xi--; yi--; xf--; yf--;
 
-    while (!mq.empty()) {
-        auto [x, y] = mq.front();
-        mq.pop();
-        for (auto [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist[nx][ny] > dist[x][y] + 1) {
-                dist[nx][ny] = dist[x][y] + 1;
-                mq.push({nx, ny});
-            }
+    vvi dist(h, vi(w, INF));
+    dist[xi][yi] = 0;
+    deque<pii> dq;
+    dq.pb({xi, yi});
+    vi dx = {0, 1, 0, -1};
+    vi dy = {1, 0, -1, 0};
+
+    while(sz(dq)){
+        auto [x, y] = dq.front();
+        dq.pop_front();
+        if(x == xf && y == yf){
+            cout << dist[x][y] << endl;
+            return;
         }
-    }
 
-    queue<pii> pq;
-    pq.push(A);
-
-    vvi dist2(n, vi(m, INF));
-    vector<vector<pair<pii, char>>> parent(n, vector<pair<pii, char>>(m, {{-1, -1}, ' '}));
-    dist2[A.f][A.s] = 0;
-    while (sz(pq)) {
-        auto [x, y] = pq.front();
-        pq.pop();
-        for (auto& [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist2[nx][ny] > dist2[x][y] + 1 and dist[nx][ny] > dist2[x][y] + 1) {
-                dist2[nx][ny] = dist2[x][y] + 1;
-                char moveChar;
-                if (dx == -1 and dy == 0)
-                    moveChar = 'U';
-                else if (dx == 1 and dy == 0)
-                    moveChar = 'D';
-                else if (dx == 0 and dy == -1)
-                    moveChar = 'L';
-                else // dx == 0 and dy == 1
-                    moveChar = 'R';
-                parent[nx][ny] = {{x, y}, moveChar};
-                pq.push({nx, ny});
-            }
-        }
-    }
-
-    pii exitCell = {-1, -1};
-    rep(i, 0, n) {
-        rep(j, 0, m) {
-            if (i == 0 or j == 0 or i == n - 1 or j == m - 1) {
-                if (dist2[i][j] < INF) {
-                    exitCell = {i, j};
-                    break;
+        rep(i, 0, 4){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
+            if(a[nx][ny]){
+                if(dist[nx][ny] > dist[x][y]){
+                    dist[nx][ny] = dist[x][y];
+                    dq.push_front({nx, ny});
                 }
             }
         }
-        if (exitCell.f != -1) break;
-    }
 
-    string ans;
-    if (exitCell.f == -1) {
-        cout << "NO" << endl;
-    } else {
-        for (pii cur = exitCell; cur != A;) {
-            auto [par, moveChar] = parent[cur.f][cur.s];
-            ans.pb(moveChar);
-            cur = par;
+        rep(i, 0, 4){
+            rep(s, 1, 3){
+                int nx = x + dx[i]*s;
+                int ny = y + dy[i]*s;
+                if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
+                if(!a[nx][ny]){
+                    if(dist[nx][ny] > dist[x][y] + 1){
+                        dist[nx][ny] = dist[x][y] + 1;
+                        dq.pb({nx, ny});
+                    }
+                }
+            }
         }
-        reverse(all(ans));
-        cout << "YES" << endl << sz(ans) << endl << ans << endl;
     }
 }
 

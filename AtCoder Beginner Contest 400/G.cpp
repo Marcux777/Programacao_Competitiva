@@ -90,94 +90,35 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<string> s(n);
-    rep(i, 0, n) cin >> s[i];
+struct bolo{
+    int p, q, r;
+    bolo(int p, int q, int r) : p(p), q(q), r(r) {}
 
-    pii A;
-    vvi dist(n, vi(m, INF));
-    queue<pii> mq;
-    rep(i, 0, n) rep(j, 0, m) {
-        if (s[i][j] == 'M') {
-            dist[i][j] = 0;
-            mq.push({i, j});
-        } else if (s[i][j] == 'A') {
-            A = {i, j};
-        }
+    bool operator<(const bolo &other) const {
+        if (p != other.p) return p < other.p;
+        if (q != other.q) return q < other.q;
+        return r < other.r;
     }
-    vii d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    bool operator>(const bolo &other) const {
+        if (p != other.p) return p > other.p;
+        if (q != other.q) return q > other.q;
+        return r > other.r;
+    }
+    bool operator==(const bolo &other) const {
+        return p == other.p && q == other.q && r == other.r;
+    }
+};
 
-    while (!mq.empty()) {
-        auto [x, y] = mq.front();
-        mq.pop();
-        for (auto [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist[nx][ny] > dist[x][y] + 1) {
-                dist[nx][ny] = dist[x][y] + 1;
-                mq.push({nx, ny});
-            }
-        }
+void solve()
+{
+
+    int n, k; cin >> n >> k;
+    vector<bolo> v(n);
+    rep(i, 0, n){
+        int p, q, r; cin >> p >> q >> r;
+        v[i] = bolo(p, q, r);
     }
 
-    queue<pii> pq;
-    pq.push(A);
-
-    vvi dist2(n, vi(m, INF));
-    vector<vector<pair<pii, char>>> parent(n, vector<pair<pii, char>>(m, {{-1, -1}, ' '}));
-    dist2[A.f][A.s] = 0;
-    while (sz(pq)) {
-        auto [x, y] = pq.front();
-        pq.pop();
-        for (auto& [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist2[nx][ny] > dist2[x][y] + 1 and dist[nx][ny] > dist2[x][y] + 1) {
-                dist2[nx][ny] = dist2[x][y] + 1;
-                char moveChar;
-                if (dx == -1 and dy == 0)
-                    moveChar = 'U';
-                else if (dx == 1 and dy == 0)
-                    moveChar = 'D';
-                else if (dx == 0 and dy == -1)
-                    moveChar = 'L';
-                else // dx == 0 and dy == 1
-                    moveChar = 'R';
-                parent[nx][ny] = {{x, y}, moveChar};
-                pq.push({nx, ny});
-            }
-        }
-    }
-
-    pii exitCell = {-1, -1};
-    rep(i, 0, n) {
-        rep(j, 0, m) {
-            if (i == 0 or j == 0 or i == n - 1 or j == m - 1) {
-                if (dist2[i][j] < INF) {
-                    exitCell = {i, j};
-                    break;
-                }
-            }
-        }
-        if (exitCell.f != -1) break;
-    }
-
-    string ans;
-    if (exitCell.f == -1) {
-        cout << "NO" << endl;
-    } else {
-        for (pii cur = exitCell; cur != A;) {
-            auto [par, moveChar] = parent[cur.f][cur.s];
-            ans.pb(moveChar);
-            cur = par;
-        }
-        reverse(all(ans));
-        cout << "YES" << endl << sz(ans) << endl << ans << endl;
-    }
 }
 
 int32_t main()
@@ -185,6 +126,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
+    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

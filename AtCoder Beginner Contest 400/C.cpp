@@ -84,100 +84,34 @@ typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
 typedef tuple<int, int, int> tiii;
-const int MAXN = 2e5 + 5;
+const int MAXN = 5e5 + 5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<string> s(n);
-    rep(i, 0, n) cin >> s[i];
-
-    pii A;
-    vvi dist(n, vi(m, INF));
-    queue<pii> mq;
-    rep(i, 0, n) rep(j, 0, m) {
-        if (s[i][j] == 'M') {
-            dist[i][j] = 0;
-            mq.push({i, j});
-        } else if (s[i][j] == 'A') {
-            A = {i, j};
-        }
+int f(int x){
+    if(x == 0) return 0;
+    int l = 1, r = 1e9;
+    while(l < r){
+        int m = l + (r - l)/2;
+        if(m > x/m) r = m;
+        else l = m+1;
     }
-    vii d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    return l;
+}
 
-    while (!mq.empty()) {
-        auto [x, y] = mq.front();
-        mq.pop();
-        for (auto [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist[nx][ny] > dist[x][y] + 1) {
-                dist[nx][ny] = dist[x][y] + 1;
-                mq.push({nx, ny});
-            }
-        }
+void solve()
+{
+    int n; cin >> n;
+    int ans = 0;
+    rep(i, 1, n+1){
+        int p = (1LL<<i);
+        if(p > n) break;
+        ans += (f(n/p)/2);
     }
+    cout << ans << endl;
 
-    queue<pii> pq;
-    pq.push(A);
-
-    vvi dist2(n, vi(m, INF));
-    vector<vector<pair<pii, char>>> parent(n, vector<pair<pii, char>>(m, {{-1, -1}, ' '}));
-    dist2[A.f][A.s] = 0;
-    while (sz(pq)) {
-        auto [x, y] = pq.front();
-        pq.pop();
-        for (auto& [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist2[nx][ny] > dist2[x][y] + 1 and dist[nx][ny] > dist2[x][y] + 1) {
-                dist2[nx][ny] = dist2[x][y] + 1;
-                char moveChar;
-                if (dx == -1 and dy == 0)
-                    moveChar = 'U';
-                else if (dx == 1 and dy == 0)
-                    moveChar = 'D';
-                else if (dx == 0 and dy == -1)
-                    moveChar = 'L';
-                else // dx == 0 and dy == 1
-                    moveChar = 'R';
-                parent[nx][ny] = {{x, y}, moveChar};
-                pq.push({nx, ny});
-            }
-        }
-    }
-
-    pii exitCell = {-1, -1};
-    rep(i, 0, n) {
-        rep(j, 0, m) {
-            if (i == 0 or j == 0 or i == n - 1 or j == m - 1) {
-                if (dist2[i][j] < INF) {
-                    exitCell = {i, j};
-                    break;
-                }
-            }
-        }
-        if (exitCell.f != -1) break;
-    }
-
-    string ans;
-    if (exitCell.f == -1) {
-        cout << "NO" << endl;
-    } else {
-        for (pii cur = exitCell; cur != A;) {
-            auto [par, moveChar] = parent[cur.f][cur.s];
-            ans.pb(moveChar);
-            cur = par;
-        }
-        reverse(all(ans));
-        cout << "YES" << endl << sz(ans) << endl << ans << endl;
-    }
 }
 
 int32_t main()

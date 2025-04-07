@@ -90,94 +90,44 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<string> s(n);
-    rep(i, 0, n) cin >> s[i];
+void solve()
+{
+    int n; cin >> n;
+    vi colors(2*n+5), custos(n+5);
+    rep(i, 1, n+1) cin >> colors[i];
+    rep(i, 1, n+1) cin >> custos[i];
 
-    pii A;
-    vvi dist(n, vi(m, INF));
-    queue<pii> mq;
-    rep(i, 0, n) rep(j, 0, m) {
-        if (s[i][j] == 'M') {
-            dist[i][j] = 0;
-            mq.push({i, j});
-        } else if (s[i][j] == 'A') {
-            A = {i, j};
-        }
-    }
-    vii d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-    while (!mq.empty()) {
-        auto [x, y] = mq.front();
-        mq.pop();
-        for (auto [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist[nx][ny] > dist[x][y] + 1) {
-                dist[nx][ny] = dist[x][y] + 1;
-                mq.push({nx, ny});
-            }
-        }
+    rep(i, 1, 2*n + 1){
+        colors[i] = colors[(i-1)%n + 1];
     }
 
-    queue<pii> pq;
-    pq.push(A);
+    //cout << colors << endl;
 
-    vvi dist2(n, vi(m, INF));
-    vector<vector<pair<pii, char>>> parent(n, vector<pair<pii, char>>(m, {{-1, -1}, ' '}));
-    dist2[A.f][A.s] = 0;
-    while (sz(pq)) {
-        auto [x, y] = pq.front();
-        pq.pop();
-        for (auto& [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist2[nx][ny] > dist2[x][y] + 1 and dist[nx][ny] > dist2[x][y] + 1) {
-                dist2[nx][ny] = dist2[x][y] + 1;
-                char moveChar;
-                if (dx == -1 and dy == 0)
-                    moveChar = 'U';
-                else if (dx == 1 and dy == 0)
-                    moveChar = 'D';
-                else if (dx == 0 and dy == -1)
-                    moveChar = 'L';
-                else // dx == 0 and dy == 1
-                    moveChar = 'R';
-                parent[nx][ny] = {{x, y}, moveChar};
-                pq.push({nx, ny});
-            }
-        }
-    }
+    // dp[i][j] representa o custo mínimo para “pintar” o intervalo de fatias de i a j de modo que, ao final, cada fatia fique com sua cor alvo Colors[i]
 
-    pii exitCell = {-1, -1};
-    rep(i, 0, n) {
-        rep(j, 0, m) {
-            if (i == 0 or j == 0 or i == n - 1 or j == m - 1) {
-                if (dist2[i][j] < INF) {
-                    exitCell = {i, j};
-                    break;
+    vvi dp(2*n+1, vi(2*n+1, INF));
+
+    rep(i, 1, 2*n+1) dp[i][i-1] = 0;
+
+    rep(i, 1, 2*n+1) dp[i][i] = 1 + custos[colors[i]];
+
+    rep(len, 2, n+1){
+        rep(i, 1, 2*n-len+2){
+            int j = i + len - 1;
+            dp[i][j] = dp[i][j-1] + 1 + custos[colors[j]];
+            rep(k, i, j){
+                if(colors[k] == colors[j]){
+                    dp[i][j] = min(dp[i][j], dp[i][k] + dp[k+1][j-1] + (j - k));
                 }
             }
         }
-        if (exitCell.f != -1) break;
     }
+    int ans = LINF;
+    rep(i, 1, n+1){
+        ans = min(ans, dp[i][i+n-1]);
+    }
+    cout << ans << endl;
 
-    string ans;
-    if (exitCell.f == -1) {
-        cout << "NO" << endl;
-    } else {
-        for (pii cur = exitCell; cur != A;) {
-            auto [par, moveChar] = parent[cur.f][cur.s];
-            ans.pb(moveChar);
-            cur = par;
-        }
-        reverse(all(ans));
-        cout << "YES" << endl << sz(ans) << endl << ans << endl;
-    }
 }
 
 int32_t main()

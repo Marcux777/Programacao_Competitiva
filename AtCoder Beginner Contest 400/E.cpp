@@ -84,99 +84,36 @@ typedef pair<int, pii> piii;
 typedef vector<pii> vii;
 typedef vector<piii> viii;
 typedef tuple<int, int, int> tiii;
-const int MAXN = 2e5 + 5;
+const int MAXN = 1e6+5;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<string> s(n);
-    rep(i, 0, n) cin >> s[i];
-
-    pii A;
-    vvi dist(n, vi(m, INF));
-    queue<pii> mq;
-    rep(i, 0, n) rep(j, 0, m) {
-        if (s[i][j] == 'M') {
-            dist[i][j] = 0;
-            mq.push({i, j});
-        } else if (s[i][j] == 'A') {
-            A = {i, j};
-        }
-    }
-    vii d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-    while (!mq.empty()) {
-        auto [x, y] = mq.front();
-        mq.pop();
-        for (auto [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist[nx][ny] > dist[x][y] + 1) {
-                dist[nx][ny] = dist[x][y] + 1;
-                mq.push({nx, ny});
+void solve()
+{
+    vi facs(MAXN, 0);
+    rep(i, 2, MAXN){
+        if(facs[i] == 0){
+            for(int j = i; j < MAXN; j += i){
+                facs[j]++;
             }
         }
     }
 
-    queue<pii> pq;
-    pq.push(A);
+    vi list;
+    list.reserve(MAXN);
+    rep(i, 2, MAXN){
+        if(facs[i] == 2)
+            if(i * i <= 1e12)list.pb(i*i);
 
-    vvi dist2(n, vi(m, INF));
-    vector<vector<pair<pii, char>>> parent(n, vector<pair<pii, char>>(m, {{-1, -1}, ' '}));
-    dist2[A.f][A.s] = 0;
-    while (sz(pq)) {
-        auto [x, y] = pq.front();
-        pq.pop();
-        for (auto& [dx, dy] : d) {
-            int nx = x + dx, ny = y + dy;
-            if (nx < 0 or nx >= n or ny < 0 or ny >= m or s[nx][ny] == '#')
-                continue;
-            if (dist2[nx][ny] > dist2[x][y] + 1 and dist[nx][ny] > dist2[x][y] + 1) {
-                dist2[nx][ny] = dist2[x][y] + 1;
-                char moveChar;
-                if (dx == -1 and dy == 0)
-                    moveChar = 'U';
-                else if (dx == 1 and dy == 0)
-                    moveChar = 'D';
-                else if (dx == 0 and dy == -1)
-                    moveChar = 'L';
-                else // dx == 0 and dy == 1
-                    moveChar = 'R';
-                parent[nx][ny] = {{x, y}, moveChar};
-                pq.push({nx, ny});
-            }
-        }
     }
-
-    pii exitCell = {-1, -1};
-    rep(i, 0, n) {
-        rep(j, 0, m) {
-            if (i == 0 or j == 0 or i == n - 1 or j == m - 1) {
-                if (dist2[i][j] < INF) {
-                    exitCell = {i, j};
-                    break;
-                }
-            }
-        }
-        if (exitCell.f != -1) break;
-    }
-
-    string ans;
-    if (exitCell.f == -1) {
-        cout << "NO" << endl;
-    } else {
-        for (pii cur = exitCell; cur != A;) {
-            auto [par, moveChar] = parent[cur.f][cur.s];
-            ans.pb(moveChar);
-            cur = par;
-        }
-        reverse(all(ans));
-        cout << "YES" << endl << sz(ans) << endl << ans << endl;
+    sor(list);
+    int q; cin >> q;
+    while(q--){
+        int a; cin >> a;
+        auto it = upper_bound(all(list), a);
+        cout << *(--it) << endl;
     }
 }
 
