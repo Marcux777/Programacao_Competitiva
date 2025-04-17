@@ -94,19 +94,7 @@ void solve()
 {
     int n,m,k; cin >> n >> m >> k;
 
-    int a = 1, b = 2;
-    while(__gcd(b, k) != 1) b++;
-    vi linha(m);
-    rep(i, 0, n){
-        rep(j, 0, m){
-            linha[j] = ((1LL * a * i + 1LL* b * j) % k) + 1;
-        }
-
-        for(auto &i : linha) {
-            cout << i << " ";
-        }
-        cout << endl;
-    }
+    
 }
 
 int32_t main()
