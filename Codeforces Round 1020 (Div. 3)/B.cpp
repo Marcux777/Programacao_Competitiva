@@ -27,9 +27,11 @@ template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 template <typename T>
-ostream& operator<<(ostream &os, const vector<T> &v) {
+ostream &operator<<(ostream &os, const vector<T> &v)
+{
     os << "[";
-    for (size_t i = 0; i < v.size(); ++i) {
+    for (size_t i = 0; i < v.size(); ++i)
+    {
         os << v[i] << (i + 1 == v.size() ? "" : ", ");
     }
     os << "]";
@@ -49,8 +51,8 @@ void dbg_out(Head H, Tail... T)
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
-#define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
+#define TXTIO                          \
+    freopen("entrada.in", "r", stdin); \
     freopen("saida.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
@@ -92,9 +94,26 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, x;
+    cin >> n >> x;
+    if (x == 0)
+    {
+        rep(i, 1, n) {cout << i << " ";}
+
+        cout << 0 << endl;
+    }
+    else if (x == n)
+    {
+        rep(i, 0, n) {cout << i << " ";}
+        cout << endl;
+    }
+    else
+    {
+        rep(i, 0, x) {cout << i << " ";}
+
+        rep(i, x + 1, n){ cout << i << " ";}
+        cout << x << endl;
+    }
 }
 
 int32_t main()
@@ -103,7 +122,7 @@ int32_t main()
     int tt;
     tt = 1;
     cin >> tt;
-    while (tt --> 0)
+    while (tt-- > 0)
         solve();
     return 0;
 }

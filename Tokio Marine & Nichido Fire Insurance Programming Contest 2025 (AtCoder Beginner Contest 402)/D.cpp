@@ -90,11 +90,55 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+struct BIT {
+    vector<int> f;
+    int n;
+    BIT(int n): f(n+2,0), n(n) {}
+    void add(int idx,int delta){
+        for(; idx<=n; idx+=idx&-idx) f[idx]+=delta;
+    }
+    int sumPrefix(int idx){
+        int s=0;
+        for(; idx>0; idx-=idx&-idx) s+=f[idx];
+        return s;
+    }
+    int sumRange(int l,int r){
+        if(l>r) return 0;
+        return sumPrefix(r)-sumPrefix(l-1);
+    }
+};
+
+
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, m;
+    cin >> n >> m;
+    vi a(m), b(m);
+    vii seg(m);
+    rep(i, 0, m) {
+        cin >> a[i] >> b[i];
+        if(a[i] > b[i]) swap(a[i], b[i]);
+        seg[i] = {a[i], b[i]};
+    }
+    sor(seg);
+    BIT bit(n);
+
+    ll ans = 0;
+   for(int i = 0; i < m;){
+    int j = i;
+    while(j < m && seg[j].f == seg[i].f){
+        if(seg[j].f+1 > seg[j].s)
+            ans += bit.sumRange(seg[j].f+1, seg[j].s-1);
+        j++;
+    }
+    
+    rep(k, i, j)
+        bit.add(seg[k].s, 1);
+
+    i = j;
+   }
+
+    cout << ans << endl;
 }
 
 int32_t main()
@@ -102,7 +146,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

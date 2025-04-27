@@ -70,7 +70,7 @@ void dbg_out(Head H, Tail... T)
 #define MAX(v) *max_element(all(v))
 #define LB(c, x) distance((c).begin(), lower_bound(all(c), (x)))
 #define UB(c, x) distance((c).begin(), upper_bound(all(c), (x)))
-typedef vector<double> vd;
+typedef vector<long double> vd;
 typedef vector<vd> vvd;
 typedef vector<vvd> vvvd;
 typedef vector<int> vi;
@@ -92,9 +92,32 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, x; cin >> n >> x;
+    vd s(n), p(n), q(n);
+    vi c(n);
+    rep(i, 0, n){
+        cin >> s[i] >> c[i] >> p[i];
+        p[i] /= 100.0;
+        q[i] = 1.0 - p[i];
+    }
+    vvd dp(1<<n, vd(x+1, 0));
+
+    rep(i, 1, x+1){
+        rep(mask, 0, 1<<n){
+            ld value = 0.0L;
+            rep(j, 0, n){
+                if(!(mask & (1<<j)) && c[j] <= i){
+                    ld YepEV = s[j] + dp[mask | (1<<j)][i - c[j]];
+                    ld NopEV  = dp[mask][i - c[j]];
+                    ld ev = p[j]*YepEV + (q[j])*NopEV;
+                    value = max(value, ev);
+                }
+            }
+            dp[mask][i] = value;
+        }
+    }
+
+    cout << fixed << setprecision(10) << dp[0][x] << endl;
 }
 
 int32_t main()
@@ -102,7 +125,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

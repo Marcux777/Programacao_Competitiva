@@ -92,9 +92,41 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n; cin >> n;
+    vi a(n), p(n);
+    int k = 0;
+    int maxa = 0, surv = -1;
+    rep(i, 0, n) {
+        cin >> a[i];
+        maxa = max(maxa, a[i]);
+        if(a[i] == -1) surv = i;
+    }
+    k = maxa;
+
+    vvi g(k+1);
+    rep(i, 0, n){
+        if(a[i] > 0) {
+            g[a[i]].pb(i);
+        }
+    }
+
+    int l = 1, r = n;
+rep(i, 1, k+1){
+        if(i&1){
+            for(auto id : g[i]){
+                p[id] = r--;
+            }
+        }else{
+            for(auto id : g[i]){
+                p[id] = l++;
+            }
+        }
+    }
+
+    p[surv] = l;
+
+    rep(i, 0, n) cout << p[i] << " ";
+    cout << endl;
 }
 
 int32_t main()

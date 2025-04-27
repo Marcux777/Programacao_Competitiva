@@ -94,30 +94,23 @@ void solve()
 {
     int n; cin >> n;
     vvi v(n, vi(n));
+    vi used(2*n+1, -1), seq(2*n+1, -1);
     rep(i, 0, n) {
         rep(j, 0, n) {
             cin >> v[i][j];
+            seq[(i+1)+ (j+1)] = v[i][j];
+            used[v[i][j]] = 1;
         }
     }
-    vi p(2*n + 1, -1);
-    vi exist(2*n + 1, 0);
-    rep(i, 2, n+2){
-        p[i] = v[0][i-2];
-        exist[p[i]] = 1;
+    rep(i, 1, 2*n+1){
+        if(used[i] == -1){
+            rep(j, 1, 2*n+1) if(seq[j] == -1) seq[j] = i;
+        }
     }
 
-    rep(i, n+2, 2*n+1){
-        p[i] = v[i-n-1][n-1];
-        exist[p[i]] = 1;
-    }
-
-    int valor = -1;
-    rep(i, 1, 2*n+1) if(!exist[i]) {valor = i; break;}
-
-
-    p[1] = valor;
-    rep(i, 1, 2*n+1) cout << p[i] << " ";
+    rep(i, 1, 2*n+1) cout << seq[i] << " ";
     cout << endl;
+
 
 }
 

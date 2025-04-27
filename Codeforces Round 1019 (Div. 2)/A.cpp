@@ -92,9 +92,11 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n; cin >> n;
+    vi a(n);
+    rep(i, 0, n) cin >> a[i];
+    set<int> s(all(a));
+    cout << sz(s) << endl;
 }
 
 int32_t main()

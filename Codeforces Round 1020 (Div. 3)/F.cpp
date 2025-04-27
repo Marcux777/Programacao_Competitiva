@@ -27,9 +27,11 @@ template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 template <typename T>
-ostream& operator<<(ostream &os, const vector<T> &v) {
+ostream &operator<<(ostream &os, const vector<T> &v)
+{
     os << "[";
-    for (size_t i = 0; i < v.size(); ++i) {
+    for (size_t i = 0; i < v.size(); ++i)
+    {
         os << v[i] << (i + 1 == v.size() ? "" : ", ");
     }
     os << "]";
@@ -49,8 +51,8 @@ void dbg_out(Head H, Tail... T)
 #define IOS                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(0)
-#define TXTIO                           \
-    freopen("entrada.in", "r", stdin);\
+#define TXTIO                          \
+    freopen("entrada.in", "r", stdin); \
     freopen("saida.out", "w", stdout)
 #define pb push_back
 #define all(v) v.begin(), v.end()
@@ -90,11 +92,114 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+class DSU
+{
+    vector<int> parent;
+    vector<int> rank;
+
+public:
+    DSU(int n)
+    {
+        parent.assign(n, -1);
+        rank.assign(n, 1);
+    }
+
+    int find(int i)
+    {
+        if (parent[i] == -1)
+            return i;
+
+        return parent[i] = find(parent[i]);
+    }
+
+    void unite(int x, int y)
+    {
+        int s1 = find(x);
+        int s2 = find(y);
+
+        if (s1 != s2)
+        {
+            if (rank[s1] < rank[s2])
+            {
+                parent[s1] = s2;
+            }
+            else if (rank[s1] > rank[s2])
+            {
+                parent[s2] = s1;
+            }
+            else
+            {
+                parent[s2] = s1;
+                rank[s1] += 1;
+            }
+        }
+    }
+};
+
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    vi u(n + 2, -1), l(n + 2, -1), d(n + 2, -1);
+    vi w;
+    int cnt = 0;
+    rep(i, 1, n + 1)
+    {
+        if (s[i - 1] == '0')
+        {
+            if (i > 1)
+            {
+                u[i] = cnt++;
+                w.pb(i - 1);
+            }
+            if (i < n)
+            {
+                l[i] = cnt++;
+                w.pb(n - i);
+            }
+        }
+        else
+        {
+            d[i] = cnt++;
+            w.pb(1);
+        }
+    }
+
+    if(!cnt){
+        cout<<0<<endl;
+        return;
+    }
+
+    DSU dsu(cnt+5);
+
+    rep(i, 1, n)
+    {
+        if (s[i - 1] == '0' && s[i] == '0')
+        {
+            if (u[i] != -1 && u[i + 1] != -1)
+                dsu.unite(u[i], u[i + 1]);
+            if (l[i] != -1 && l[i + 1] != -1)
+                dsu.unite(l[i], l[i + 1]);
+        }
+        if (s[i - 1] == '1' && s[i] == '0')
+        {
+            if (d[i] != -1 && u[i + 1] != -1)
+                dsu.unite(d[i], u[i + 1]);
+        }
+        if (s[i - 1] == '0' && s[i] == '1')
+        {
+            if (l[i] != -1 && d[i + 1] != -1)
+                dsu.unite(l[i], d[i + 1]);
+        }
+    }
+
+    vi sum(cnt, 0);
+    rep(i, 0, cnt) sum[dsu.find(i)] += w[i];
+
+    cout << *max_element(all(sum)) << endl;
 }
 
 int32_t main()
@@ -103,7 +208,7 @@ int32_t main()
     int tt;
     tt = 1;
     cin >> tt;
-    while (tt --> 0)
+    while (tt-- > 0)
         solve();
     return 0;
 }

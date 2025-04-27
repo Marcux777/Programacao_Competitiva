@@ -92,17 +92,82 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, m; cin >> n >> m;
+    vvi a(n, vi(n));
+    rep(i, 0, n) {
+        rep(j, 0, n) {
+            cin >> a[i][j];
+        }
+    }
+
+
+    vvvi p(n, vvi(n)), s(n, vvi(n));
+
+    rep(i, 0, 1 << (n-1)){
+        int x = 0, y = 0;
+        int rem = a[0][0]%m;
+        rep(j, 0, n-1){
+            if(i >> j & 1) x++;
+            else y++;
+            rem = (rem * 10 + a[x][y]) % m;
+        }
+        p[x][y].pb(rem);
+    }
+
+    rep(i, 0, 1 << (n-1)){
+        int x = n-1, y = n-1;
+        vi digs;
+        digs.reserve(n);
+        digs.pb(a[x][y]);
+        rep(j, 0, n-1){
+            if(i >> j & 1) x--;
+            else y--;
+            digs.pb(a[x][y]);
+        }
+
+        reverse(all(digs));
+        int rem = 0;
+        rep(j, 1, sz(digs)){
+            rem = (rem * 10 + digs[j]) % m;
+        }
+        s[x][y].pb(rem);
+    }
+    
+    vi poten(n);
+    poten[0] = 1;
+    rep(i, 1, n) poten[i] = (poten[i-1] * 10) % m;
+    int t = poten[n-1];
+    int ans= 0;
+
+    // meet in the middle
+    rep(i, 0, n) rep(j, 0, n) if(i + j == n-1){
+        auto& v = p[i][j];
+        auto& u = s[i][j];
+        if(sz(v) == 0 || sz(u) == 0) continue;
+
+        sor(u);
+
+        for(auto x : v){
+            int b = (x * t) % m;
+            int l = m - 1 - b;
+
+            auto it = upper_bound(all(u), l);
+            if(it != u.begin()){
+                it--;
+                ans = max(ans, (b+ *it) % m);
+            }else ans = max(ans, (b + u.back()) % m);
+        }
+
+    }
+    cout << ans << endl;
 }
+
 
 int32_t main()
 {
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;

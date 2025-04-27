@@ -92,9 +92,29 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, k; cin >> n >> k;
+    vi a(n), cnt(n);
+    rep(i, 0, n){
+        cnt[i] = cnt[i-1] + (a[i] <= k);
+    }
+    vi pref_good(n, 0), suff_good(n, 0);
+    rep(i, 0, n){
+        if(cnt[i] >= (i + 2)/2) pref_good[i] = 1;
+    }
+    vi sc(n+1, 0);
+    for(int i = n-1; i >= 0; --i){
+        sc[i] = sc[i+1] + (a[i] <= k);
+    }
+
+    rep(i, 0, n){
+        if(sc[i] >= ((n-i)+1)/2) suff_good[i] = 1;
+    }
+
+    vi ans(n+2, 0);
+    for(int i = n; i >= 0; i--) ans[i] = suff_good[i] || pref_good[i+1];
+
+    
+
 }
 
 int32_t main()

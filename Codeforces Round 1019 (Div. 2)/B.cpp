@@ -92,9 +92,52 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n; cin >> n;
+    string s; cin >> s;
+
+    int cnt = 0, count = 0;
+    if(s[0] == '0') cnt++;
+    rep(i, 1, n){
+        if(s[i] != s[i-1]) count++;
+        if(s[i] == '0') cnt++;
+    }
+
+    int cost = n + count + (s[0] == '1');
+
+    vi l = {INF, INF};
+    vvi r = {{INF, INF}, {INF, INF}};
+    int ans = 0;
+    int b = 0LL;
+    rep(i, 0LL, n){
+        int b = s[i] - '0';
+        int c = (i == 0 ? 0 : s[i-1] - '0');
+
+        int orig = (i == 0? (b == 1) : (b != c));
+
+        rep(d,0LL, 2LL){
+            int val = ((c != d)) - orig;
+            l[d] = min(l[d], val);
+
+            rep(e, 0LL, 2LL){
+                val += ((b != e));
+                r[d][e] = min(r[d][e], val);
+            }
+        }
+
+        int alp;
+        int bet = b;
+        if(i+1 < n){
+            int delta = s[i+1] - '0';
+            int orig = (b != delta);
+
+            alp = r[bet][delta] - orig;
+        }else{
+            alp = l[bet];
+        }
+        ans = min(ans, alp);
+    }
+
+    cout << ans + cost << endl;
 }
 
 int32_t main()

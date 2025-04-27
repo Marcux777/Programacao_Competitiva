@@ -90,11 +90,58 @@ const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 const int mod = 1e9 + 7;
 const int LOGN = 21;
 
+
+
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, m; cin >> n >> m;
+    vi a(n), b(m);
+    for(auto &i : a) cin >> i;
+    for(auto &i : b) cin >> i;
+
+    auto ok = [&](int x) -> bool{
+        vi prefix(n+1, 0);
+        int c  = 0;
+        rep(i, 0, n){
+            if(c < m && a[i] >= b[c]) c++;
+
+            prefix[i+1] = c;
+        }
+        vi suffix(n+1, 0);
+        c = 0;
+        for(int i = n-1; i >= 0; i--){
+            if(c < m && a[i] >= b[m-1-c]) c++;
+            suffix[i] = c;
+        }
+
+        rep(i, 0, n+1){
+            int v = prefix[i];
+            if(v < m && x >= b[v]){
+                v++;
+                v += suffix[i];
+            }
+            if(v >= m){
+                return true;
+            }
+        }
+        return false;
+    };
+
+    if(ok(0)){
+        cout<<0<<endl;
+        return;
+    }
+
+    int l = 1, r = INF, ans = -1;
+    while(l <= r){
+        int m = l + (r - l) / 2;
+        if(ok(m)){
+            ans = m;
+            r = m - 1;
+        }
+        else l = m + 1;
+    }
+    cout<< ans<<endl;
 }
 
 int32_t main()
@@ -102,7 +149,7 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
+    cin>>tt;
     while (tt --> 0)
         solve();
     return 0;

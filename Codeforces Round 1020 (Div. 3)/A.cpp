@@ -92,9 +92,19 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n; cin >> n;
+    string s; cin >> s;
+    vector<string> grid;
+    rep(i, 0, n) {
+        string t = s;
+        t[i] = (t[i] == '1' ? '0' : '1');
+        grid.pb(t);
+    }
+    int ans = 0;
+    for (auto &r : grid)
+        for (char c : r)
+            if (c == '1') ans++;
+    cout << ans << endl;
 }
 
 int32_t main()

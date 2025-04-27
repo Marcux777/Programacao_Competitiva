@@ -92,9 +92,41 @@ const int LOGN = 21;
 
 void solve()
 {
-    int n, m, l, r;
-    cin >> n >>m >> l >> r;
-    cout << min(0LL, r-m) << " " << (min(0LL, r-m) + m) << endl;
+    int n, m; cin >> n >> m;
+    vi k(m), b(n);
+    vvi a(m);
+    rep(i, 0, m) {
+        cin >> k[i];
+        a[i].resize(k[i]);
+        rep(j, 0, k[i]) {
+            cin >> a[i][j];
+        }
+    }
+    for(auto& i : b) cin >> i;
+
+    vvi inv(n+1);
+    rep(i, 0, m){
+        for(auto j : a[i]){
+            inv[j].pb(i);
+        }
+    }
+
+    vi ans(n);
+    int cur = 0;
+    rep(i, 0, n){
+        int ingr = b[i];
+        for(auto j : inv[ingr]){
+            k[j]--;
+            if(k[j] == 0){
+                cur++;
+            }
+        }
+        ans[i] = cur;
+    }
+
+    rep(i, 0, n)
+        cout << ans[i] << endl;
+
 }
 
 int32_t main()
@@ -102,7 +134,6 @@ int32_t main()
     IOS;
     int tt;
     tt = 1;
-    cin >> tt;
     while (tt --> 0)
         solve();
     return 0;
