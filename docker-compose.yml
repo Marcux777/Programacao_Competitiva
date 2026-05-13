@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  cp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: cp-dev:local
+    container_name: cp-dev
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    user: "${UID:-1000}:${GID:-1000}"
+    stdin_open: true
+    tty: true
+    command: bash
